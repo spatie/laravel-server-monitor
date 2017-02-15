@@ -10,7 +10,7 @@ class CheckCollection extends Collection
     {
         while($process = $this->getNextProcess())
         {
-            
+
         }
     }
 
