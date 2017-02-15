@@ -36,8 +36,8 @@ composer require spatie/laravel-server-monitor
 ## Usage
 
 ``` php
-$skeleton = new Spatie\Skeleton();
-echo $skeleton->echoPhrase('Hello, Spatie!');
+$ServerMonitor = new Spatie\ServerMonitor();
+echo $ServerMonitor->echoPhrase('Hello, Spatie!');
 ```
 
 ## Changelog

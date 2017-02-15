@@ -16,19 +16,25 @@
         }
     ],
     "require": {
-        "php": "^7.1"
+        "php": "^7.1",
+        "illuminate/console": "^5.4",
+        "illuminate/database": "^5.4",
+        "illuminate/events": "^5.4",
+        "illuminate/support": "^5.4",
+        "symfony/process": "^3.2"
     },
     "require-dev": {
-        "phpunit/phpunit": "^6.0"
+        "phpunit/phpunit": "^6.0",
+        "orchestra/testbench": "^3.4"
     },
     "autoload": {
         "psr-4": {
-            "Spatie\\Skeleton\\": "src"
+            "Spatie\\ServerMonitor\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Spatie\\Skeleton\\Test\\": "tests"
+            "Spatie\\ServerMonitor\\Test\\": "tests"
         }
     },
     "scripts": {

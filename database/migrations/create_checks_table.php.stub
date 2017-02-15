@@ -1,0 +1,40 @@
+<?php
+
+use Spatie\ServerMonitor\Models\Enums\CertificateStatus;
+use Spatie\ServerMonitor\Models\Enums\UptimeStatus;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+
+class CreateChecksTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('checks', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('host_id')->unsigned();
+            $table->foreign('host_id')->references('id')->on('hosts')->onDelete('cascade');
+            $table->string('type');
+            $table->string('status');
+            $table->boolean('enabled')->default(true);
+            $table->timestamp('checked_at')->nullable();
+            $table->timestamp('next_check_at')->nullable();
+            $table->json('properties');
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::drop('checks');
+    }
+}
