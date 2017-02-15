@@ -10,7 +10,7 @@ class CheckSucceeded implements ShouldQueue
     /** @var \Spatie\ServerMonitor\Check */
     public $check;
 
-    public function __construct(Check $check, string $reason)
+    public function __construct(Check $check)
     {
         $this->check = $check;
     }

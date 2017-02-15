@@ -2,7 +2,10 @@
 
 namespace Spatie\ServerMonitor\CheckDefinitions;
 
-class CheckDefinition
+use Carbon\Carbon;
+use Symfony\Component\Process\Process;
+
+abstract class CheckDefinition
 {
     /** @var \Spatie\ServerMonitor\Models\Check */
     protected $check;
@@ -19,8 +22,9 @@ class CheckDefinition
         return $this;
     }
 
-    public function getCommand(): string
-    {
+    abstract public function getCommand();
 
-    }
+    abstract public function performNextRunAt(): Carbon;
+
+    abstract public function handleFinishedProcess(Process $process);
 }

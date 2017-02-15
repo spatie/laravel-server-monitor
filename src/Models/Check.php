@@ -4,8 +4,11 @@ namespace Spatie\ServerMonitor\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
+use Spatie\CheckSucceeded\Events\CheckFailed;
+use Spatie\CheckSucceeded\Events\CheckSucceeded;
 use Spatie\ServerMonitor\CheckDefinitions\CheckDefinition;
 use Spatie\ServerMonitor\Exceptions\InvalidCheckDefinition;
+use Spatie\ServerMonitor\Models\Enums\CheckStatus;
 use Symfony\Component\Process\Process;
 
 class Check extends Model
@@ -45,7 +48,7 @@ class Check extends Model
         return $this->host;
     }
 
-    protected function getDefinition(): CheckDefinition
+    public function getDefinition(): CheckDefinition
     {
         if (! $definitionClass = config("server-monitor.checks.{$this->type}")) {
             throw InvalidCheckDefinition::unknownCheckType($this);
@@ -60,15 +63,46 @@ class Check extends Model
 
     public function getProcess(): Process
     {
-        $delimiter = 'EOF-LARAVEL-SERVER-MONITOR';
+        $process = null;
 
-        $definition = $this->getDefinition();
+        if (is_null($process)) {
 
-        return new Process(
-            "ssh {$this->getTarget()} 'bash -se' << \\$delimiter".PHP_EOL
-            .'set -e'.PHP_EOL
-            .$definition->getCommand().PHP_EOL
-            .$delimiter
-        );
+            $delimiter = 'EOF-LARAVEL-SERVER-MONITOR';
+
+            $definition = $this->getDefinition();
+
+            $process = new Process(
+                "ssh {$this->getTarget()} 'bash -se' << \\$delimiter".PHP_EOL
+                .'set -e'.PHP_EOL
+                .$definition->getCommand().PHP_EOL
+                .$delimiter
+            );
+        }
+
+        return $process;
+    }
+
+    public function failed(string $failureReason)
+    {
+        $this->status = CheckStatus::FAILURE;
+        $this->message = $failureReason;
+
+        $this->save();
+
+        event(new CheckFailed($this, $failureReason));
+
+        return $this;
+    }
+
+    public function succeeded()
+    {
+        $this->status = CheckStatus::SUCCESS;
+        $this->message = '';
+
+        $this->save();
+
+        event(new CheckSucceeded($this));
+
+        return $this;
     }
 }
