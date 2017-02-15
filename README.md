@@ -1,12 +1,12 @@
 # Very short description of the package
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/spatie/:package_name.svg?style=flat-square)](https://packagist.org/packages/spatie/:package_name)
-[![Build Status](https://img.shields.io/travis/spatie/:package_name/master.svg?style=flat-square)](https://travis-ci.org/spatie/:package_name)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/spatie/laravel-server-monitor.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-server-monitor)
+[![Build Status](https://img.shields.io/travis/spatie/laravel-server-monitor/master.svg?style=flat-square)](https://travis-ci.org/spatie/laravel-server-monitor)
 [![SensioLabsInsight](https://img.shields.io/sensiolabs/i/xxxxxxxxx.svg?style=flat-square)](https://insight.sensiolabs.com/projects/xxxxxxxxx)
-[![Quality Score](https://img.shields.io/scrutinizer/g/spatie/:package_name.svg?style=flat-square)](https://scrutinizer-ci.com/g/spatie/:package_name)
-[![Total Downloads](https://img.shields.io/packagist/dt/spatie/:package_name.svg?style=flat-square)](https://packagist.org/packages/spatie/:package_name)
+[![Quality Score](https://img.shields.io/scrutinizer/g/spatie/laravel-server-monitor.svg?style=flat-square)](https://scrutinizer-ci.com/g/spatie/laravel-server-monitor)
+[![Total Downloads](https://img.shields.io/packagist/dt/spatie/laravel-server-monitor.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-server-monitor)
 
-**Note:** Replace ```:author_name``` ```:author_username``` ```:author_email``` ```:package_name``` ```:package_description``` with their correct values in [README.md](README.md), [CHANGELOG.md](CHANGELOG.md), [CONTRIBUTING.md](CONTRIBUTING.md), [LICENSE.md](LICENSE.md) and [composer.json](composer.json) files, then delete this line.
+**Note:** Replace ```Freek Van der Herten``` ```freekmurze``` ```freek@spatie.be``` ```laravel-server-monitor``` ```Monitor servers``` with their correct values in [README.md](README.md), [CHANGELOG.md](CHANGELOG.md), [CONTRIBUTING.md](CONTRIBUTING.md), [LICENSE.md](LICENSE.md) and [composer.json](composer.json) files, then delete this line.
 
 This is where your description should go. Try and limit it to a paragraph or two, and maybe throw in a mention of what PSRs you support to avoid any confusion with users and contributors.
 
@@ -30,7 +30,7 @@ This package is custom built for [Spatie](https://spatie.be) projects and is the
 You can install the package via composer:
 
 ``` bash
-composer require spatie/:package_name
+composer require spatie/laravel-server-monitor
 ```
 
 ## Usage
@@ -60,7 +60,7 @@ If you discover any security related issues, please email freek@spatie.be instea
 
 ## Credits
 
-- [:author_name](https://github.com/:author_username)
+- [Freek Van der Herten](https://github.com/freekmurze)
 - [All Contributors](../../contributors)
 
 ## About Spatie
