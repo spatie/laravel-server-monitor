@@ -2,6 +2,7 @@
 
 namespace Spatie\ServerMonitor\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Spatie\CheckSucceeded\Events\CheckFailed;
@@ -104,5 +105,10 @@ class Check extends Model
         event(new CheckSucceeded($this));
 
         return $this;
+    }
+
+    public function scopeEnabled(Builder $query)
+    {
+        $query->where('enabled', 1);
     }
 }

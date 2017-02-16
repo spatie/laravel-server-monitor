@@ -6,11 +6,11 @@ use Spatie\ServerMonitor\Models\Check;
 
 class CheckRepository
 {
-    public static function allThatShouldRun(): MonitorCollection
+    public static function allThatShouldRun(): CheckCollection
     {
         $checks = self::query()->get()->filter->shouldCheckUptime();
 
-        return CheckCollection::make($checks);
+        return new CheckCollection($checks);
     }
 
     protected static function query()
