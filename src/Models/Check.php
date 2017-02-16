@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Arr;
 use Spatie\ServerMonitor\Events\CheckFailed;
+use Spatie\ServerMonitor\Events\CheckRestored;
 use Spatie\ServerMonitor\Events\CheckSucceeded;
 use Spatie\ServerMonitor\Events\CheckWarning;
 use Spatie\ServerMonitor\CheckDefinitions\CheckDefinition;
@@ -146,9 +147,17 @@ class Check extends Model
 
     public function handleFinishedProcess()
     {
+        $originalStatus = $this->status;
+
         $this->getDefinition()->handleFinishedProcess($this->getProcess());
 
         $this->scheduleNextRun();
+
+        $newStatus = $this->status;
+
+        if ($this->shouldFireRestoredEvent($originalStatus, $newStatus)) {
+            event(new CheckRestored($this, $this->message));
+        }
 
         return $this;
     }
@@ -166,5 +175,14 @@ class Check extends Model
     public function hasStatus(string $status): bool
     {
         return $this->status === $status;
+    }
+
+    protected function shouldFireRestoredEvent(?string $originalStatus, ?string $newStatus)
+    {
+        if (! in_array($originalStatus, [CheckStatus::FAILED, CheckStatus::WARNING]) ) {
+            return false;
+        }
+
+        return $newStatus === CheckStatus::SUCCESS;
     }
 }

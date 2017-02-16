@@ -2,7 +2,6 @@
 
 namespace Spatie\ServerMonitor\CheckDefinitions;
 
-use Carbon\Carbon;
 use Spatie\Regex\Regex;
 use Symfony\Component\Process\Process;
 
@@ -35,7 +34,7 @@ final class Diskspace extends CheckDefinition
 
     public function performNextRunInMinutes(): int
     {
-        return 0;
+        return 10;
     }
 
     protected function getDiskUsagePercentage(string $commandOutput): int
