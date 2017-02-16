@@ -24,7 +24,13 @@ class Check extends Model
 
     public function getAttribute($key)
     {
-        return Arr::get($this->properties, $key, parent::getAttribute($key));
+        if (array_key_exists($key, $this->attributes)) {
+            return parent::getAttribute($key);
+        }
+
+        $properties = json_decode($this->attributes->properties, true);
+
+        return Arr::get($properties, $key);
     }
 
     public function shouldRun(): bool

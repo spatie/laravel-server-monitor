@@ -8,7 +8,7 @@ class CheckRepository
 {
     public static function allThatShouldRun(): CheckCollection
     {
-        $checks = self::query()->get()->filter->shouldCheckUptime();
+        $checks = self::query()->get()->filter->shouldRun();
 
         return new CheckCollection($checks);
     }

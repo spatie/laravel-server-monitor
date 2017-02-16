@@ -2,11 +2,11 @@
 
 namespace Spatie\ServerMonitor;
 
+use Countable;
 use Illuminate\Support\Collection;
 use Spatie\ServerMonitor\Models\Check;
-use Symfony\Component\Process\Process;
 
-class CheckCollection
+class CheckCollection implements Countable
 {
     /** @var \Illuminate\Support\Collection */
     protected $checks;
@@ -17,12 +17,14 @@ class CheckCollection
     public function __construct(Collection $checks)
     {
         $this->checks = $checks;
+
+        $this->runningChecks = collect();
     }
 
     public function run()
     {
         while ($this->hasPendingChecks()) {
-            if ($this->runningChecks->count < config('server-monitor.concurrent_ssh_connections')) {
+            if ($this->runningChecks->count() < config('server-monitor.concurrent_ssh_connections')) {
                 $this->startNextCheck();
             }
 
@@ -58,5 +60,10 @@ class CheckCollection
         $finishedChecks->each(function(Check $check) {
             $check->getDefinition()->handleFinishedProcess($check->getProcess());
         });
+    }
+
+    public function count()
+    {
+        return count($this->checks);
     }
 }
