@@ -2,6 +2,7 @@
 
 namespace Spatie\ServerMonitor\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -164,7 +165,7 @@ class Check extends Model
 
     protected function scheduleNextRun()
     {
-        $this->checked_at = \Carbon\Carbon::now();
+        $this->checked_at = Carbon::now();
 
         $this->next_check_in_minutes = $this->getDefinition()->performNextRunInMinutes();
         $this->save();
