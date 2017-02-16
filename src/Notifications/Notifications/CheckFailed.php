@@ -53,4 +53,9 @@ class CheckFailed extends BaseNotification
     {
         return $this->getCheck()->hasStatus(CheckStatus::FAILED);
     }
+
+    protected function getSubject(): string
+    {
+        return "Something wrong with {$this->getCheck()->host->name}";
+    }
 }

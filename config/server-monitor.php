@@ -9,7 +9,7 @@ return [
      */
     'checks' => [
         'diskspace' => Spatie\ServerMonitor\CheckDefinitions\Diskspace::class,
-        'beanstalkd' => Spatie\ServerMonitor\CheckDefinitions\Beanstald::class,
+        'elasticsearch' => Spatie\ServerMonitor\CheckDefinitions\Elasticsearch::class,
     ],
 
     /*

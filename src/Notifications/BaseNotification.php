@@ -23,11 +23,6 @@ abstract class BaseNotification extends Notification
         return $this->event->check;
     }
 
-    protected function getSubject(): string
-    {
-        return "Warning for {$this->getCheck()->host->name}";
-    }
-
     protected function getMessageText(): ?string
     {
         return $this->getCheck()->message;

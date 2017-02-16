@@ -49,7 +49,10 @@ class CheckSucceeded extends BaseNotification
         return $this;
     }
 
-
+    protected function getSubject(): string
+    {
+        return "{$this->getCheck()->host->name}";
+    }
 
     public function isStillRelevant(): bool
     {
