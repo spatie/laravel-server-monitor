@@ -6,7 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Messages\SlackMessage;
 use Illuminate\Notifications\Messages\SlackAttachment;
-use Spatie\ServerMonitor\Events\CheckSucceeded as CheckSucceededEvent;
+use Spatie\ServerMonitor\Events\CheckRestored as CheckRestoredEvent;
 use Spatie\ServerMonitor\Models\Enums\CheckStatus;
 use Spatie\ServerMonitor\Notifications\BaseNotification;
 
@@ -42,7 +42,7 @@ class CheckRestored extends BaseNotification
             });
     }
 
-    public function setEvent(CheckSucceededEvent $event)
+    public function setEvent(CheckRestoredEvent $event)
     {
         $this->event = $event;
 
@@ -51,7 +51,7 @@ class CheckRestored extends BaseNotification
 
     protected function getSubject(): string
     {
-        return "{$this->getCheck()->host->name}";
+        return "Check restored for {$this->getCheck()->host->name}";
     }
 
     public function isStillRelevant(): bool

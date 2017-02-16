@@ -2,7 +2,6 @@
 
 namespace Spatie\ServerMonitor\CheckDefinitions;
 
-use Carbon\Carbon;
 use Spatie\ServerMonitor\Models\Check;
 use Symfony\Component\Process\Process;
 

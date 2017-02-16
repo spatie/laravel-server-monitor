@@ -33,7 +33,6 @@ class Check extends Model
 
     public function getAttribute($key)
     {
-
         if (array_key_exists($key, $this->attributes)) {
             return parent::getAttribute($key);
         }
@@ -110,7 +109,7 @@ class Check extends Model
 
         $this->save();
 
-        event(new CheckSucceeded($this));
+        event(new CheckSucceeded($this, $message));
 
         return $this;
     }

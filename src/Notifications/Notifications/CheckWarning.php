@@ -49,6 +49,11 @@ class CheckWarning extends BaseNotification
         return $this;
     }
 
+    protected function getSubject(): string
+    {
+        return "Warning for {$this->getCheck()->host->name}";
+    }
+
     public function isStillRelevant(): bool
     {
         return $this->getCheck()->hasStatus(CheckStatus::WARNING);
