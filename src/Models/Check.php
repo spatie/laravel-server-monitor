@@ -79,7 +79,7 @@ class Check extends Model
 
     public function getProcess(): Process
     {
-        $process = null;
+        static $process = null;
 
         if (is_null($process)) {
 

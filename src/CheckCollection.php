@@ -42,9 +42,7 @@ class CheckCollection implements Countable
     {
         $check = $this->checks->shift();
 
-       echo 'start process';
         $check->getProcess()->start();
-        echo 'after start process';
 
         $this->runningChecks->push($check);
     }
