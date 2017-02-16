@@ -21,7 +21,7 @@ class Notifiable
      */
     public function routeNotificationForSlack()
     {
-        return config('laravel-uptime-monitor.notifications.slack.webhook_url');
+        return config('server-monitor.notifications.slack.webhook_url');
     }
 
     public function getKey(): string

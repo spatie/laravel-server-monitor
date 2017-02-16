@@ -128,7 +128,7 @@ class Check extends Model
 
     public function failed(string $failureReason = '')
     {
-        $this->status = CheckStatus::FAILURE;
+        $this->status = CheckStatus::FAILED;
         $this->message = $failureReason;
 
         $this->save();
@@ -161,5 +161,10 @@ class Check extends Model
         $this->save();
 
         return $this;
+    }
+
+    public function hasStatus(string $status): bool
+    {
+        return $this->status === $status;
     }
 }

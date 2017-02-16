@@ -3,7 +3,7 @@
 namespace Spatie\ServerMonitor\Notifications;
 
 use Illuminate\Notifications\Notification;
-use Spatie\ServerMonitor\Check;
+use Spatie\ServerMonitor\Models\Check;
 
 abstract class BaseNotification extends Notification
 {
@@ -21,5 +21,15 @@ abstract class BaseNotification extends Notification
     public function getCheck(): Check
     {
         return $this->event->check;
+    }
+
+    protected function getSubject(): string
+    {
+        return "Warning for {$this->getCheck()->host->name}";
+    }
+
+    protected function getMessageText(): ?string
+    {
+        return $this->getCheck()->message;
     }
 }

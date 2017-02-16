@@ -6,11 +6,11 @@ use Carbon\Carbon;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Messages\SlackMessage;
 use Illuminate\Notifications\Messages\SlackAttachment;
-use Spatie\ServerMonitor\Events\CheckWarning as CheckWarningEvent;
+use Spatie\ServerMonitor\Events\CheckSucceeded as CheckSucceededEvent;
 use Spatie\ServerMonitor\Models\Enums\CheckStatus;
 use Spatie\ServerMonitor\Notifications\BaseNotification;
 
-class CheckWarning extends BaseNotification
+class CheckSucceeded extends BaseNotification
 {
     /** @var \Spatie\ServerMonitor\Events\CheckWarning */
     public $event;
@@ -24,7 +24,7 @@ class CheckWarning extends BaseNotification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->error()
+            ->success()
             ->subject($this->getSubject())
             ->line($this->getMessageText());
     }
@@ -32,7 +32,7 @@ class CheckWarning extends BaseNotification
     public function toSlack($notifiable)
     {
         return (new SlackMessage)
-            ->warning()
+            ->success()
             ->attachment(function (SlackAttachment $attachment) {
                 $attachment
                     ->title($this->getSubject())
@@ -42,15 +42,17 @@ class CheckWarning extends BaseNotification
             });
     }
 
-    public function setEvent(CheckWarningEvent $event)
+    public function setEvent(CheckSucceededEvent $event)
     {
         $this->event = $event;
 
         return $this;
     }
 
+
+
     public function isStillRelevant(): bool
     {
-        return $this->getCheck()->hasStatus(CheckStatus::WARNING);
+        return $this->getCheck()->hasStatus(CheckStatus::SUCCESS);
     }
 }
