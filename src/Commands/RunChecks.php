@@ -1,6 +1,6 @@
 <?php
 
-namespace Spatie\UptimeMonitor\Commands;
+namespace Spatie\ServerMonitor\Commands;
 
 use Spatie\ServerMonitor\CheckRepository;
 

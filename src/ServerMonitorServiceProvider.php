@@ -4,7 +4,7 @@ namespace Spatie\ServerMonitor;
 
 use Illuminate\Support\ServiceProvider;
 use Spatie\ServerMonitor\Notifications\EventHandler;
-use Spatie\UptimeMonitor\Commands\RunChecks;
+use Spatie\ServerMonitor\Commands\RunChecks;
 
 class ServerMonitorServiceProvider extends ServiceProvider
 {
