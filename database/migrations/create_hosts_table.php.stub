@@ -16,8 +16,8 @@ class CreateHostsTable extends Migration
     {
         Schema::create('hosts', function (Blueprint $table) {
             $table->increments('id');
-            $table->name('name')
-            $table->string('ssh_user')
+            $table->name('name');
+            $table->string('ssh_user');
             $table->string('url');
             $table->timestamps();
         });
