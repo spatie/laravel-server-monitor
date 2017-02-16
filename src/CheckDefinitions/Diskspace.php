@@ -3,13 +3,14 @@
 namespace Spatie\ServerMonitor\CheckDefinitions;
 
 use Carbon\Carbon;
+use Spatie\Regex\Regex;
 use Symfony\Component\Process\Process;
 
 class Diskspace extends CheckDefinition
 {
     public function getCommand(): string
     {
-        return 'df .';
+        return 'df -P .';
     }
 
     public function handleFinishedProcess(Process $process)
@@ -40,6 +41,6 @@ class Diskspace extends CheckDefinition
 
     protected function getFreeSpacePercentage(string $commandOutput): int
     {
-        return 80;
+        return (int) Regex::match('/(\d?\d)%/', $commandOutput)->group(1);
     }
 }
