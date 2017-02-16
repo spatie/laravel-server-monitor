@@ -25,7 +25,7 @@ abstract class CheckDefinition
 
     abstract public function getCommand();
 
-    abstract public function performNextRunAt(): Carbon;
+    abstract public function performNextRunInMinutes(): int;
 
     abstract public function handleFinishedProcess(Process $process);
 }

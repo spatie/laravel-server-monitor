@@ -6,7 +6,7 @@ use Carbon\Carbon;
 use Spatie\Regex\Regex;
 use Symfony\Component\Process\Process;
 
-class Diskspace extends CheckDefinition
+final class Diskspace extends CheckDefinition
 {
     public function getCommand(): string
     {
@@ -15,7 +15,6 @@ class Diskspace extends CheckDefinition
 
     public function handleFinishedProcess(Process $process)
     {
-
         $percentage = $this->getDiskUsagePercentage($process->getOutput());
         if ($percentage > 90) {
             $this->check->failed("Disk nearly full: {$percentage}");
@@ -29,14 +28,14 @@ class Diskspace extends CheckDefinition
             return;
         }
 
-        $this->check->succeeded();
+        $this->check->succeeded("The disk space usage is now at {$percentage}%");
 
         return;
     }
 
-    public function performNextRunAt(): Carbon
+    public function performNextRunInMinutes(): int
     {
-        return Carbon::now()->addMinutes(5);
+        return 5;
     }
 
     protected function getDiskUsagePercentage(string $commandOutput): int

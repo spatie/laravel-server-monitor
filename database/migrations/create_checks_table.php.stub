@@ -23,7 +23,7 @@ class CreateChecksTable extends Migration
             $table->string('status');
             $table->boolean('enabled')->default(true);
             $table->timestamp('checked_at')->nullable();
-            $table->timestamp('next_check_at')->nullable();
+            $table->integer('next_check_in_minutes');
             $table->json('properties')->nullable();
             $table->timestamps();
         });

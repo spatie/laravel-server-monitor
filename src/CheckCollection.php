@@ -29,7 +29,7 @@ class CheckCollection implements Countable
                 $this->startNextCheck();
             }
 
-            $this->cleanRunningChecks();
+            $this->handleFinishedChecks();
         }
     }
 
@@ -46,20 +46,13 @@ class CheckCollection implements Countable
         $this->runningChecks->push($check);
     }
 
-    protected function cleanRunningChecks()
+    protected function handleFinishedChecks()
     {
         [$this->runningChecks, $finishedChecks] = $this->runningChecks->partition(function (Check $check) {
             return $check->getProcess()->isRunning();
         });
 
-        $this->processFinishedChecks($finishedChecks);
-    }
-
-    protected function processFinishedChecks(Collection $finishedChecks)
-    {
-        $finishedChecks->each(function(Check $check) {
-            $check->getDefinition()->handleFinishedProcess($check->getProcess());
-        });
+        $finishedChecks->each->handleFinishedProcess();
     }
 
     public function count()

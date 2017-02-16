@@ -51,7 +51,9 @@ class Check extends Model
             return true;
         }
 
-        return $this->next_check_at->isPast();
+        return $this->checked_at
+            ->addMinutes($this->next_check_in_minutes)
+            ->isPast();
     }
 
     public function getTarget(): string
@@ -80,15 +82,15 @@ class Check extends Model
 
     public function getProcess(): Process
     {
-        static $process = null;
+        static $processes = [];
 
-        if (is_null($process)) {
+        if (! isset($processes[$this->id])) {
 
             $delimiter = 'EOF-LARAVEL-SERVER-MONITOR';
 
             $definition = $this->getDefinition();
 
-            $process = new Process(
+            $processes[$this->id] = new Process(
                 "ssh {$this->getTarget()} 'bash -se' << \\$delimiter".PHP_EOL
                 .'set -e'.PHP_EOL
                 .$definition->getCommand().PHP_EOL
@@ -96,13 +98,13 @@ class Check extends Model
             );
         }
 
-        return $process;
+        return $processes[$this->id];
     }
 
-    public function succeeded()
+    public function succeeded(string $message = '')
     {
         $this->status = CheckStatus::SUCCESS;
-        $this->message = '';
+        $this->message = $message;
 
         $this->save();
 
@@ -112,7 +114,7 @@ class Check extends Model
     }
 
 
-    public function warn(string $warningMessage)
+    public function warn(string $warningMessage = '')
     {
         $this->status = CheckStatus::WARNING;
         $this->message = $warningMessage;
@@ -124,7 +126,7 @@ class Check extends Model
         return $this;
     }
 
-    public function failed(string $failureReason)
+    public function failed(string $failureReason = '')
     {
         $this->status = CheckStatus::FAILURE;
         $this->message = $failureReason;
@@ -137,9 +139,27 @@ class Check extends Model
     }
 
 
-
     public function scopeEnabled(Builder $query)
     {
         $query->where('enabled', 1);
+    }
+
+    public function handleFinishedProcess()
+    {
+        $this->getDefinition()->handleFinishedProcess($this->getProcess());
+
+        $this->scheduleNextRun();
+
+        return $this;
+    }
+
+    protected function scheduleNextRun()
+    {
+        $this->checked_at = \Carbon\Carbon::now();
+
+        $this->next_check_in_minutes = $this->getDefinition()->performNextRunInMinutes();
+        $this->save();
+
+        return $this;
     }
 }
