@@ -15,8 +15,8 @@ class ServerMonitorServiceProvider extends ServiceProvider
                 __DIR__ . '/../config/server-monitor.php' => config_path('server-monitor.php'),
             ], 'config');
 
-            $this->publishesMigration('CreateHostsTable', 'create_hosts_table');
-            $this->publishesMigration('CreateChecksTable', 'create_checks_table');
+            $this->publishesMigration('CreateHostsTable', 'create_hosts_table', 1);
+            $this->publishesMigration('CreateChecksTable', 'create_checks_table', 2);
         }
     }
 
@@ -33,10 +33,10 @@ class ServerMonitorServiceProvider extends ServiceProvider
         ]);
     }
 
-    protected function publishesMigration(string $className, string $fileName)
+    protected function publishesMigration(string $className, string $fileName, int $timestampSuffix)
     {
         if (!class_exists($className)) {
-            $timestamp = date('Y_m_d_His', time());
+            $timestamp = date('Y_m_d_His', time()) . $timestampSuffix;
 
             $this->publishes([
                 __DIR__ . "/../database/migrations/{$fileName}.php.stub" => database_path('migrations/' . $timestamp . "_{$fileName}.php"),
