@@ -8,8 +8,8 @@ return [
      * `Spatie\ServerMonitor\Checks\CheckDefinitions\CheckDefinition` class.
      */
     'checks' => [
-        'diskspace' => Spatie\ServerMonitor\CheckDefiniations\Diskspace::class,
-        'beanstalkd' => Spatie\ServerMonitor\CheckDefiniations\Beanstald::class,
+        'diskspace' => Spatie\ServerMonitor\CheckDefinitions\Diskspace::class,
+        'beanstalkd' => Spatie\ServerMonitor\CheckDefinitions\Beanstald::class,
     ],
 
     /*

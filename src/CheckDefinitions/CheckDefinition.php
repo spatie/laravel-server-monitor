@@ -3,6 +3,7 @@
 namespace Spatie\ServerMonitor\CheckDefinitions;
 
 use Carbon\Carbon;
+use Spatie\ServerMonitor\Models\Check;
 use Symfony\Component\Process\Process;
 
 abstract class CheckDefinition
@@ -11,7 +12,7 @@ abstract class CheckDefinition
     protected $check;
 
     /**
-     * @param \Spatie\ServerMonitor\CheckDefinitions\Check $check
+     * @param \Spatie\ServerMonitor\Models\Check $check
      *
      * @return $this
      */

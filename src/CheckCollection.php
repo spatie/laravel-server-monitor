@@ -25,6 +25,7 @@ class CheckCollection implements Countable
     {
         while ($this->hasPendingChecks()) {
             if ($this->runningChecks->count() < config('server-monitor.concurrent_ssh_connections')) {
+
                 $this->startNextCheck();
             }
 
@@ -41,7 +42,9 @@ class CheckCollection implements Countable
     {
         $check = $this->checks->shift();
 
+       echo 'start process';
         $check->getProcess()->start();
+        echo 'after start process';
 
         $this->runningChecks->push($check);
     }

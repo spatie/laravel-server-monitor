@@ -47,7 +47,7 @@ After the migration has been published you can create the `hosts`  and `checks `
 php artisan migrate
 ```
 
-You can publish the config-file with:
+You must publish the config-file with:
 ```bash
 php artisan vendor:publish --provider="Spatie\ServerMonitor\ServerMonitorServiceProvider" --tag="config"
 ```

@@ -4,6 +4,7 @@ namespace Spatie\ServerMonitor\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Arr;
 use Spatie\CheckSucceeded\Events\CheckFailed;
 use Spatie\CheckSucceeded\Events\CheckSucceeded;
@@ -22,15 +23,21 @@ class Check extends Model
         'checked_at', 'next_check_at',
     ];
 
+    public function host(): BelongsTo
+    {
+        return $this->belongsTo(Host::class);
+    }
+
     public function getAttribute($key)
     {
+
         if (array_key_exists($key, $this->attributes)) {
             return parent::getAttribute($key);
         }
 
-        $properties = json_decode($this->attributes->properties, true);
+        $properties = json_decode($this->attributes['properties'], true);
 
-        return Arr::get($properties, $key);
+        return Arr::get($properties, $key, parent::getAttribute($key));
     }
 
     public function shouldRun(): bool
@@ -48,11 +55,13 @@ class Check extends Model
 
     public function getTarget(): string
     {
-        if ($this->ssh_user) {
-            return "{$this->ssh_user}&{$this->host}";
+        $target = $this->host->url;
+
+        if ($this->host->ssh_user) {
+            $target = $this->host->ssh_user . '@' . $target;
         }
 
-        return $this->host;
+        return $target;
     }
 
     public function getDefinition(): CheckDefinition
