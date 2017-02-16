@@ -4,15 +4,9 @@ namespace Spatie\ServerMonitor\Notifications;
 
 use Illuminate\Config\Repository;
 use Illuminate\Contracts\Events\Dispatcher;
-use Spatie\CheckSucceeded\Events\CheckFailed;
-use Spatie\CheckSucceeded\Events\CheckSucceeded;
-use Spatie\CheckSucceeded\Events\CheckWarning;
-use Spatie\ServerMonitor\Events\UptimeCheckFailed;
-use Spatie\ServerMonitor\Events\UptimeCheckRecovered;
-use Spatie\ServerMonitor\Events\UptimeCheckSucceeded;
-use Spatie\ServerMonitor\Events\CertificateCheckFailed;
-use Spatie\ServerMonitor\Events\CertificateExpiresSoon;
-use Spatie\ServerMonitor\Events\CertificateCheckSucceeded;
+use Spatie\ServerMonitor\Events\CheckFailed;
+use Spatie\ServerMonitor\Events\CheckSucceeded;
+use Spatie\ServerMonitor\Events\CheckWarning;
 
 class EventHandler
 {

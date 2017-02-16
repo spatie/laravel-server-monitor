@@ -35,7 +35,7 @@ final class Diskspace extends CheckDefinition
 
     public function performNextRunInMinutes(): int
     {
-        return 5;
+        return 0;
     }
 
     protected function getDiskUsagePercentage(string $commandOutput): int

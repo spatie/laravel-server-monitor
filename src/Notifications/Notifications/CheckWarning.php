@@ -6,8 +6,8 @@ use Carbon\Carbon;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Messages\SlackMessage;
 use Illuminate\Notifications\Messages\SlackAttachment;
-use Spatie\UptimeMonitor\Notifications\BaseNotification;
-use Spatie\UptimeMonitor\Events\CertificateExpiresSoon as SoonExpiringSslCertificateFoundEvent;
+use Spatie\ServerMonitor\Events\CheckWarning as CheckWarningEvent;
+use Spatie\ServerMonitor\Notifications\BaseNotification;
 
 class CheckWarning extends BaseNotification
 {
@@ -41,7 +41,7 @@ class CheckWarning extends BaseNotification
             });
     }
 
-    public function setEvent(SoonExpiringSslCertificateFoundEvent $event)
+    public function setEvent(CheckWarningEvent $event)
     {
         $this->event = $event;
 
@@ -50,11 +50,16 @@ class CheckWarning extends BaseNotification
 
     protected function getSubject(): string
     {
-        return "Warning for {$this->event->check->host->name}";
+        return "Warning for {$this->getCheck()->host->name}";
     }
 
     protected function getMessageText(): ?string
     {
-        return $this->event->check->message;
+        return $this->getCheck()->message;
+    }
+
+    public function isStillRelevant(): bool
+    {
+        return true;
     }
 }

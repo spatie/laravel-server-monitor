@@ -14,7 +14,7 @@ class RunChecks extends BaseCommand
     {
         $checks = CheckRepository::allThatShouldRun();
 
-        $this->comment('Start running '.count($checks).' checks...');
+        $this->info('Start running '.count($checks).' checks...');
 
         $checks->run();
 

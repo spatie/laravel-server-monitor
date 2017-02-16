@@ -4,6 +4,7 @@ namespace Spatie\ServerMonitor;
 
 use Countable;
 use Illuminate\Support\Collection;
+use Spatie\ServerMonitor\Helpers\ConsoleOutput;
 use Spatie\ServerMonitor\Models\Check;
 
 class CheckCollection implements Countable
@@ -41,6 +42,7 @@ class CheckCollection implements Countable
 
         $check = $this->pendingChecks->shift();
 
+        ConsoleOutput::comment($check->host->name . ": performing check `{$check->type}`...");
         $check->getProcess()->start();
 
         $this->runningChecks->push($check);

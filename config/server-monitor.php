@@ -22,9 +22,9 @@ return [
     'notifications' => [
 
         'notifications' => [
-            Spatie\ServerMonitor\CheckSucceeded::class => [],
-            Spatie\ServerMonitor\CheckWarning::class => ['slack'],
-            Spatie\ServerMonitor\CheckFailed::class => ['slack'],
+            Spatie\ServerMonitor\Notifications\Notifications\CheckSucceeded::class => [],
+            Spatie\ServerMonitor\Notifications\Notifications\CheckWarning::class => ['slack'],
+            Spatie\ServerMonitor\Notifications\Notifications\CheckFailed::class => ['slack'],
         ],
 
         'mail' => [
