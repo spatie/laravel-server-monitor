@@ -44,7 +44,7 @@ class Check extends Model
 
     public function shouldRun(): bool
     {
-        if (! $this->enabled) {
+        if (!$this->enabled) {
             return false;
         }
 
@@ -70,11 +70,11 @@ class Check extends Model
 
     public function getDefinition(): CheckDefinition
     {
-        if (! $definitionClass = config("server-monitor.checks.{$this->type}")) {
+        if (!$definitionClass = config("server-monitor.checks.{$this->type}")) {
             throw InvalidCheckDefinition::unknownCheckType($this);
         }
 
-        if (! class_exists($definitionClass)) {
+        if (!class_exists($definitionClass)) {
             throw InvalidCheckDefinition::definitionClassDoesNotExist($this, $definitionClass);
         }
 
@@ -85,18 +85,17 @@ class Check extends Model
     {
         static $processes = [];
 
-        if (! isset($processes[$this->id])) {
+        if (!isset($processes[$this->id])) {
 
             $delimiter = 'EOF-LARAVEL-SERVER-MONITOR';
 
             $definition = $this->getDefinition();
 
-            $processes[$this->id] = new Process(
-                "ssh {$this->getTarget()} 'bash -se' << \\$delimiter".PHP_EOL
-                .'set -e'.PHP_EOL
-                .$definition->getCommand().PHP_EOL
-                .$delimiter
-            );
+            $processes[$this->id] = (new Process())
+                ->setCommandLine("ssh {$this->getTarget()} 'bash -se' << \\$delimiter" . PHP_EOL
+                    . 'set -e' . PHP_EOL
+                    . $definition->getCommand() . PHP_EOL
+                    . $delimiter);
         }
 
         return $processes[$this->id];
@@ -179,10 +178,17 @@ class Check extends Model
 
     protected function shouldFireRestoredEvent(?string $originalStatus, ?string $newStatus)
     {
-        if (! in_array($originalStatus, [CheckStatus::FAILED, CheckStatus::WARNING]) ) {
+        if (!in_array($originalStatus, [CheckStatus::FAILED, CheckStatus::WARNING])) {
             return false;
         }
 
         return $newStatus === CheckStatus::SUCCESS;
     }
 }
+
+Fractal::create()
+    ->collection($books)
+    ->transformWith(new BookTransformer())
+    ->includeCharacters()
+    ->toArray();
+
