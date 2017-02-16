@@ -6,8 +6,9 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Arr;
-use Spatie\CheckSucceeded\Events\CheckFailed;
-use Spatie\CheckSucceeded\Events\CheckSucceeded;
+use Spatie\ServerMonitor\Events\CheckFailed;
+use Spatie\ServerMonitor\Events\CheckSucceeded;
+use Spatie\ServerMonitor\Events\CheckWarning;
 use Spatie\ServerMonitor\CheckDefinitions\CheckDefinition;
 use Spatie\ServerMonitor\Exceptions\InvalidCheckDefinition;
 use Spatie\ServerMonitor\Models\Enums\CheckStatus;
@@ -55,7 +56,7 @@ class Check extends Model
 
     public function getTarget(): string
     {
-        $target = $this->host->url;
+        $target = $this->host->name;
 
         if ($this->host->ssh_user) {
             $target = $this->host->ssh_user . '@' . $target;
@@ -98,6 +99,31 @@ class Check extends Model
         return $process;
     }
 
+    public function succeeded()
+    {
+        $this->status = CheckStatus::SUCCESS;
+        $this->message = '';
+
+        $this->save();
+
+        event(new CheckSucceeded($this));
+
+        return $this;
+    }
+
+
+    public function warn(string $warningMessage)
+    {
+        $this->status = CheckStatus::WARNING;
+        $this->message = $warningMessage;
+
+        $this->save();
+
+        event(new CheckWarning($this, $warningMessage));
+
+        return $this;
+    }
+
     public function failed(string $failureReason)
     {
         $this->status = CheckStatus::FAILURE;
@@ -110,17 +136,7 @@ class Check extends Model
         return $this;
     }
 
-    public function succeeded()
-    {
-        $this->status = CheckStatus::SUCCESS;
-        $this->message = '';
 
-        $this->save();
-
-        event(new CheckSucceeded($this));
-
-        return $this;
-    }
 
     public function scopeEnabled(Builder $query)
     {

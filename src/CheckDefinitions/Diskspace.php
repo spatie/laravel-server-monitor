@@ -15,8 +15,8 @@ class Diskspace extends CheckDefinition
 
     public function handleFinishedProcess(Process $process)
     {
-        $percentage = $this->getFreeSpacePercentage($process->getOutput());
 
+        $percentage = $this->getDiskUsagePercentage($process->getOutput());
         if ($percentage > 90) {
             $this->check->failed("Disk nearly full: {$percentage}");
 
@@ -24,7 +24,7 @@ class Diskspace extends CheckDefinition
         }
 
         if ($percentage > 80) {
-            $this->check->warn("Free diskspace running low: {$percentage}");
+            $this->check->warn("The disk space usage is now at {$percentage}%");
 
             return;
         }
@@ -39,7 +39,7 @@ class Diskspace extends CheckDefinition
         return Carbon::now()->addMinutes(5);
     }
 
-    protected function getFreeSpacePercentage(string $commandOutput): int
+    protected function getDiskUsagePercentage(string $commandOutput): int
     {
         return (int) Regex::match('/(\d?\d)%/', $commandOutput)->group(1);
     }

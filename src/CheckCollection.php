@@ -9,21 +9,21 @@ use Spatie\ServerMonitor\Models\Check;
 class CheckCollection implements Countable
 {
     /** @var \Illuminate\Support\Collection */
-    protected $checks;
+    protected $pendingChecks;
 
     /** @var \Illuminate\Support\Collection */
     protected $runningChecks;
 
     public function __construct(Collection $checks)
     {
-        $this->checks = $checks;
+        $this->pendingChecks = $checks;
 
         $this->runningChecks = collect();
     }
 
     public function run()
     {
-        while ($this->hasPendingChecks()) {
+        while ($this->pendingChecks->isNotEmpty() || $this->runningChecks->isNotEmpty()) {
             if ($this->runningChecks->count() < config('server-monitor.concurrent_ssh_connections')) {
 
                 $this->startNextCheck();
@@ -33,14 +33,13 @@ class CheckCollection implements Countable
         }
     }
 
-    protected function hasPendingChecks(): bool
-    {
-        return $this->checks->count() > 0;
-    }
-
     protected function startNextCheck()
     {
-        $check = $this->checks->shift();
+        if ($this->pendingChecks->isEmpty()) {
+            return;
+        }
+
+        $check = $this->pendingChecks->shift();
 
         $check->getProcess()->start();
 
@@ -65,6 +64,6 @@ class CheckCollection implements Countable
 
     public function count()
     {
-        return count($this->checks);
+        return count($this->pendingChecks);
     }
 }

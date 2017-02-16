@@ -1,9 +1,9 @@
 <?php
 
-namespace Spatie\CheckSucceeded\Events;
+namespace Spatie\ServerMonitor\Events;
 
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Spatie\ServerMonitor\Check;
+use Spatie\ServerMonitor\Models\Check;
 
 class CheckWarning implements ShouldQueue
 {

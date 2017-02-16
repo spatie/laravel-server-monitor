@@ -18,7 +18,6 @@ class CreateHostsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('ssh_user');
-            $table->string('url');
             $table->timestamps();
         });
     }
