@@ -7,10 +7,7 @@ use Symfony\Component\Process\Process;
 
 final class Diskspace extends CheckDefinition
 {
-    public function getCommand(): string
-    {
-        return 'df -P .';
-    }
+    public $command = 'df -P .';
 
     public function handleFinishedProcess(Process $process)
     {

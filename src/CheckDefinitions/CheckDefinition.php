@@ -22,7 +22,10 @@ abstract class CheckDefinition
         return $this;
     }
 
-    abstract public function getCommand();
+    public function getCommand(): string
+    {
+        return $this->command;
+    }
 
     abstract public function performNextRunInMinutes(): int;
 
