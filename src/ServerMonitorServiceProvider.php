@@ -3,6 +3,8 @@
 namespace Spatie\ServerMonitor;
 
 use Illuminate\Support\ServiceProvider;
+use Spatie\ServerMonitor\Notifications\EventHandler;
+use Spatie\UptimeMonitor\Commands\RunChecks;
 
 class ServerMonitorServiceProvider extends ServiceProvider
 {
@@ -10,7 +12,7 @@ class ServerMonitorServiceProvider extends ServiceProvider
     {
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                __DIR__.'/../config/server-monitor.php' => config_path('server-monitor.php'),
+                __DIR__ . '/../config/server-monitor.php' => config_path('server-monitor.php'),
             ], 'config');
 
             $this->publishesMigration('CreateHostsTable', 'create_hosts_table');
@@ -20,12 +22,20 @@ class ServerMonitorServiceProvider extends ServiceProvider
 
     public function register()
     {
-        $this->mergeConfigFrom(__DIR__.'/../config/server-monitor.php', 'ServerMonitor');
+        $this->mergeConfigFrom(__DIR__ . '/../config/server-monitor.php', 'ServerMonitor');
+
+        $this->app['events']->subscribe(EventHandler::class);
+
+        $this->app->bind('command.monitor:run-checks', RunChecks::class);
+
+        $this->commands([
+            'command.monitor:run-checks',
+        ]);
     }
 
     protected function publishesMigration(string $className, string $fileName)
     {
-        if (! class_exists($className)) {
+        if (!class_exists($className)) {
             $timestamp = date('Y_m_d_His', time());
 
             $this->publishes([

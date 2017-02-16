@@ -4,7 +4,7 @@ namespace Spatie\UptimeMonitor\Commands;
 
 use Spatie\ServerMonitor\CheckRepository;
 
-class CheckUptime extends BaseCommand
+class RunChecks extends BaseCommand
 {
     protected $signature = 'monitor:run-checks';
 
