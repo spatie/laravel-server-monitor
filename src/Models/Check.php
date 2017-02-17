@@ -95,10 +95,10 @@ class Check extends Model
 
             $portArgument = empty($this->host->port) ? '' : "-p {$this->host->port}";
 
-            $command = "ssh {$this->getTarget()} {$portArgument} 'bash -se' << \\$delimiter" . PHP_EOL
+            $command = "ssh {$this->getTarget()} {$portArgument} 'bash -se <<$delimiter" . PHP_EOL
                 . 'set -e' . PHP_EOL
                 . $definition->getCommand() . PHP_EOL
-                . $delimiter;
+                . $delimiter . "'";
 
             $processes[$this->id] = (new Process(''))
                 ->setCommandLine($command);

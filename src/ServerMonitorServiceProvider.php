@@ -23,7 +23,7 @@ class ServerMonitorServiceProvider extends ServiceProvider
 
     public function register()
     {
-        $this->mergeConfigFrom(__DIR__ . '/../config/server-monitor.php', 'ServerMonitor');
+        $this->mergeConfigFrom(__DIR__ . '/../config/server-monitor.php', 'server-monitor');
 
         $this->app['events']->subscribe(EventHandler::class);
 
