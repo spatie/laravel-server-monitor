@@ -3,6 +3,7 @@
 namespace Spatie\ServerMonitor;
 
 use Illuminate\Support\ServiceProvider;
+use Spatie\ServerMonitor\Commands\AddHost;
 use Spatie\ServerMonitor\Notifications\EventHandler;
 use Spatie\ServerMonitor\Commands\RunChecks;
 
@@ -27,9 +28,11 @@ class ServerMonitorServiceProvider extends ServiceProvider
         $this->app['events']->subscribe(EventHandler::class);
 
         $this->app->bind('command.monitor:run-checks', RunChecks::class);
+        $this->app->bind('command.monitor:add-host', AddHost::class);
 
         $this->commands([
             'command.monitor:run-checks',
+            'command.monitor:add-host',
         ]);
     }
 

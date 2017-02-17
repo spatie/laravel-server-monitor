@@ -18,6 +18,8 @@ use Symfony\Component\Process\Process;
 
 class Check extends Model
 {
+    public $guarded = [];
+
     public $casts = [
         'properties' => 'array',
     ];
@@ -91,11 +93,15 @@ class Check extends Model
 
             $definition = $this->getDefinition();
 
-            $processes[$this->id] = (new Process())
-                ->setCommandLine("ssh {$this->getTarget()} 'bash -se' << \\$delimiter" . PHP_EOL
-                    . 'set -e' . PHP_EOL
-                    . $definition->getCommand() . PHP_EOL
-                    . $delimiter);
+            $portArgument = empty($this->host->port) ? '' : "-p {$this->host->port}";
+
+            $command = "ssh {$this->getTarget()} {$portArgument} 'bash -se' << \\$delimiter" . PHP_EOL
+                . 'set -e' . PHP_EOL
+                . $definition->getCommand() . PHP_EOL
+                . $delimiter;
+
+            $processes[$this->id] = (new Process(''))
+                ->setCommandLine($command);
         }
 
         return $processes[$this->id];
@@ -185,10 +191,3 @@ class Check extends Model
         return $newStatus === CheckStatus::SUCCESS;
     }
 }
-
-Fractal::create()
-    ->collection($books)
-    ->transformWith(new BookTransformer())
-    ->includeCharacters()
-    ->toArray();
-

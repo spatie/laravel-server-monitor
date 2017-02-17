@@ -11,6 +11,7 @@ final class Diskspace extends CheckDefinition
 
     public function handleFinishedProcess(Process $process)
     {
+        dd($process->getErrorOutput());
         $percentage = $this->getDiskUsagePercentage($process->getOutput());
         if ($percentage > 90) {
             $this->check->failed("Disk nearly full: {$percentage}");
