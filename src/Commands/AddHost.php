@@ -3,6 +3,8 @@
 namespace Spatie\ServerMonitor\Commands;
 
 use InvalidArgumentException;
+use Spatie\ServerMonitor\Models\Check;
+use Spatie\ServerMonitor\Models\Enums\CheckStatus;
 use Spatie\ServerMonitor\Models\Host;
 
 class AddHost extends BaseCommand
@@ -37,11 +39,20 @@ class AddHost extends BaseCommand
             throw new InvalidArgumentException("Host `{$hostName}` already exitst");
         };
 
+
+
+
         Host::create([
             'name' => $hostName,
             'ssh_user' => $sshUser,
             'port' => $port,
-        ])->checks()->$chosenChecks;
+        ])->checks()->saveMany(collect($chosenChecks)->map(function(string $checkName) {
+            return new Check([
+                'type' => $checkName,
+                'status' => CheckStatus::class,
+                'properties' => [],
+            ]);
+        }));
 
         $this->info("Host `{$hostName}` added");
     }
