@@ -6,6 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use Spatie\ServerMonitor\Commands\AddHost;
 use Spatie\ServerMonitor\Notifications\EventHandler;
 use Spatie\ServerMonitor\Commands\RunChecks;
+use Symfony\Component\Process\Process;
 
 class ServerMonitorServiceProvider extends ServiceProvider
 {

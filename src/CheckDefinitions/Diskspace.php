@@ -11,7 +11,6 @@ final class Diskspace extends CheckDefinition
 
     public function handleFinishedProcess(Process $process)
     {
-        dd($process->getOutput(), $process->getErrorOutput(),$process->getExitCodeText(), 'percentage');
         $percentage = $this->getDiskUsagePercentage($process->getOutput());
 
 

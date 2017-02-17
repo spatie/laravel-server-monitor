@@ -19,11 +19,11 @@ class CreateChecksTable extends Migration
             $table->integer('host_id')->unsigned();
             $table->foreign('host_id')->references('id')->on('hosts')->onDelete('cascade');
             $table->string('type');
-            $table->text('message');
+            $table->text('message')->nullable();
             $table->string('status');
             $table->boolean('enabled')->default(true);
             $table->timestamp('checked_at')->nullable();
-            $table->integer('next_check_in_minutes');
+            $table->integer('next_check_in_minutes')->nullable();
             $table->json('properties')->nullable();
             $table->timestamps();
         });
