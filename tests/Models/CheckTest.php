@@ -2,11 +2,11 @@
 
 namespace Spatie\ServerMonitor\Test\Models;
 
+use Spatie\ServerMonitor\Models\Host;
+use Spatie\ServerMonitor\Models\Check;
+use Spatie\ServerMonitor\Test\TestCase;
 use Spatie\ServerMonitor\CheckDefinitions\Diskspace;
 use Spatie\ServerMonitor\Exceptions\InvalidCheckDefinition;
-use Spatie\ServerMonitor\Models\Check;
-use Spatie\ServerMonitor\Models\Host;
-use Spatie\ServerMonitor\Test\TestCase;
 
 class CheckTest extends TestCase
 {

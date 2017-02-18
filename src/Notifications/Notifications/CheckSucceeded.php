@@ -4,11 +4,11 @@ namespace Spatie\ServerMonitor\Notifications\Notifications;
 
 use Carbon\Carbon;
 use Illuminate\Notifications\Messages\MailMessage;
+use Spatie\ServerMonitor\Models\Enums\CheckStatus;
 use Illuminate\Notifications\Messages\SlackMessage;
 use Illuminate\Notifications\Messages\SlackAttachment;
-use Spatie\ServerMonitor\Events\CheckSucceeded as CheckSucceededEvent;
-use Spatie\ServerMonitor\Models\Enums\CheckStatus;
 use Spatie\ServerMonitor\Notifications\BaseNotification;
+use Spatie\ServerMonitor\Events\CheckSucceeded as CheckSucceededEvent;
 
 class CheckSucceeded extends BaseNotification
 {

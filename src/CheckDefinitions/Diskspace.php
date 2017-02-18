@@ -26,8 +26,6 @@ final class Diskspace extends CheckDefinition
         }
 
         $this->check->succeeded("The disk space usage is now at {$percentage}%");
-
-        return;
     }
 
     public function performNextRunInMinutes(): int

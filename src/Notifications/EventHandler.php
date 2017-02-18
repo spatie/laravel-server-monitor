@@ -5,9 +5,9 @@ namespace Spatie\ServerMonitor\Notifications;
 use Illuminate\Config\Repository;
 use Illuminate\Contracts\Events\Dispatcher;
 use Spatie\ServerMonitor\Events\CheckFailed;
+use Spatie\ServerMonitor\Events\CheckWarning;
 use Spatie\ServerMonitor\Events\CheckRestored;
 use Spatie\ServerMonitor\Events\CheckSucceeded;
-use Spatie\ServerMonitor\Events\CheckWarning;
 
 class EventHandler
 {

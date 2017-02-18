@@ -2,7 +2,7 @@
 
 return [
 
-    /**
+    /*
      * These are the checks that can be performed on your servers. You can add your own
      * checks. The only requirement is that they should extend the
      * `Spatie\ServerMonitor\Checks\CheckDefinitions\CheckDefinition` class.

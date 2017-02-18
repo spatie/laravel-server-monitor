@@ -4,9 +4,9 @@ namespace Spatie\ServerMonitor\Test\Commands;
 
 use Artisan;
 use Mockery as m;
-use Spatie\ServerMonitor\Commands\AddHost;
 use Spatie\ServerMonitor\Models\Host;
 use Spatie\ServerMonitor\Test\TestCase;
+use Spatie\ServerMonitor\Commands\AddHost;
 
 class AddHostTest extends TestCase
 {
@@ -58,8 +58,8 @@ class AddHostTest extends TestCase
 
         $this->assertEquals(count(config('server-monitor.checks')), count($host->checks->pluck('type')));
 
-        foreach(array_keys(config('server-monitor.checks')) as $checkType) {
-           $this->assertTrue(in_array($checkType, $host->checks->pluck('type')->toArray()));
+        foreach (array_keys(config('server-monitor.checks')) as $checkType) {
+            $this->assertTrue(in_array($checkType, $host->checks->pluck('type')->toArray()));
         }
     }
 
