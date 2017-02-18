@@ -13,13 +13,13 @@ final class Diskspace extends CheckDefinition
     {
         $percentage = $this->getDiskUsagePercentage($process->getOutput());
 
-        if ($percentage > 90) {
-            $this->check->failed("Disk nearly full: {$percentage}");
+        if ($percentage >= 90) {
+            $this->check->failed("Disk nearly full: {$percentage}%");
 
             return;
         }
 
-        if ($percentage > 80) {
+        if ($percentage >= 80) {
             $this->check->warn("The disk space usage is now at {$percentage}%");
 
             return;

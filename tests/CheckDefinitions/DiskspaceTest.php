@@ -5,6 +5,7 @@ namespace Spatie\ServerMonitor\CheckDefinitions\Test;
 use Mockery;
 use Spatie\ServerMonitor\CheckDefinitions\Diskspace;
 use Spatie\ServerMonitor\Models\Check;
+use Spatie\ServerMonitor\Models\Enums\CheckStatus;
 use Spatie\ServerMonitor\Test\TestCase;
 use Symfony\Component\Process\Process;
 
@@ -13,11 +14,12 @@ class DiskspaceTest extends TestCase
     /** @var \Spatie\ServerMonitor\CheckDefinitions\Diskspace */
     protected $diskspaceCheckDefinition;
 
+    /** @var  \Spatie\ServerMonitor\Models\Check */
+    protected $check;
+
     public function setUp()
     {
         parent::setUp();
-
-        $this->process = Mockery::mock(Process::class);
 
         $this->createHost('localhost', 65000, ['diskspace']);
 
@@ -26,20 +28,40 @@ class DiskspaceTest extends TestCase
         $this->diskspaceCheckDefinition = (new Diskspace())->setCheck($this->check);
     }
 
-    /** @test */
-    public function it_tests_diskspace()
+    /**
+     * @test
+     *
+     * @dataProvider percentageProvider
+     */
+    public function it_can_handle_its_command_output(int $diskspaceUsed, string $status)
     {
-        $process = Mockery::mock(Process::class)
-            ->shouldReceive('getOutput')
-            ->andReturn('blabla');
-
-        $process->shouldReceive('stop')
-            ->andReturn('blabla');
+        $process = $this->getSuccessfulProcessWithOutput(
+            'Filesystem 512-blocks      Used Available Capacity  Mounted on\n' .
+            "/dev/disk1  974700800 830137776 144051024   {$diskspaceUsed}%    /"
+        );
 
         $this->diskspaceCheckDefinition->handleSuccessfulProcess($process);
 
+        $this->check->fresh();
 
+        $this->assertStringContains("{$diskspaceUsed}%", $this->check->message);
+        $this->assertEquals($status, $this->check->status);
     }
+
+    public function percentageProvider()
+    {
+        return [
+            [40, CheckStatus::SUCCESS],
+            [50, CheckStatus::SUCCESS],
+            [79, CheckStatus::SUCCESS],
+            [80, CheckStatus::WARNING],
+            [89, CheckStatus::WARNING],
+            [90, CheckStatus::FAILED],
+            [95, CheckStatus::FAILED],
+        ];
+    }
+
+
 
 
 }

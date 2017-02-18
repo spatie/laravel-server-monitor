@@ -11,6 +11,7 @@ use Spatie\ServerMonitor\Models\Check;
 use Spatie\ServerMonitor\Models\Enums\CheckStatus;
 use Spatie\ServerMonitor\Models\Host;
 use Spatie\ServerMonitor\ServerMonitorServiceProvider;
+use Symfony\Component\Process\Process;
 
 abstract class TestCase extends Orchestra
 {
@@ -94,5 +95,23 @@ abstract class TestCase extends Orchestra
                 'properties' => [],
             ]);
         }));
+    }
+
+    protected function getSuccessfulProcessWithOutput(string $output): Process
+    {
+        $process = new Process("echo {$output}");
+
+        $process->start();
+
+        while($process->isRunning()) {
+
+        }
+
+        return $process;
+    }
+
+    protected function assertStringContains($needle, $haystack)
+    {
+        $this->assertTrue(str_contains($haystack, $needle), "String `{$haystack}` did not contain `{$needle}`");
     }
 }
