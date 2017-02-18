@@ -86,7 +86,7 @@ abstract class TestCase extends Orchestra
             $checks = ['diskspace'];
         };
 
-        Host::create([
+        return Host::create([
             'name' =>  $hostName
         ])->checks()->saveMany(collect($checks)->map(function(string $checkName) {
             return new Check([
