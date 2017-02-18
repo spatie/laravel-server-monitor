@@ -3,19 +3,18 @@
 namespace Spatie\ServerMonitor\Models;
 
 use Carbon\Carbon;
-use Exception;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Arr;
+use Symfony\Component\Process\Process;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 use Spatie\ServerMonitor\Events\CheckFailed;
+use Spatie\ServerMonitor\Events\CheckWarning;
 use Spatie\ServerMonitor\Events\CheckRestored;
 use Spatie\ServerMonitor\Events\CheckSucceeded;
-use Spatie\ServerMonitor\Events\CheckWarning;
+use Spatie\ServerMonitor\Models\Enums\CheckStatus;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\ServerMonitor\CheckDefinitions\CheckDefinition;
 use Spatie\ServerMonitor\Exceptions\InvalidCheckDefinition;
-use Spatie\ServerMonitor\Models\Enums\CheckStatus;
-use Symfony\Component\Process\Process;
 
 class Check extends Model
 {
@@ -47,7 +46,7 @@ class Check extends Model
 
     public function shouldRun(): bool
     {
-        if (!$this->enabled) {
+        if (! $this->enabled) {
             return false;
         }
 
@@ -62,11 +61,11 @@ class Check extends Model
 
     public function getDefinition(): CheckDefinition
     {
-        if (!$definitionClass = config("server-monitor.checks.{$this->type}")) {
+        if (! $definitionClass = config("server-monitor.checks.{$this->type}")) {
             throw InvalidCheckDefinition::unknownCheckType($this);
         }
 
-        if (!class_exists($definitionClass)) {
+        if (! class_exists($definitionClass)) {
             throw InvalidCheckDefinition::definitionClassDoesNotExist($this, $definitionClass);
         }
 
@@ -77,8 +76,7 @@ class Check extends Model
     {
         static $processes = [];
 
-        if (!isset($processes[$this->id])) {
-
+        if (! isset($processes[$this->id])) {
             $processes[$this->id] = new Process($this->getProcessCommand());
         }
 
@@ -93,10 +91,10 @@ class Check extends Model
 
         $portArgument = empty($this->host->port) ? '' : "-p {$this->host->port}";
 
-        return "ssh {$this->getTarget()} {$portArgument} 'bash -se <<$delimiter" . PHP_EOL
-            . 'set -e' . PHP_EOL
-            . $definition->getCommand() . PHP_EOL
-            . $delimiter . "'";
+        return "ssh {$this->getTarget()} {$portArgument} 'bash -se <<$delimiter".PHP_EOL
+            .'set -e'.PHP_EOL
+            .$definition->getCommand().PHP_EOL
+            .$delimiter."'";
     }
 
     protected function getTarget(): string
@@ -104,7 +102,7 @@ class Check extends Model
         $target = $this->host->name;
 
         if ($this->host->ssh_user) {
-            $target = $this->host->ssh_user . '@' . $target;
+            $target = $this->host->ssh_user.'@'.$target;
         }
 
         return $target;
@@ -121,7 +119,6 @@ class Check extends Model
 
         return $this;
     }
-
 
     public function warn(string $warningMessage = '')
     {
@@ -146,7 +143,6 @@ class Check extends Model
 
         return $this;
     }
-
 
     public function scopeEnabled(Builder $query)
     {
@@ -185,7 +181,7 @@ class Check extends Model
 
     protected function shouldFireRestoredEvent(?string $originalStatus, ?string $newStatus)
     {
-        if (!in_array($originalStatus, [CheckStatus::FAILED, CheckStatus::WARNING])) {
+        if (! in_array($originalStatus, [CheckStatus::FAILED, CheckStatus::WARNING])) {
             return false;
         }
 

@@ -4,8 +4,8 @@ namespace Spatie\ServerMonitor;
 
 use Countable;
 use Illuminate\Support\Collection;
-use Spatie\ServerMonitor\Helpers\ConsoleOutput;
 use Spatie\ServerMonitor\Models\Check;
+use Spatie\ServerMonitor\Helpers\ConsoleOutput;
 
 class CheckCollection implements Countable
 {
@@ -26,7 +26,6 @@ class CheckCollection implements Countable
     {
         while ($this->pendingChecks->isNotEmpty() || $this->runningChecks->isNotEmpty()) {
             if ($this->runningChecks->count() < config('server-monitor.concurrent_ssh_connections')) {
-
                 $this->startNextCheck();
             }
 
@@ -42,7 +41,7 @@ class CheckCollection implements Countable
 
         $check = $this->pendingChecks->shift();
 
-        ConsoleOutput::comment($check->host->name . ": performing check `{$check->type}`...");
+        ConsoleOutput::comment($check->host->name.": performing check `{$check->type}`...");
         $check->getProcess()->start();
 
         $this->runningChecks->push($check);

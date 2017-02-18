@@ -2,8 +2,8 @@
 
 namespace Spatie\ServerMonitor\Events;
 
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Spatie\ServerMonitor\Models\Check;
+use Illuminate\Contracts\Queue\ShouldQueue;
 
 class CheckSucceeded implements ShouldQueue
 {

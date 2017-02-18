@@ -2,20 +2,18 @@
 
 namespace Spatie\ServerMonitor\Test;
 
-use Event;
-use Artisan;
-use Carbon\Carbon;
 use Mockery;
-use Orchestra\Testbench\TestCase as Orchestra;
-use Spatie\ServerMonitor\Models\Check;
-use Spatie\ServerMonitor\Models\Enums\CheckStatus;
+use Carbon\Carbon;
 use Spatie\ServerMonitor\Models\Host;
-use Spatie\ServerMonitor\ServerMonitorServiceProvider;
+use Spatie\ServerMonitor\Models\Check;
 use Symfony\Component\Process\Process;
+use Orchestra\Testbench\TestCase as Orchestra;
+use Spatie\ServerMonitor\Models\Enums\CheckStatus;
+use Spatie\ServerMonitor\ServerMonitorServiceProvider;
 
 abstract class TestCase extends Orchestra
 {
-    /** @var  Server */
+    /** @var Server */
     public $server;
 
     public function setUp()
@@ -44,7 +42,6 @@ abstract class TestCase extends Orchestra
      */
     protected function getEnvironmentSetUp($app)
     {
-
         $app['config']->set('database.default', 'sqlite');
 
         $app['config']->set('mail.driver', 'log');
@@ -84,11 +81,11 @@ abstract class TestCase extends Orchestra
     {
         if (is_null($checks)) {
             $checks = ['diskspace'];
-        };
+        }
 
         return Host::create([
-            'name' =>  $hostName
-        ])->checks()->saveMany(collect($checks)->map(function(string $checkName) {
+            'name' =>  $hostName,
+        ])->checks()->saveMany(collect($checks)->map(function (string $checkName) {
             return new Check([
                 'type' => $checkName,
                 'status' => CheckStatus::class,
@@ -103,8 +100,7 @@ abstract class TestCase extends Orchestra
 
         $process->start();
 
-        while($process->isRunning()) {
-
+        while ($process->isRunning()) {
         }
 
         return $process;
@@ -112,12 +108,11 @@ abstract class TestCase extends Orchestra
 
     protected function getFailedProcess(): Process
     {
-        $process = new Process("blablabla");
+        $process = new Process('blablabla');
 
         $process->start();
 
-        while($process->isRunning()) {
-
+        while ($process->isRunning()) {
         }
 
         return $process;

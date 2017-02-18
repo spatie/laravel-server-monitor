@@ -2,8 +2,8 @@
 
 namespace Spatie\ServerMonitor\Test\Events;
 
-use Spatie\ServerMonitor\Events\CheckSucceeded;
 use Spatie\ServerMonitor\Test\TestCase;
+use Spatie\ServerMonitor\Events\CheckSucceeded;
 
 class CheckSucceededTest extends TestCase
 {
@@ -31,8 +31,8 @@ class CheckSucceededTest extends TestCase
     public function the_check_succeeded_event_will_be_fired_when_a_check_succeeds()
     {
         $process = $this->getSuccessfulProcessWithOutput(
-            'Filesystem 512-blocks      Used Available Capacity  Mounted on\n' .
-            "/dev/disk1  974700800 830137776 144051024   40%    /"
+            'Filesystem 512-blocks      Used Available Capacity  Mounted on\n'.
+            '/dev/disk1  974700800 830137776 144051024   40%    /'
         );
 
         $this->diskspaceCheckDefinition->handleSuccessfulProcess($process);

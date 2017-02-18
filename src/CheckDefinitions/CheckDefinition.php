@@ -32,13 +32,13 @@ abstract class CheckDefinition
         try {
             if (! $process->isSuccessful()) {
                 $this->handleFailedProcess($process);
+
                 return;
             }
 
             $this->handleSuccessfulProcess($process);
-        }
-        catch (Exception $exception) {
-            $this->failed("Exception occurred:" . $exception->getMessage());
+        } catch (Exception $exception) {
+            $this->failed('Exception occurred:'.$exception->getMessage());
         }
     }
 
@@ -46,7 +46,7 @@ abstract class CheckDefinition
 
     public function handleFailedProcess(Process $process)
     {
-        $this->check->failed("Could not check diskspace: " . $process->getErrorOutput());
+        $this->check->failed('Could not check diskspace: '.$process->getErrorOutput());
     }
 
     abstract public function performNextRunInMinutes(): int;
