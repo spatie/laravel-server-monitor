@@ -110,6 +110,19 @@ abstract class TestCase extends Orchestra
         return $process;
     }
 
+    protected function getFailedProcess(): Process
+    {
+        $process = new Process("blablabla");
+
+        $process->start();
+
+        while($process->isRunning()) {
+
+        }
+
+        return $process;
+    }
+
     protected function assertStringContains($needle, $haystack)
     {
         $this->assertTrue(str_contains($haystack, $needle), "String `{$haystack}` did not contain `{$needle}`");

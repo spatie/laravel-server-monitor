@@ -2,12 +2,10 @@
 
 namespace Spatie\ServerMonitor\CheckDefinitions\Test;
 
-use Mockery;
 use Spatie\ServerMonitor\CheckDefinitions\Diskspace;
 use Spatie\ServerMonitor\Models\Check;
 use Spatie\ServerMonitor\Models\Enums\CheckStatus;
 use Spatie\ServerMonitor\Test\TestCase;
-use Symfony\Component\Process\Process;
 
 class DiskspaceTest extends TestCase
 {

@@ -2,7 +2,6 @@
 
 namespace Spatie\ServerMonitor\CheckDefinitions;
 
-use Spatie\Regex\Regex;
 use Symfony\Component\Process\Process;
 
 final class Elasticsearch extends CheckDefinition
@@ -26,6 +25,6 @@ final class Elasticsearch extends CheckDefinition
 
     public function performNextRunInMinutes(): int
     {
-        return 0;
+        return 10;
     }
 }
