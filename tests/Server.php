@@ -1,6 +1,6 @@
 <?php
 
-namespace Spatie\UptimeMonitor\Test;
+namespace Spatie\ServerMonitor\Test;
 
 use GuzzleHttp\Client;
 

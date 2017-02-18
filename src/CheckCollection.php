@@ -22,7 +22,7 @@ class CheckCollection implements Countable
         $this->runningChecks = collect();
     }
 
-    public function run()
+    public function runAll()
     {
         while ($this->pendingChecks->isNotEmpty() || $this->runningChecks->isNotEmpty()) {
             if ($this->runningChecks->count() < config('server-monitor.concurrent_ssh_connections')) {

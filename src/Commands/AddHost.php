@@ -13,34 +13,31 @@ class AddHost extends BaseCommand
 
     protected $description = 'Add a host';
 
-    protected $allChecksLabel  ='<every check>';
+    public static $allChecksLabel  ='<every check>';
 
     public function handle()
     {
         $this->info("Let's add a host!");
 
-        $hostName = $this->ask("What's the name of the host");
+        $hostName = $this->ask("What is the name of the host");
 
         $sshUser = $this->confirm("Should a custom ssh user be used?")
-            ? $this->ask('Which ssh?')
+            ? $this->ask('Which user?')
             : null;
 
         $port = $this->confirm("Should a custom port be used?")
             ? $this->ask('Which port?')
             : null;
 
-        $checkNames = array_merge([$this->allChecksLabel], $this->getAllCheckNames());
+        $checkNames = array_merge([static::$allChecksLabel], $this->getAllCheckNames());
 
-        $chosenChecks = $this->choice("Which checks should be performed?", $checkNames,0, null, true);
+        $chosenChecks = $this->choice("Which checks should be performed?", $checkNames, 0, null, true);
 
         $chosenChecks = $this->determineChecks($chosenChecks, $checkNames);
 
         if (Host::where('name', $hostName)->first()) {
             throw new InvalidArgumentException("Host `{$hostName}` already exitst");
         };
-
-
-
 
         Host::create([
             'name' => $hostName,
@@ -59,11 +56,11 @@ class AddHost extends BaseCommand
 
     protected function determineChecks(array $chosenChecks, array $checkNames): array
     {
-        if (in_array($this->allChecksLabel, $chosenChecks)) {
-            return $checkNames;
+        if (in_array(static::$allChecksLabel, $chosenChecks)) {
+            return $this->getAllCheckNames();
         }
 
-        return array_diff($chosenChecks, [$this->allChecksLabel]);
+        return array_diff($chosenChecks, [static::$allChecksLabel]);
     }
 
     protected function getAllCheckNames(): array

@@ -8,7 +8,6 @@ use Carbon\Carbon;
 use Mockery;
 use Orchestra\Testbench\TestCase as Orchestra;
 use Spatie\ServerMonitor\ServerMonitorServiceProvider;
-use Spatie\UptimeMonitor\Test\Server;
 
 abstract class TestCase extends Orchestra
 {

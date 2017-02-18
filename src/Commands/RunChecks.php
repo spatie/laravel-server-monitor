@@ -16,7 +16,7 @@ class RunChecks extends BaseCommand
 
         $this->info('Start running '.count($checks).' checks...');
 
-        $checks->run();
+        $checks->runAll();
 
         $this->info('All done!');
     }

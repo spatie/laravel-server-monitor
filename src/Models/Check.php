@@ -3,6 +3,7 @@
 namespace Spatie\ServerMonitor\Models;
 
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -154,7 +155,12 @@ class Check extends Model
     {
         $originalStatus = $this->status;
 
-        $this->getDefinition()->handleFinishedProcess($this->getProcess());
+        try {
+            $this->getDefinition()->handleFinishedProcess($this->getProcess());
+        }
+        catch (Exception $exception) {
+            $this->failed("Exception occurred:" . $exception->getMessage());
+        }
 
         $this->scheduleNextRun();
 
