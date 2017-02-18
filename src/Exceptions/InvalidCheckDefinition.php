@@ -9,7 +9,7 @@ class InvalidCheckDefinition extends Exception
 {
     public static function unknownCheckType(Check $check)
     {
-        $validValues = implode(', ',array_keys(config('server-monitor.checks')));
+        $validValues = implode(', ', array_keys(config('server-monitor.checks')));
 
         return new static("The check with id `{$check->id}` has an unknown type `{$check->type}`. Valid values are {$validValues}");
     }

@@ -4,9 +4,8 @@ namespace Spatie\ServerMonitor;
 
 use Illuminate\Support\ServiceProvider;
 use Spatie\ServerMonitor\Commands\AddHost;
-use Spatie\ServerMonitor\Notifications\EventHandler;
 use Spatie\ServerMonitor\Commands\RunChecks;
-use Symfony\Component\Process\Process;
+use Spatie\ServerMonitor\Notifications\EventHandler;
 
 class ServerMonitorServiceProvider extends ServiceProvider
 {
@@ -14,7 +13,7 @@ class ServerMonitorServiceProvider extends ServiceProvider
     {
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                __DIR__ . '/../config/server-monitor.php' => config_path('server-monitor.php'),
+                __DIR__.'/../config/server-monitor.php' => config_path('server-monitor.php'),
             ], 'config');
 
             $this->publishesMigration('CreateHostsTable', 'create_hosts_table', 1);
@@ -24,7 +23,7 @@ class ServerMonitorServiceProvider extends ServiceProvider
 
     public function register()
     {
-        $this->mergeConfigFrom(__DIR__ . '/../config/server-monitor.php', 'server-monitor');
+        $this->mergeConfigFrom(__DIR__.'/../config/server-monitor.php', 'server-monitor');
 
         $this->app['events']->subscribe(EventHandler::class);
 
@@ -39,11 +38,11 @@ class ServerMonitorServiceProvider extends ServiceProvider
 
     protected function publishesMigration(string $className, string $fileName, int $timestampSuffix)
     {
-        if (!class_exists($className)) {
-            $timestamp = date('Y_m_d_His', time()) . $timestampSuffix;
+        if (! class_exists($className)) {
+            $timestamp = date('Y_m_d_His', time()).$timestampSuffix;
 
             $this->publishes([
-                __DIR__ . "/../database/migrations/{$fileName}.php.stub" => database_path('migrations/' . $timestamp . "_{$fileName}.php"),
+                __DIR__."/../database/migrations/{$fileName}.php.stub" => database_path('migrations/'.$timestamp."_{$fileName}.php"),
             ], 'migrations');
         }
     }

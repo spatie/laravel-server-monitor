@@ -2,17 +2,17 @@
 
 namespace Spatie\ServerMonitor\CheckDefinitions\Test;
 
-use Spatie\ServerMonitor\CheckDefinitions\Diskspace;
 use Spatie\ServerMonitor\Models\Check;
-use Spatie\ServerMonitor\Models\Enums\CheckStatus;
 use Spatie\ServerMonitor\Test\TestCase;
+use Spatie\ServerMonitor\Models\Enums\CheckStatus;
+use Spatie\ServerMonitor\CheckDefinitions\Diskspace;
 
 class DiskspaceTest extends TestCase
 {
     /** @var \Spatie\ServerMonitor\CheckDefinitions\Diskspace */
     protected $diskspaceCheckDefinition;
 
-    /** @var  \Spatie\ServerMonitor\Models\Check */
+    /** @var \Spatie\ServerMonitor\Models\Check */
     protected $check;
 
     public function setUp()
@@ -34,7 +34,7 @@ class DiskspaceTest extends TestCase
     public function it_can_handle_its_command_output(int $diskspaceUsed, string $status)
     {
         $process = $this->getSuccessfulProcessWithOutput(
-            'Filesystem 512-blocks      Used Available Capacity  Mounted on\n' .
+            'Filesystem 512-blocks      Used Available Capacity  Mounted on\n'.
             "/dev/disk1  974700800 830137776 144051024   {$diskspaceUsed}%    /"
         );
 
@@ -58,8 +58,4 @@ class DiskspaceTest extends TestCase
             [95, CheckStatus::FAILED],
         ];
     }
-
-
-
-
 }
