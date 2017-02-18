@@ -9,7 +9,7 @@ final class Elasticsearch extends CheckDefinition
 {
     public $command = 'curl http://localhost:9200';
 
-    public function handleFinishedProcess(Process $process)
+    public function handleSuccessfulProcess(Process $process)
     {
         $checkSucceeded = str_contains($process->getOutput(), 'lucene_version');
 
@@ -27,10 +27,5 @@ final class Elasticsearch extends CheckDefinition
     public function performNextRunInMinutes(): int
     {
         return 0;
-    }
-
-    protected function getDiskUsagePercentage(string $commandOutput): int
-    {
-        return (int) Regex::match('/(\d?\d)%/', $commandOutput)->group(1);
     }
 }

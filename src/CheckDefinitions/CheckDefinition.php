@@ -27,7 +27,27 @@ abstract class CheckDefinition
         return $this->command;
     }
 
-    abstract public function performNextRunInMinutes(): int;
+    public function handleFinishedProcess(Process $process)
+    {
+        try {
+            if (! $process->isSuccessful()) {
+                $this->handleFailedProcess($process);
+                return;
+            }
 
-    abstract public function handleFinishedProcess(Process $process);
+            $this->handleSuccessfulProcess($process);
+        }
+        catch (Exception $exception) {
+            $this->failed("Exception occurred:" . $exception->getMessage());
+        }
+    }
+
+    abstract public function handleSuccessfulProcess(Process $process);
+
+    public function handleFailedProcess(Process $process)
+    {
+        $this->check->failed("Could not check diskspace: " . $process->getErrorOutput());
+    }
+
+    abstract public function performNextRunInMinutes(): int;
 }

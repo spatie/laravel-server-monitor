@@ -7,6 +7,9 @@ use Artisan;
 use Carbon\Carbon;
 use Mockery;
 use Orchestra\Testbench\TestCase as Orchestra;
+use Spatie\ServerMonitor\Models\Check;
+use Spatie\ServerMonitor\Models\Enums\CheckStatus;
+use Spatie\ServerMonitor\Models\Host;
 use Spatie\ServerMonitor\ServerMonitorServiceProvider;
 
 abstract class TestCase extends Orchestra
@@ -74,5 +77,22 @@ abstract class TestCase extends Orchestra
         $newNow = Carbon::now()->addMinutes($minutes);
 
         Carbon::setTestNow($newNow);
+    }
+
+    protected function createHost(string $hostName = 'localhost', int $port = 65000, $checks = null)
+    {
+        if (is_null($checks)) {
+            $checks = ['diskspace'];
+        };
+
+        Host::create([
+            'name' =>  $hostName
+        ])->checks()->saveMany(collect($checks)->map(function(string $checkName) {
+            return new Check([
+                'type' => $checkName,
+                'status' => CheckStatus::class,
+                'properties' => [],
+            ]);
+        }));
     }
 }

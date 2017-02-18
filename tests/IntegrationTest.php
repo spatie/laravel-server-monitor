@@ -5,7 +5,6 @@ namespace Spatie\ServerMonitor\Test;
 use Illuminate\Support\Facades\Artisan;
 use Spatie\ServerMonitor\Models\Check;
 use Spatie\ServerMonitor\Models\Enums\CheckStatus;
-use Spatie\ServerMonitor\Models\Host;
 
 class DiskspaceTest extends TestCase
 {
@@ -16,11 +15,11 @@ class DiskspaceTest extends TestCase
     {
         parent::setUp();
 
-        $this->host = $this->createHost('testhost.be', ['diskspace']);
+        $this->host = $this->createHost('localhost', 65000, ['diskspace']);
     }
 
     /** @test */
-    public function it_can_check()
+    public function it_can_run_a_successful_check()
     {
         $listenFor = 'bash -se <<EOF-LARAVEL-SERVER-MONITOR\n' .
             'set -e\n' .
@@ -38,18 +37,5 @@ class DiskspaceTest extends TestCase
 
         $this->assertEquals("The disk space usage is now at 86%", $check->message);
         $this->assertEquals(CheckStatus::SUCCESS, $check->status);
-    }
-
-    protected function createHost($hostName, $checks)
-    {
-        Host::create([
-           'name' =>  $hostName
-        ])->checks()->saveMany(collect($checks)->map(function(string $checkName) {
-            return new Check([
-                'type' => $checkName,
-                'status' => CheckStatus::class,
-                'properties' => [],
-            ]);
-        }));
     }
 }

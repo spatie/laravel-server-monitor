@@ -60,17 +60,6 @@ class Check extends Model
             ->isPast();
     }
 
-    public function getTarget(): string
-    {
-        $target = $this->host->name;
-
-        if ($this->host->ssh_user) {
-            $target = $this->host->ssh_user . '@' . $target;
-        }
-
-        return $target;
-    }
-
     public function getDefinition(): CheckDefinition
     {
         if (!$definitionClass = config("server-monitor.checks.{$this->type}")) {
@@ -90,22 +79,35 @@ class Check extends Model
 
         if (!isset($processes[$this->id])) {
 
-            $delimiter = 'EOF-LARAVEL-SERVER-MONITOR';
-
-            $definition = $this->getDefinition();
-
-            $portArgument = empty($this->host->port) ? '' : "-p {$this->host->port}";
-
-            $command = "ssh {$this->getTarget()} {$portArgument} 'bash -se <<$delimiter" . PHP_EOL
-                . 'set -e' . PHP_EOL
-                . $definition->getCommand() . PHP_EOL
-                . $delimiter . "'";
-
-            $processes[$this->id] = (new Process(''))
-                ->setCommandLine($command);
+            $processes[$this->id] = new Process($this->getProcessCommand());
         }
 
         return $processes[$this->id];
+    }
+
+    public function getProcessCommand(): string
+    {
+        $delimiter = 'EOF-LARAVEL-SERVER-MONITOR';
+
+        $definition = $this->getDefinition();
+
+        $portArgument = empty($this->host->port) ? '' : "-p {$this->host->port}";
+
+        return "ssh {$this->getTarget()} {$portArgument} 'bash -se <<$delimiter" . PHP_EOL
+            . 'set -e' . PHP_EOL
+            . $definition->getCommand() . PHP_EOL
+            . $delimiter . "'";
+    }
+
+    protected function getTarget(): string
+    {
+        $target = $this->host->name;
+
+        if ($this->host->ssh_user) {
+            $target = $this->host->ssh_user . '@' . $target;
+        }
+
+        return $target;
     }
 
     public function succeeded(string $message = '')
@@ -155,18 +157,11 @@ class Check extends Model
     {
         $originalStatus = $this->status;
 
-        try {
-            $this->getDefinition()->handleFinishedProcess($this->getProcess());
-        }
-        catch (Exception $exception) {
-            $this->failed("Exception occurred:" . $exception->getMessage());
-        }
+        $this->getDefinition()->handleFinishedProcess($this->getProcess());
 
         $this->scheduleNextRun();
 
-        $newStatus = $this->status;
-
-        if ($this->shouldFireRestoredEvent($originalStatus, $newStatus)) {
+        if ($this->shouldFireRestoredEvent($originalStatus, $this->status)) {
             event(new CheckRestored($this, $this->message));
         }
 
