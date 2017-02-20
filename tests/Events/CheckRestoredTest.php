@@ -4,11 +4,10 @@ namespace Spatie\ServerMontior\Test\Events;
 
 use Event;
 use Illuminate\Support\Facades\Artisan;
-use Spatie\ServerMonitor\Events\CheckRestored;
 use Spatie\ServerMonitor\Test\TestCase;
-use Spatie\UptimeMonitor\MonitorRepository;
+use Spatie\ServerMonitor\Events\CheckRestored;
 
-class CheckRecoveredTest extends TestCase
+class CheckRestoredTest extends TestCase
 {
     /** @var \Spatie\ServerMonitor\Models\Check */
     protected $check;
