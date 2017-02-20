@@ -3,7 +3,6 @@
 namespace Spatie\ServerMonitor\Test\Commands;
 
 use Artisan;
-use Mockery as m;
 use Spatie\ServerMonitor\Models\Host;
 use Spatie\ServerMonitor\Test\TestCase;
 use Spatie\ServerMonitor\Commands\AddHost;

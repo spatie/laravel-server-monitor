@@ -2,7 +2,6 @@
 
 namespace Spatie\ServerMonitor\Test;
 
-use Mockery;
 use Carbon\Carbon;
 use Spatie\ServerMonitor\Models\Host;
 use Spatie\ServerMonitor\Models\Check;
@@ -52,11 +51,6 @@ abstract class TestCase extends Orchestra
         ]);
 
         $this->setUpDatabase();
-    }
-
-    public function tearDown()
-    {
-        Mockery::close();
     }
 
     protected function setUpDatabase()
