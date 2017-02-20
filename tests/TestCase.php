@@ -77,21 +77,22 @@ abstract class TestCase extends Orchestra
         Carbon::setTestNow($newNow);
     }
 
-    protected function createHost(string $hostName = 'localhost', int $port = 65000, $checks = null)
+    protected function createHost(string $hostName = 'localhost', int $port = 65000, $checks = null): Host
     {
         if (is_null($checks)) {
             $checks = ['diskspace'];
         }
 
-        return Host::create([
+        return tap(Host::create([
             'name' =>  $hostName,
-        ])->checks()->saveMany(collect($checks)->map(function (string $checkName) {
-            return new Check([
-                'type' => $checkName,
-                'status' => CheckStatus::class,
-                'properties' => [],
-            ]);
-        }));
+        ]), function(Host $host) use ($checks) {
+            $host->checks()->saveMany(collect($checks)->map(function (string $checkName) {
+                return new Check([
+                    'type' => $checkName,
+                    'status' => CheckStatus::class,
+                ]);
+            }));
+        });
     }
 
     protected function getSuccessfulProcessWithOutput(string $output): Process

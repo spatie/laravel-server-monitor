@@ -2,6 +2,8 @@
 
 namespace Spatie\ServerMonitor\Test\Events;
 
+use Event;
+use Spatie\ServerMonitor\CheckDefinitions\Diskspace;
 use Spatie\ServerMonitor\Test\TestCase;
 use Spatie\ServerMonitor\Events\CheckSucceeded;
 

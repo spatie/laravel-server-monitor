@@ -1,9 +1,8 @@
 {
   "scripts": {
-    "server": "node ./server.js"
+    "server": "node ./src/server.js"
   },
   "dependencies": {
-    "buffer-equal-constant-time": "^1.0.1",
     "ssh2": "^0.5.4"
   }
 }
