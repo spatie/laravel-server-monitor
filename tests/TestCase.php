@@ -116,4 +116,13 @@ abstract class TestCase extends Orchestra
     {
         $this->assertTrue(str_contains($haystack, $needle), "String `{$haystack}` did not contain `{$needle}`");
     }
+
+    protected function letSshServerRespondWithDiskspaceUsagePercentage(int $diskspaceUsagePercentage)
+    {
+        $listenFor = "bash -se <<EOF-LARAVEL-SERVER-MONITOR\nset -e\ndf -P .\nEOF-LARAVEL-SERVER-MONITOR";
+
+        $respondWith = "Filesystem 512-blocks      Used Available Capacity  Mounted on\n/dev/disk1  974700800 830137776 144051024    {$diskspaceUsagePercentage}%    /\n";
+
+        SshServer::setResponse($listenFor, $respondWith);
+    }
 }

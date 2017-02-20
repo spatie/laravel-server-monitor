@@ -5,11 +5,10 @@ namespace Spatie\ServerMontior\Test\Events;
 use Event;
 use Illuminate\Support\Facades\Artisan;
 use Spatie\ServerMonitor\Events\CheckRestored;
-use Spatie\ServerMonitor\Events\CheckSucceeded;
 use Spatie\ServerMonitor\Test\TestCase;
 use Spatie\UptimeMonitor\MonitorRepository;
 
-class CheckSucceededTest extends TestCase
+class CheckRecoveredTest extends TestCase
 {
     /** @var \Spatie\ServerMonitor\Models\Check */
     protected $check;
@@ -24,15 +23,21 @@ class CheckSucceededTest extends TestCase
     }
 
     /** @test */
-    public function the_succeeded_event_will_be_fired_when_a_check_succeeds()
+    public function the_recovered_event_will_be_fired_when_an_check_succeeds_after_it_has_failed()
     {
-        $this->letSshServerRespondWithDiskspaceUsagePercentage(20);
-
-        Event::assertNotDispatched(CheckSucceeded::class);
+        $this->letSshServerRespondWithDiskspaceUsagePercentage(99);
 
         Artisan::call('monitor:run-checks');
 
-        Event::assertDispatched(CheckSucceeded::class, function (CheckSucceeded $event) {
+        $this->letSshServerRespondWithDiskspaceUsagePercentage(20);
+
+        $this->progressMinutes(60 * 24);
+
+        Event::assertNotDispatched(CheckRestored::class);
+
+        Artisan::call('monitor:run-checks');
+
+        Event::assertDispatched(CheckRestored::class, function (CheckRestored $event) {
             return $event->check->id === $this->check->id;
         });
     }
