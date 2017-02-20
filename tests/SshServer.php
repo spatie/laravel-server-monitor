@@ -11,6 +11,6 @@ class SshServer
             'output' => $response,
         ]);
 
-        file_put_contents(__DIR__ . '/server/store.json', $fileContents);
+        file_put_contents(__DIR__.'/server/store.json', $fileContents);
     }
 }
