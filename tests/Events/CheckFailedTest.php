@@ -4,11 +4,8 @@ namespace Spatie\ServerMontior\Test\Events;
 
 use Event;
 use Illuminate\Support\Facades\Artisan;
-use Spatie\ServerMonitor\Events\CheckFailed;
-use Spatie\ServerMonitor\Events\CheckRestored;
-use Spatie\ServerMonitor\Events\CheckSucceeded;
 use Spatie\ServerMonitor\Test\TestCase;
-use Spatie\UptimeMonitor\MonitorRepository;
+use Spatie\ServerMonitor\Events\CheckFailed;
 
 class CheckFailedTest extends TestCase
 {
