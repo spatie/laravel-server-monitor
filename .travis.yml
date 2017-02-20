@@ -14,7 +14,7 @@ env:
     - COMPOSER_FLAGS=""
 
 before_script:
-  - echo -e "Host 127.0.0.1\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+  - echo -e "Host localhost\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
   - ./tests/server/start_server.sh
   - sleep 5 # give server some time to start
   - travis_retry composer self-update
