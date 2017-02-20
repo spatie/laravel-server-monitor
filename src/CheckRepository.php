@@ -2,6 +2,7 @@
 
 namespace Spatie\ServerMonitor;
 
+use Spatie\ServerMonitor\Exceptions\InvalidConfiguration;
 use Spatie\ServerMonitor\Models\Check;
 
 class CheckRepository
