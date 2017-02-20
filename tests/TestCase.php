@@ -75,7 +75,7 @@ abstract class TestCase extends Orchestra
         Carbon::setTestNow($newNow);
     }
 
-    protected function createHost(string $hostName = 'localhost', int $port = 65000, $checks = null): Host
+    protected function createHost(string $hostName = 'localhost', ?int $port = 65000, $checks = null): Host
     {
         if (is_null($checks)) {
             $checks = ['diskspace'];

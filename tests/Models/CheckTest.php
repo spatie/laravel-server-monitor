@@ -17,7 +17,7 @@ class CheckTest extends TestCase
     {
         parent::setUp();
 
-        $this->createHost('my-host', 65000, ['diskspace']);
+        $this->createHost('my-host', null, ['diskspace']);
 
         $this->check = Check::first();
     }
