@@ -21,8 +21,6 @@ abstract class TestCase extends Orchestra
         Carbon::setTestNow(Carbon::create(2016, 1, 1, 00, 00, 00));
 
         parent::setUp();
-
-        $this->server = new Server();
     }
 
     /**
@@ -85,6 +83,7 @@ abstract class TestCase extends Orchestra
 
         return tap(Host::create([
             'name' =>  $hostName,
+            'port' => $port,
         ]), function(Host $host) use ($checks) {
             $host->checks()->saveMany(collect($checks)->map(function (string $checkName) {
                 return new Check([

@@ -3,3 +3,4 @@ composer.lock
 docs
 vendor
 tests/server/node_modules
+test/server/store.json
