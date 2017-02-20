@@ -84,7 +84,7 @@ abstract class TestCase extends Orchestra
         return tap(Host::create([
             'name' =>  $hostName,
             'port' => $port,
-        ]), function(Host $host) use ($checks) {
+        ]), function (Host $host) use ($checks) {
             $host->checks()->saveMany(collect($checks)->map(function (string $checkName) {
                 return new Check([
                     'type' => $checkName,
