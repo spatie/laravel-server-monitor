@@ -26,7 +26,8 @@
         "symfony/process": "^3.2"
     },
     "require-dev": {
-        "orchestra/testbench": "^3.4.5",
+        "mockery/mockery": "^0.9.8",
+        "orchestra/testbench": "^3.4",
         "phpunit/phpunit": "^5.7.14"
     },
     "autoload": {

@@ -3,21 +3,35 @@
 namespace Spatie\UptimeMonitor\Test\Integration\Notifications;
 
 use Notification;
-use Carbon\Carbon;
 use Spatie\ServerMonitor\Events\CheckFailed;
+use Spatie\ServerMonitor\Events\CheckRestored;
+use Spatie\ServerMonitor\Events\CheckSucceeded;
+use Spatie\ServerMonitor\Events\CheckWarning;
+use Spatie\ServerMonitor\Models\Enums\CheckStatus;
+use Spatie\ServerMonitor\Notifications\Notifiable;
 use Spatie\ServerMonitor\Notifications\Notifications\CheckFailed as CheckFailedNotification;
+use Spatie\ServerMonitor\Notifications\Notifications\CheckRestored as CheckRestoredNotification;
+use Spatie\ServerMonitor\Notifications\Notifications\CheckSucceeded as CheckSucceededNotification;
+use Spatie\ServerMonitor\Notifications\Notifications\CheckWarning as CheckWarningNotification;
 use Spatie\ServerMonitor\Test\TestCase;
 
 class EventHandlerTest extends TestCase
 {
-    /** @var \Spatie\UptimeMonitor\Models\Monitor */
-    protected $monitor;
+    /** @var \Spatie\ServerMonitor\Models\Host */
+    protected $host;
+
+    /** @var \Spatie\ServerMonitor\Models\Check */
+    protected $check;
 
     public function setUp()
     {
         parent::setUp();
 
         Notification::fake();
+
+        $this->host = $this->createHost();
+
+        $this->check = $this->host->checks->first();
     }
 
     /**
@@ -28,47 +42,36 @@ class EventHandlerTest extends TestCase
     public function it_can_send_a_notifications_for_certain_events(
         $eventClass,
         $notificationClass,
-        $monitorAttributes,
-        $shouldSendNotification
+        $checkStatus
     ) {
+        $this->app['config']->set(
+            'server-monitor.notifications.notifications.'.CheckSucceededNotification::class,
+            ['slack']
+        );
 
-        $host = $this->createHost();
+        $this->check->status = $checkStatus;
+        $this->check->save();
 
-        if (in_array($eventClass, [
-            UptimeCheckFailedEvent::class,
-            UptimeCheckRecoveredEvent::class,
-        ])) {
-            event(new $eventClass($monitor, new Period(Carbon::now(), Carbon::now())));
-        } else {
-            event(new $eventClass($monitor));
-        }
+        event(new $eventClass($this->check, ''));
 
-        if ($shouldSendNotification) {
             Notification::assertSentTo(
                 new Notifiable(),
                 $notificationClass,
-                function ($notification) use ($monitor) {
-                    return $notification->event->monitor->id == $monitor->id;
+                function ($notification) {
+                    return $notification->event->check->id == $this->check->id;
                 }
             );
-        }
-
-        if (! $shouldSendNotification) {
-            Notification::assertNotSentTo(
-                new Notifiable(),
-                $notificationClass
-            );
-        }
     }
 
     public function eventClassDataProvider(): array
     {
         return [
-            [CheckFailed::class, CheckFailedNotification::class, ['status' => \Spatie\ServerMonitor\Models\Enums\CheckStatus::FAILED], true],
+            [CheckFailed::class, CheckFailedNotification::class, CheckStatus::FAILED],
+            [CheckSucceeded::class, CheckSucceededNotification::class, CheckStatus::SUCCESS],
+            [CheckWarning::class, CheckWarningNotification::class, CheckStatus::WARNING],
+            [CheckRestored::class, CheckRestoredNotification::class, CheckStatus::SUCCESS],
         ];
     }
-
-
 
     /**
      * @test
@@ -78,17 +81,18 @@ class EventHandlerTest extends TestCase
     public function it_send_notifications_to_the_channels_configured_in_the_config_file(array $configuredChannels)
     {
         $this->app['config']->set(
-            'laravel-uptime-monitor.notifications.notifications.'.UptimeCheckSucceeded::class,
+            'server-monitor.notifications.notifications.'.CheckSucceededNotification::class,
             $configuredChannels
         );
 
-        $monitor = factory(Monitor::class)->create();
+        $this->check->status = CheckStatus::SUCCESS;
+        $this->check->save();
 
-        event(new UptimeCheckSucceededEvent($monitor));
+        event(new CheckSucceeded($this->check, ''));
 
         Notification::assertSentTo(
             new Notifiable(),
-            UptimeCheckSucceeded::class,
+            CheckSucceededNotification::class,
             function ($notification, $usedChannels) use ($configuredChannels) {
                 return $usedChannels == $configuredChannels;
             }

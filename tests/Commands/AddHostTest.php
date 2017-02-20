@@ -6,6 +6,7 @@ use Artisan;
 use Spatie\ServerMonitor\Models\Host;
 use Spatie\ServerMonitor\Test\TestCase;
 use Spatie\ServerMonitor\Commands\AddHost;
+use Mockery as m;
 
 class AddHostTest extends TestCase
 {
