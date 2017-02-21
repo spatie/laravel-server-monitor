@@ -2,8 +2,8 @@
 
 namespace Spatie\ServerMonitor\Commands;
 
-use Spatie\ServerMonitor\Models\Enums\CheckStatus;
 use Spatie\ServerMonitor\Models\Host;
+use Spatie\ServerMonitor\Models\Enums\CheckStatus;
 
 class ListHosts extends BaseCommand
 {
@@ -37,7 +37,6 @@ class ListHosts extends BaseCommand
         $hosts = $hostsQuery->get();
 
         $this->renderTable($hosts);
-
     }
 
     protected function renderTable($hosts)
@@ -57,7 +56,7 @@ class ListHosts extends BaseCommand
         $this->table($header, $rows);
     }
 
-    protected function formatCheckStatusCountForHost (Host $host): string
+    protected function formatCheckStatusCountForHost(Host $host): string
     {
         $statuses = collect([CheckStatus::SUCCESS, CheckStatus::FAILED, CheckStatus::NOT_YET_CHECKED, CheckStatus::WARNING]);
 
@@ -70,6 +69,7 @@ class ListHosts extends BaseCommand
                 return $statusCount ? "{$emoji} {$statusCount}  " : '';
             })
             ->implode('');
+
         return substr($checks, 0, -2);
     }
 
@@ -77,7 +77,7 @@ class ListHosts extends BaseCommand
     {
         return $host->checks
             ->filter(function ($check) {
-                return !empty($check->message);
+                return ! empty($check->message);
             })
             ->map(function ($check) {
                 return "<fg=black;bg=cyan>{$check->type}</>: {$check->message}";

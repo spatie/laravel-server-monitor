@@ -2,8 +2,8 @@
 
 namespace Spatie\ServerMonitor\Models\Presenters;
 
-use Spatie\ServerMonitor\Models\Enums\CheckStatus;
 use Spatie\ServerMonitor\Helpers\Emoji;
+use Spatie\ServerMonitor\Models\Enums\CheckStatus;
 
 trait CheckPresenter
 {
