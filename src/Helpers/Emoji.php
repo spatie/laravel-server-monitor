@@ -18,4 +18,14 @@ class Emoji
     {
         return "\u{27A1}";
     }
+
+    public static function unknown(): string
+    {
+        return "\u{2753}";
+    }
+
+    public static function warning(): string
+    {
+        return "\u{26A0}";
+    }
 }

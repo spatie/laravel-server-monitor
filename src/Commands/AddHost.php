@@ -46,7 +46,7 @@ class AddHost extends BaseCommand
         ])->checks()->saveMany(collect($chosenChecks)->map(function (string $checkName) {
             return new Check([
                 'type' => $checkName,
-                'status' => CheckStatus::class,
+                'status' => CheckStatus::NOT_YET_CHECKED,
                 'properties' => [],
             ]);
         }));

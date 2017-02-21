@@ -14,10 +14,13 @@ use Spatie\ServerMonitor\Events\CheckSucceeded;
 use Spatie\ServerMonitor\Models\Enums\CheckStatus;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\ServerMonitor\CheckDefinitions\CheckDefinition;
+use Spatie\ServerMonitor\Models\Presenters\CheckPresenter;
 use Spatie\ServerMonitor\Exceptions\InvalidCheckDefinition;
 
 class Check extends Model
 {
+    use CheckPresenter;
+
     public $guarded = [];
 
     public $casts = [
