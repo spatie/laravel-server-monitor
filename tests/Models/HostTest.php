@@ -38,6 +38,54 @@ class HostTest extends TestCase
         $this->assertTrue($host->status === HostHealth::UNHEALTHY);
     }
 
+    /** @test */
+    public function its_status_will_be_a_warning_when_it_contains_an_check_that_has_not_run_yet()
+    {
+        $host = $this->createHostWithChecks([
+            CheckStatus::SUCCESS, CheckStatus::NOT_YET_CHECKED
+        ]);
+
+        $this->assertTrue($host->status === HostHealth::WARNING);
+    }
+
+    /** @test */
+    public function its_status_will_be_a_warning_when_it_contains_an_check_that_issued_a_warning()
+    {
+        $host = $this->createHostWithChecks([
+            CheckStatus::SUCCESS, CheckStatus::WARNING
+        ]);
+
+        $this->assertTrue($host->status === HostHealth::WARNING);
+    }
+
+    /** @test */
+    public function it_has_helper_methods_to_determine_its_status()
+    {
+        $host = $this->createHostWithChecks([
+            CheckStatus::SUCCESS
+        ]);
+
+        $this->assertTrue($host->isHealthy());
+        $this->assertFalse($host->isUnhealthy());
+        $this->assertFalse($host->hasWarning());
+
+        $host = $this->createHostWithChecks([
+            CheckStatus::WARNING
+        ]);
+
+        $this->assertFalse($host->isHealthy());
+        $this->assertFalse($host->isUnhealthy());
+        $this->assertTrue($host->hasWarning());
+
+        $host = $this->createHostWithChecks([
+            CheckStatus::FAILED
+        ]);
+
+        $this->assertFalse($host->isHealthy());
+        $this->assertTrue($host->isUnhealthy());
+        $this->assertFalse($host->hasWarning());
+    }
+
     protected function createHostWithChecks(array $statuses): Host
     {
         $host = Host::create([
