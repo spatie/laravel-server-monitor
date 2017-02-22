@@ -7,9 +7,12 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
 use Spatie\ServerMonitor\Models\Enums\CheckStatus;
 use Spatie\ServerMonitor\Models\Enums\HostHealth;
+use Spatie\ServerMonitor\Models\Presenters\HostPresenter;
 
 class Host extends Model
 {
+    use HostPresenter;
+
     public $guarded = [];
 
     public function checks(): HasMany

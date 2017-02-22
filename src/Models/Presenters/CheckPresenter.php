@@ -7,7 +7,7 @@ use Spatie\ServerMonitor\Models\Enums\CheckStatus;
 
 trait CheckPresenter
 {
-    public function getCheckStatusAsEmojiAttribute(): string
+    public function getStatusAsEmojiAttribute(): string
     {
         if ($this->status === CheckStatus::SUCCESS) {
             return Emoji::ok();
@@ -26,5 +26,10 @@ trait CheckPresenter
         }
 
         return '';
+    }
+
+    public function getSummaryAttribute(): string
+    {
+        return "{$this->status_as_emoji}  {$this->type}: {$this->message}";
     }
 }

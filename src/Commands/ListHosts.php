@@ -2,8 +2,9 @@
 
 namespace Spatie\ServerMonitor\Commands;
 
+use Illuminate\Support\Collection;
+use Spatie\ServerMonitor\Models\Check;
 use Spatie\ServerMonitor\Models\Host;
-use Spatie\ServerMonitor\Models\Enums\CheckStatus;
 
 class ListHosts extends BaseCommand
 {
@@ -15,73 +16,44 @@ class ListHosts extends BaseCommand
 
     public function handle()
     {
-        $hostName = $this->option('host');
-        $checkType = $this->option('check');
-
-        $hostsQuery = Host::query();
-
-        if ($hostName) {
-            $hostsQuery->where('name', 'LIKE', "%{$hostName}%");
-        }
-
-        if ($checkType) {
-            $hostsQuery
-                ->whereHas('checks', function ($query) use ($checkType) {
-                    $query->where('type', 'LIKE', "%{$checkType}%");
-                })
-                ->with(['checks' => function ($query) use ($checkType) {
-                    $query->where('type', 'LIKE', "%{$checkType}%");
-                }]);
-        }
-
-        $hosts = $hostsQuery->get();
-
-        $this->renderTable($hosts);
+        $this->table(
+            ['Host', 'Health', 'Checks'],
+            $this->getTableRows(Host::all())
+        );
     }
 
-    protected function renderTable($hosts)
+    protected function getTableRows(Collection $hosts): array
     {
-        $rows = $hosts->map(function ($host) {
-            $name = $host->name;
+        if ($hostName = $this->option('host')) {
+            $hosts->filter(function (Host $host) use ($hostName) {
+                return $host->name === $hostName;
+            });
+        }
 
-            $checks = $this->formatCheckStatusCountForHost($host);
-
-            $messages = $this->formatCheckMessagesForHost($host);
-
-            return compact('name', 'checks', 'messages');
-        });
-
-        $header = ['Host', 'Checks', 'Message'];
-
-        $this->table($header, $rows);
-    }
-
-    protected function formatCheckStatusCountForHost(Host $host): string
-    {
-        $statuses = collect([CheckStatus::SUCCESS, CheckStatus::FAILED, CheckStatus::NOT_YET_CHECKED, CheckStatus::WARNING]);
-
-        $checks = $statuses
-            ->map(function ($status) use ($host) {
-                $checksWithStatus = $host->checks->where('status', $status);
-                $statusCount = $checksWithStatus->count();
-                $emoji = $checksWithStatus->first()->statusAsEmoji ?? '';
-
-                return $statusCount ? "{$emoji} {$statusCount}  " : '';
+        return Host::all()
+            ->map(function (Host $host) {
+                return [
+                    'name' => $host->name,
+                    'health' => $host->health_as_emoji,
+                    'checks' => $this->getChecksSummary($host, $this->option('check'))
+                ];
             })
-            ->implode('');
-
-        return substr($checks, 0, -2);
+            ->toArray();
     }
 
-    protected function formatCheckMessagesForHost(Host $host): string
+    protected function getChecksSummary(Host $host, ?string $typeFilter): string
     {
         return $host->checks
-            ->filter(function ($check) {
-                return ! empty($check->message);
+            ->filter(function (Check $check) use ($typeFilter) {
+                if (is_null($typeFilter)) {
+                    return true;
+                }
+
+                return $check->type === $typeFilter;
             })
-            ->map(function ($check) {
-                return "<fg=black;bg=cyan>{$check->type}</>: {$check->message}";
+            ->map(function (Check $check) {
+                return $check->summary;
             })
-            ->implode("\n");
+            ->implode(PHP_EOL);
     }
 }
