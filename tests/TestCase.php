@@ -82,7 +82,7 @@ abstract class TestCase extends Orchestra
             $host->checks()->saveMany(collect($checks)->map(function (string $checkName) {
                 return new Check([
                     'type' => $checkName,
-                    'status' => CheckStatus::class,
+                    'status' => CheckStatus::NOT_YET_CHECKED,
                 ]);
             }));
         });
