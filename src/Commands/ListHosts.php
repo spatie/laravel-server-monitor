@@ -3,8 +3,8 @@
 namespace Spatie\ServerMonitor\Commands;
 
 use Illuminate\Support\Collection;
-use Spatie\ServerMonitor\Models\Check;
 use Spatie\ServerMonitor\Models\Host;
+use Spatie\ServerMonitor\Models\Check;
 
 class ListHosts extends BaseCommand
 {
@@ -35,7 +35,7 @@ class ListHosts extends BaseCommand
                 return [
                     'name' => $host->name,
                     'health' => $host->health_as_emoji,
-                    'checks' => $this->getChecksSummary($host, $this->option('check'))
+                    'checks' => $this->getChecksSummary($host, $this->option('check')),
                 ];
             })
             ->toArray();

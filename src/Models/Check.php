@@ -2,7 +2,6 @@
 
 namespace Spatie\ServerMonitor\Models;
 
-use Spatie\ServerMonitor\Models\Concerns\HasCustomProperties;
 use Carbon\Carbon;
 use Symfony\Component\Process\Process;
 use Illuminate\Database\Eloquent\Model;
@@ -16,6 +15,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\ServerMonitor\CheckDefinitions\CheckDefinition;
 use Spatie\ServerMonitor\Models\Presenters\CheckPresenter;
 use Spatie\ServerMonitor\Exceptions\InvalidCheckDefinition;
+use Spatie\ServerMonitor\Models\Concerns\HasCustomProperties;
 
 class Check extends Model
 {
