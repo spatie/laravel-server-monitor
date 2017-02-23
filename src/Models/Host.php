@@ -2,6 +2,7 @@
 
 namespace Spatie\ServerMonitor\Models;
 
+use Spatie\ServerMonitor\Models\Concerns\HasCustomProperties;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
@@ -11,7 +12,11 @@ use Spatie\ServerMonitor\Models\Presenters\HostPresenter;
 
 class Host extends Model
 {
-    use HostPresenter;
+    use HostPresenter, HasCustomProperties;
+
+    public $casts = [
+        'custom_properties' => 'array',
+    ];
 
     public $guarded = [];
 

@@ -55,10 +55,10 @@ abstract class TestCase extends Orchestra
 
     protected function setUpDatabase()
     {
-        include_once __DIR__.'/../database/migrations/create_hosts_table.php.stub';
+        include_once __DIR__ . '/../database/migrations/create_hosts_table.php.stub';
         (new \CreateHostsTable())->up();
 
-        include_once __DIR__.'/../database/migrations/create_checks_table.php.stub';
+        include_once __DIR__ . '/../database/migrations/create_checks_table.php.stub';
         (new \CreateChecksTable())->up();
     }
 
@@ -75,17 +75,20 @@ abstract class TestCase extends Orchestra
             $checks = ['diskspace'];
         }
 
-        return tap(Host::create([
-            'name' =>  $hostName,
+        $host = Host::create([
+            'name' => $hostName,
             'port' => $port,
-        ]), function (Host $host) use ($checks) {
-            $host->checks()->saveMany(collect($checks)->map(function (string $checkName) {
-                return new Check([
-                    'type' => $checkName,
-                    'status' => CheckStatus::NOT_YET_CHECKED,
-                ]);
-            }));
-        });
+        ]);
+
+        $host->checks()->saveMany(collect($checks)->map(function (string $checkName) {
+            return new Check([
+                'type' => $checkName,
+                'status' => CheckStatus::NOT_YET_CHECKED,
+            ]);
+        }));
+
+        return $host;
+
     }
 
     protected function getSuccessfulProcessWithOutput(string $output): Process

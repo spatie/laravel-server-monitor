@@ -2,6 +2,7 @@
 
 namespace Spatie\ServerMonitor\Models;
 
+use Spatie\ServerMonitor\Models\Concerns\HasCustomProperties;
 use Carbon\Carbon;
 use Illuminate\Support\Arr;
 use Symfony\Component\Process\Process;
@@ -19,12 +20,12 @@ use Spatie\ServerMonitor\Exceptions\InvalidCheckDefinition;
 
 class Check extends Model
 {
-    use CheckPresenter;
+    use CheckPresenter, HasCustomProperties;
 
     public $guarded = [];
 
     public $casts = [
-        'properties' => 'array',
+        'custom_properties' => 'array',
         'process_output' => 'array',
     ];
 
