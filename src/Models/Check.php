@@ -25,6 +25,7 @@ class Check extends Model
 
     public $casts = [
         'properties' => 'array',
+        'process_output' => 'array',
     ];
 
     public $dates = [
@@ -189,5 +190,17 @@ class Check extends Model
         }
 
         return $newStatus === CheckStatus::SUCCESS;
+    }
+
+    public function storeProcessOutput(Process $process)
+    {
+        $this->process_output = [
+            'output' => $process->getOutput(),
+            'error_output' => $process->getErrorOutput(),
+            'exit_code' => $process->getExitCode(),
+            'exit_code_text' => $process->getExitCodeText(),
+        ];
+
+        $this->save();
     }
 }

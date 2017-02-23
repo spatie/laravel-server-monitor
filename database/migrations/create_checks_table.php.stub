@@ -20,6 +20,7 @@ class CreateChecksTable extends Migration
             $table->foreign('host_id')->references('id')->on('hosts')->onDelete('cascade');
             $table->string('type');
             $table->text('message')->nullable();
+            $table->json('process_output')->nullable();
             $table->string('status');
             $table->boolean('enabled')->default(true);
             $table->timestamp('checked_at')->nullable();

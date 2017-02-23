@@ -30,6 +30,8 @@ abstract class CheckDefinition
 
     public function handleFinishedProcess(Process $process)
     {
+        $this->check->storeProcessOutput($process);
+
         try {
             if (! $process->isSuccessful()) {
                 $this->handleFailedProcess($process);

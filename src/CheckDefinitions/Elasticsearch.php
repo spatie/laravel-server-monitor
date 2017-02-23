@@ -13,12 +13,12 @@ final class Elasticsearch extends CheckDefinition
         $checkSucceeded = str_contains($process->getOutput(), 'lucene_version');
 
         if ($checkSucceeded) {
-            $this->check->failed('is down');
+            $this->check->succeeded('is up');
 
             return;
         }
 
-        $this->check->succeeded('is up');
+        $this->check->failed('is down');
     }
 
     public function performNextRunInMinutes(): int
