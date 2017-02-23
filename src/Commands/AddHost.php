@@ -9,7 +9,7 @@ use Spatie\ServerMonitor\Models\Enums\CheckStatus;
 
 class AddHost extends BaseCommand
 {
-    protected $signature = 'monitor:add-host';
+    protected $signature = 'server-monitor:add-host';
 
     protected $description = 'Add a host';
 

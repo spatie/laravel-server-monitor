@@ -2,6 +2,7 @@
 
 namespace Spatie\ServerMonitor\Models\Presenters;
 
+use Carbon\Carbon;
 use Spatie\ServerMonitor\Helpers\Emoji;
 use Spatie\ServerMonitor\Models\Enums\CheckStatus;
 
@@ -31,5 +32,23 @@ trait CheckPresenter
     public function getSummaryAttribute(): string
     {
         return "{$this->status_as_emoji}  {$this->type}: {$this->message}";
+    }
+
+    public function getLatestRunDiffAttribute(): string
+    {
+        if (! $this->checked_at) {
+            return 'Did not run yet';
+        }
+
+        return $this->checked_at->diffForHumans();
+    }
+
+    public function getNextRunDiffAttribute(): string
+    {
+        if (! $this->next_check_in_minutes) {
+            return 'As soon as possible';
+        }
+
+        return Carbon::now()->addMinutes($this->next_check_in_minutes)->diffForHumans();
     }
 }

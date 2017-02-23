@@ -8,7 +8,7 @@ use Spatie\ServerMonitor\Models\Check;
 
 class ListHosts extends BaseCommand
 {
-    protected $signature = 'monitor:list
+    protected $signature = 'server-monitor:list
                             {--host= : Filter hosts by name}
                             {--check= : Filter checks by type}';
 

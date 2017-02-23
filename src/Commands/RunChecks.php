@@ -6,7 +6,7 @@ use Spatie\ServerMonitor\CheckRepository;
 
 class RunChecks extends BaseCommand
 {
-    protected $signature = 'monitor:run-checks';
+    protected $signature = 'server-monitor:run-checks';
 
     protected $description = 'Run all checks';
 
