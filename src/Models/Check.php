@@ -4,7 +4,6 @@ namespace Spatie\ServerMonitor\Models;
 
 use Spatie\ServerMonitor\Models\Concerns\HasCustomProperties;
 use Carbon\Carbon;
-use Illuminate\Support\Arr;
 use Symfony\Component\Process\Process;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;

@@ -41,7 +41,7 @@ abstract class CheckDefinition
 
             $this->handleSuccessfulProcess($process);
         } catch (Exception $exception) {
-            $this->failed('Exception occurred:'.$exception->getMessage());
+            $this->check->failed('Exception occurred: '.$exception->getMessage());
         }
     }
 

@@ -91,7 +91,7 @@ abstract class TestCase extends Orchestra
 
     }
 
-    protected function getSuccessfulProcessWithOutput(string $output): Process
+    protected function getSuccessfulProcessWithOutput(string $output = 'my output'): Process
     {
         $process = new Process("echo {$output}");
 
