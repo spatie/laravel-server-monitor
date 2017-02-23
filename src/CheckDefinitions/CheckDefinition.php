@@ -47,7 +47,7 @@ abstract class CheckDefinition
 
     public function handleFailedProcess(Process $process)
     {
-        $this->check->failed('Could not check diskspace: '.$process->getErrorOutput());
+        $this->check->failed("Failed to run check {$this->check->type}: {$process->getErrorOutput()}");
     }
 
     abstract public function performNextRunInMinutes(): int;
