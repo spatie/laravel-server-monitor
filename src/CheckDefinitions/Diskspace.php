@@ -13,7 +13,6 @@ final class Diskspace extends CheckDefinition
     {
         $percentage = $this->getDiskUsagePercentage($process->getOutput());
 
-
         $message = "usage at {$percentage}%";
 
         if ($percentage >= 90) {

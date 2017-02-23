@@ -4,11 +4,11 @@ namespace Spatie\ServerMonitor\Test\Models\Concerns;
 
 use Spatie\ServerMonitor\Test\TestCase;
 
-class HasCustomPropertiesTest extends TestCase
+class HasCustomProperties extends TestCase
 {
     /** @var \Spatie\ServerMonitor\Models\Check */
     protected $check;
-    
+
     public function setUp()
     {
         parent::setUp();
@@ -21,11 +21,10 @@ class HasCustomPropertiesTest extends TestCase
             'customName' => 'customValue',
             'nested' => [
                 'customName' => 'nested customValue',
-            ]
+            ],
         ];
 
         $this->check->save();
-
     }
 
     /** @test */
