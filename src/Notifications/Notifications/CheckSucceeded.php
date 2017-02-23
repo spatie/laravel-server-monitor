@@ -24,7 +24,6 @@ class CheckSucceeded extends BaseNotification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->success()
             ->subject($this->getSubject())
             ->line($this->getMessageText());
     }
@@ -32,7 +31,6 @@ class CheckSucceeded extends BaseNotification
     public function toSlack($notifiable)
     {
         return (new SlackMessage)
-            ->success()
             ->attachment(function (SlackAttachment $attachment) {
                 $attachment
                     ->title($this->getSubject())
@@ -47,11 +45,6 @@ class CheckSucceeded extends BaseNotification
         $this->event = $event;
 
         return $this;
-    }
-
-    protected function getSubject(): string
-    {
-        return "{$this->getCheck()->host->name}";
     }
 
     public function isStillRelevant(): bool

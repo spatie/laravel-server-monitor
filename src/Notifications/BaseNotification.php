@@ -25,6 +25,12 @@ abstract class BaseNotification extends Notification
 
     protected function getMessageText(): ?string
     {
-        return $this->getCheck()->message;
+        return ucfirst($this->getCheck()->message);
     }
+
+    protected function getSubject(): string
+    {
+        return "{$this->getCheck()->type} on {$this->getCheck()->host->name}";
+    }
+
 }
