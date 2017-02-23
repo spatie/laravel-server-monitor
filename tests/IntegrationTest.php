@@ -27,7 +27,7 @@ class IntegrationTest extends TestCase
 
         $check = Check::where('host_id', $this->host->id)->where('type', 'diskspace')->first();
 
-        $this->assertEquals('The disk space usage is now at 40%', $check->message);
+        $this->assertEquals('usage at 40%', $check->message);
         $this->assertEquals(CheckStatus::SUCCESS, $check->status);
     }
 }
