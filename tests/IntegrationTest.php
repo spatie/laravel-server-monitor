@@ -23,11 +23,37 @@ class IntegrationTest extends TestCase
     {
         $this->letSshServerRespondWithDiskspaceUsagePercentage(40);
 
-        Artisan::call('monitor:run-checks');
+        Artisan::call('server-monitor:run-checks');
 
         $check = Check::where('host_id', $this->host->id)->where('type', 'diskspace')->first();
 
         $this->assertEquals('usage at 40%', $check->message);
         $this->assertEquals(CheckStatus::SUCCESS, $check->status);
+    }
+
+    /** @test */
+    public function it_can_run_a_check_that_issues_a_warning()
+    {
+        $this->letSshServerRespondWithDiskspaceUsagePercentage(85);
+
+        Artisan::call('server-monitor:run-checks');
+
+        $check = Check::where('host_id', $this->host->id)->where('type', 'diskspace')->first();
+
+        $this->assertEquals('usage at 85%', $check->message);
+        $this->assertEquals(CheckStatus::WARNING, $check->status);
+    }
+
+    /** @test */
+    public function it_can_run_a_failing_check()
+    {
+        $this->letSshServerRespondWithDiskspaceUsagePercentage(95);
+
+        Artisan::call('server-monitor:run-checks');
+
+        $check = Check::where('host_id', $this->host->id)->where('type', 'diskspace')->first();
+
+        $this->assertEquals('usage at 95%', $check->message);
+        $this->assertEquals(CheckStatus::WARNING, $check->status);
     }
 }

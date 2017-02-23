@@ -28,14 +28,14 @@ class ServerMonitorServiceProvider extends ServiceProvider
 
         $this->app['events']->subscribe(EventHandler::class);
 
-        $this->app->bind('command.monitor:run-checks', RunChecks::class);
-        $this->app->bind('command.monitor:add-host', AddHost::class);
-        $this->app->bind('command.monitor:list', ListHosts::class);
+        $this->app->bind('command.server-monitor:run-checks', RunChecks::class);
+        $this->app->bind('command.server-monitor:add-host', AddHost::class);
+        $this->app->bind('command.server-monitor:list', ListHosts::class);
 
         $this->commands([
-            'command.monitor:run-checks',
-            'command.monitor:add-host',
-            'command.monitor:list',
+            'command.server-monitor:run-checks',
+            'command.server-monitor:add-host',
+            'command.server-monitor:list',
         ]);
     }
 

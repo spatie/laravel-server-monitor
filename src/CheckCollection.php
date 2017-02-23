@@ -42,6 +42,7 @@ class CheckCollection implements Countable
         $check = $this->pendingChecks->shift();
 
         ConsoleOutput::comment($check->host->name.": performing check `{$check->type}`...");
+
         $check->getProcess()->start();
 
         $this->runningChecks->push($check);
@@ -56,6 +57,9 @@ class CheckCollection implements Countable
         $finishedChecks->each->handleFinishedProcess();
     }
 
+    /**
+     * @return int
+     */
     public function count()
     {
         return count($this->pendingChecks);

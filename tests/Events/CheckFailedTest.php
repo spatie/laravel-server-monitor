@@ -28,7 +28,7 @@ class CheckFailedTest extends TestCase
 
         Event::assertNotDispatched(CheckFailed::class);
 
-        Artisan::call('monitor:run-checks');
+        Artisan::call('server-monitor:run-checks');
 
         Event::assertDispatched(CheckFailed::class, function (CheckFailed $event) {
             return $event->check->id === $this->check->id;

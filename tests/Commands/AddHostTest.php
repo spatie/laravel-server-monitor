@@ -19,7 +19,7 @@ class AddHostTest extends TestCase
 
         $this->command = m::mock('Spatie\ServerMonitor\Commands\AddHost[ask, confirm, choice]');
 
-        $this->app->bind('command.monitor:add-host', function () {
+        $this->app->bind('command.server-monitor:add-host', function () {
             return $this->command;
         });
     }
@@ -50,7 +50,7 @@ class AddHostTest extends TestCase
             ->once()
             ->andReturn([AddHost::$allChecksLabel]);
 
-        Artisan::call('monitor:add-host');
+        Artisan::call('server-monitor:add-host');
 
         $host = Host::first();
 
@@ -89,7 +89,7 @@ class AddHostTest extends TestCase
             ->once()
             ->andReturn([0 => 'diskspace']);
 
-        Artisan::call('monitor:add-host');
+        Artisan::call('server-monitor:add-host');
 
         $host = Host::first();
 
@@ -138,7 +138,7 @@ class AddHostTest extends TestCase
             ->once()
             ->andReturn([0 => 'diskspace']);
 
-        Artisan::call('monitor:add-host');
+        Artisan::call('server-monitor:add-host');
 
         $host = Host::first();
 

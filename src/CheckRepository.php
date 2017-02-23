@@ -2,6 +2,7 @@
 
 namespace Spatie\ServerMonitor;
 
+use Illuminate\Database\Eloquent\Builder;
 use Spatie\ServerMonitor\Models\Check;
 use Spatie\ServerMonitor\Exceptions\InvalidConfiguration;
 
@@ -14,7 +15,7 @@ class CheckRepository
         return new CheckCollection($checks);
     }
 
-    protected static function query()
+    protected static function query(): Builder
     {
         $modelClass = static::determineCheckModel();
 

@@ -26,7 +26,7 @@ class CheckRestoredTest extends TestCase
     {
         $this->letSshServerRespondWithDiskspaceUsagePercentage(99);
 
-        Artisan::call('monitor:run-checks');
+        Artisan::call('server-monitor:run-checks');
 
         $this->letSshServerRespondWithDiskspaceUsagePercentage(20);
 
@@ -34,7 +34,7 @@ class CheckRestoredTest extends TestCase
 
         Event::assertNotDispatched(CheckRestored::class);
 
-        Artisan::call('monitor:run-checks');
+        Artisan::call('server-monitor:run-checks');
 
         Event::assertDispatched(CheckRestored::class, function (CheckRestored $event) {
             return $event->check->id === $this->check->id;

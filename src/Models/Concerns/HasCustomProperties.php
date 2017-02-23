@@ -10,8 +10,6 @@ trait HasCustomProperties
     }
 
     /**
-     * Get the value of custom property with the given name.
-     *
      * @param string $propertyName
      * @param mixed $default
      *

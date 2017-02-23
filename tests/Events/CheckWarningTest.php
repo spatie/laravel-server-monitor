@@ -28,7 +28,7 @@ class CheckWarningTest extends TestCase
 
         Event::assertNotDispatched(CheckWarning::class);
 
-        Artisan::call('monitor:run-checks');
+        Artisan::call('server-monitor:run-checks');
 
         Event::assertDispatched(CheckWarning::class, function (CheckWarning $event) {
             return $event->check->id === $this->check->id;

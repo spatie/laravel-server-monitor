@@ -8,18 +8,12 @@ class Notifiable
 {
     use NotifiableTrait;
 
-    /**
-     * @return string|null
-     */
-    public function routeNotificationForMail()
+    public function routeNotificationForMail(): ?string
     {
         return config('laravel-uptime-monitor.notifications.mail.to');
     }
 
-    /**
-     * @return string|null
-     */
-    public function routeNotificationForSlack()
+    public function routeNotificationForSlack(): ?string
     {
         return config('server-monitor.notifications.slack.webhook_url');
     }
