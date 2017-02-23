@@ -9,7 +9,11 @@
 [![StyleCI](https://styleci.io/repos/82051379/shield?branch=master)](https://styleci.io/repos/82051379)
 [![Total Downloads](https://img.shields.io/packagist/dt/spatie/laravel-server-monitor.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-server-monitor)
 
-TO DO: add description
+We all dream over servers that need no maintenance at all. But unfortunately in reality this is not the case. Disks can get full, processes can crash, the server can run out of memory. 
+
+Using this package you can keep an eye on the health of your server. There are a few checks that come out of the box. Adding new checks is a breeze.
+
+When something goes wrong it can notify via Slack or mail. Behind the scenes [Laravel's native notification system]() is leveraged so you can use one of the [many notification drivers](http://laravel-notification-channels.com/).
 
 ## Postcardware
 
@@ -112,9 +116,9 @@ return [
 ];
 ```
 
-## Usage
+## Documentation
 
-Coming soon...
+The full documentation is available on [our documentation site](https://docs.spatie.be/laravel-server-monitor).
 
 ## Changelog
 
@@ -122,8 +126,18 @@ Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recen
 
 ## Testing
 
-``` bash
-$ composer test
+To run the tests you'll have to start the included node based dummy ssh server first in a separate terminal window.
+
+```bash
+cd tests/server
+npm install
+./start_server.sh
+```
+
+With the server running, you can start testing.
+
+```bash
+vendor/bin/phpunit
 ```
 
 ## Contributing
