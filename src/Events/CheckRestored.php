@@ -7,13 +7,8 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 
 class CheckRestored implements ShouldQueue
 {
-    /** @var \Spatie\ServerMonitor\Check */
-    public $message;
-
-    public function __construct(Check $check, string $message)
+    public function __construct(Check $check)
     {
         $this->check = $check;
-
-        $this->message = $message;
     }
 }

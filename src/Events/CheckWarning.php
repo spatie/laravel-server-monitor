@@ -11,12 +11,10 @@ class CheckWarning implements ShouldQueue
     public $check;
 
     /** @var string */
-    public $warning;
+    public $message;
 
-    public function __construct(Check $check, string $warning)
+    public function __construct(Check $check)
     {
         $this->check = $check;
-
-        $this->warning = $warning;
     }
 }

@@ -119,7 +119,7 @@ class Check extends Model
 
         $this->save();
 
-        event(new CheckSucceeded($this, $message));
+        event(new CheckSucceeded($this));
 
         return $this;
     }
@@ -131,7 +131,7 @@ class Check extends Model
 
         $this->save();
 
-        event(new CheckWarning($this, $warningMessage));
+        event(new CheckWarning($this));
 
         return $this;
     }
@@ -143,7 +143,7 @@ class Check extends Model
 
         $this->save();
 
-        event(new CheckFailed($this, $failureReason));
+        event(new CheckFailed($this));
 
         return $this;
     }
@@ -162,7 +162,7 @@ class Check extends Model
         $this->scheduleNextRun();
 
         if ($this->shouldFireRestoredEvent($originalStatus, $this->status)) {
-            event(new CheckRestored($this, $this->message));
+            event(new CheckRestored($this));
         }
 
         return $this;
