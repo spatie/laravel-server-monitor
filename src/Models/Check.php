@@ -3,6 +3,7 @@
 namespace Spatie\ServerMonitor\Models;
 
 use Carbon\Carbon;
+use Spatie\ServerMonitor\Helpers\ConsoleOutput;
 use Symfony\Component\Process\Process;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
@@ -120,6 +121,7 @@ class Check extends Model
         $this->save();
 
         event(new CheckSucceeded($this));
+        ConsoleOutput::info($this->host->name.": check `{$this->type}` succeeded");
 
         return $this;
     }
@@ -133,6 +135,8 @@ class Check extends Model
 
         event(new CheckWarning($this));
 
+        ConsoleOutput::info($this->host->name.": check `{$this->type}` issued warning");
+
         return $this;
     }
 
@@ -144,6 +148,8 @@ class Check extends Model
         $this->save();
 
         event(new CheckFailed($this));
+
+        ConsoleOutput::error($this->host->name.": check `{$this->type}` failed");
 
         return $this;
     }
