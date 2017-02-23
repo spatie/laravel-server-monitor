@@ -47,7 +47,7 @@ class AddHost extends BaseCommand
             return new Check([
                 'type' => $checkName,
                 'status' => CheckStatus::NOT_YET_CHECKED,
-                'properties' => [],
+                'custom_properties' => [],
             ]);
         }));
 

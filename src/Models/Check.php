@@ -44,9 +44,9 @@ class Check extends Model
             return parent::getAttribute($key);
         }
 
-        $properties = json_decode($this->attributes['properties'], true);
+        $properties = json_decode($this->attributes['custom_properties'], true);
 
-        return Arr::get($properties, $key, parent::getAttribute($key));
+        return array_get($properties, $key, parent::getAttribute($key));
     }
 
     public function shouldRun(): bool
