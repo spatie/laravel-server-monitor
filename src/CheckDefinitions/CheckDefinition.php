@@ -49,7 +49,7 @@ abstract class CheckDefinition
 
     public function handleFailedProcess(Process $process)
     {
-        $this->check->failed("Failed to run check {$this->check->type}: {$process->getErrorOutput()}");
+        $this->check->failed("failed to run: {$process->getErrorOutput()}");
     }
 
     abstract public function performNextRunInMinutes(): int;
