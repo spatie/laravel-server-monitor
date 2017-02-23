@@ -2,10 +2,10 @@
 
 namespace Spatie\ServerMonitor\CheckDefinitions\Test;
 
-use Spatie\ServerMonitor\CheckDefinitions\Elasticsearch;
 use Spatie\ServerMonitor\Models\Check;
-use Spatie\ServerMonitor\Models\Enums\CheckStatus;
 use Spatie\ServerMonitor\Test\TestCase;
+use Spatie\ServerMonitor\Models\Enums\CheckStatus;
+use Spatie\ServerMonitor\CheckDefinitions\Elasticsearch;
 
 class ElasticsearchTest extends TestCase
 {

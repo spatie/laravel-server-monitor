@@ -55,10 +55,10 @@ abstract class TestCase extends Orchestra
 
     protected function setUpDatabase()
     {
-        include_once __DIR__ . '/../database/migrations/create_hosts_table.php.stub';
+        include_once __DIR__.'/../database/migrations/create_hosts_table.php.stub';
         (new \CreateHostsTable())->up();
 
-        include_once __DIR__ . '/../database/migrations/create_checks_table.php.stub';
+        include_once __DIR__.'/../database/migrations/create_checks_table.php.stub';
         (new \CreateChecksTable())->up();
     }
 
@@ -88,7 +88,6 @@ abstract class TestCase extends Orchestra
         }));
 
         return $host;
-
     }
 
     protected function getSuccessfulProcessWithOutput(string $output = 'my output'): Process

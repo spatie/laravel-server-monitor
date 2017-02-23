@@ -2,11 +2,11 @@
 
 namespace Spatie\ServerMonitor\Test\Models;
 
-use Spatie\ServerMonitor\Models\Check;
-use Spatie\ServerMonitor\Models\Enums\CheckStatus;
-use Spatie\ServerMonitor\Models\Enums\HostHealth;
 use Spatie\ServerMonitor\Models\Host;
+use Spatie\ServerMonitor\Models\Check;
 use Spatie\ServerMonitor\Test\TestCase;
+use Spatie\ServerMonitor\Models\Enums\HostHealth;
+use Spatie\ServerMonitor\Models\Enums\CheckStatus;
 
 class HostTest extends TestCase
 {
@@ -22,7 +22,7 @@ class HostTest extends TestCase
     public function it_will_determine_that_it_is_healthy_when_all_its_checks_have_succeeded()
     {
         $host = $this->createHostWithChecks([
-            CheckStatus::SUCCESS
+            CheckStatus::SUCCESS,
         ]);
 
         $this->assertTrue($host->status === HostHealth::HEALTHY);
@@ -32,7 +32,7 @@ class HostTest extends TestCase
     public function it_will_determine_that_it_is_unhealthy_when_one_of_its_checks_has_failed()
     {
         $host = $this->createHostWithChecks([
-            CheckStatus::SUCCESS, CheckStatus::FAILED, CheckStatus::WARNING, CheckStatus::NOT_YET_CHECKED
+            CheckStatus::SUCCESS, CheckStatus::FAILED, CheckStatus::WARNING, CheckStatus::NOT_YET_CHECKED,
         ]);
 
         $this->assertTrue($host->status === HostHealth::UNHEALTHY);
@@ -42,7 +42,7 @@ class HostTest extends TestCase
     public function its_status_will_be_a_warning_when_it_contains_an_check_that_has_not_run_yet()
     {
         $host = $this->createHostWithChecks([
-            CheckStatus::SUCCESS, CheckStatus::NOT_YET_CHECKED
+            CheckStatus::SUCCESS, CheckStatus::NOT_YET_CHECKED,
         ]);
 
         $this->assertTrue($host->status === HostHealth::WARNING);
@@ -52,7 +52,7 @@ class HostTest extends TestCase
     public function its_status_will_be_a_warning_when_it_contains_an_check_that_issued_a_warning()
     {
         $host = $this->createHostWithChecks([
-            CheckStatus::SUCCESS, CheckStatus::WARNING
+            CheckStatus::SUCCESS, CheckStatus::WARNING,
         ]);
 
         $this->assertTrue($host->status === HostHealth::WARNING);
@@ -62,7 +62,7 @@ class HostTest extends TestCase
     public function it_has_helper_methods_to_determine_its_status()
     {
         $host = $this->createHostWithChecks([
-            CheckStatus::SUCCESS
+            CheckStatus::SUCCESS,
         ]);
 
         $this->assertTrue($host->isHealthy());
@@ -70,7 +70,7 @@ class HostTest extends TestCase
         $this->assertFalse($host->hasWarning());
 
         $host = $this->createHostWithChecks([
-            CheckStatus::WARNING
+            CheckStatus::WARNING,
         ]);
 
         $this->assertFalse($host->isHealthy());
@@ -78,7 +78,7 @@ class HostTest extends TestCase
         $this->assertTrue($host->hasWarning());
 
         $host = $this->createHostWithChecks([
-            CheckStatus::FAILED
+            CheckStatus::FAILED,
         ]);
 
         $this->assertFalse($host->isHealthy());
@@ -89,12 +89,12 @@ class HostTest extends TestCase
     protected function createHostWithChecks(array $statuses): Host
     {
         $host = Host::create([
-            'name' => 'hostname'
+            'name' => 'hostname',
         ]);
 
         $host->checks()->saveMany(collect($statuses)->map(function (string $status) {
             return new Check([
-                'type' => 'my-check-' . rand(),
+                'type' => 'my-check-'.rand(),
                 'status' => $status,
             ]);
         }));
