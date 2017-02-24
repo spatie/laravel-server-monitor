@@ -3,21 +3,17 @@
 namespace Spatie\ServerMonitor\Models;
 
 use Carbon\Carbon;
-use Spatie\ServerMonitor\Models\Concerns\HandlesCheckResult;
-use Spatie\ServerMonitor\Models\Concerns\HasProcess;
 use Symfony\Component\Process\Process;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
-use Spatie\ServerMonitor\Events\CheckFailed;
-use Spatie\ServerMonitor\Events\CheckWarning;
 use Spatie\ServerMonitor\Events\CheckRestored;
-use Spatie\ServerMonitor\Events\CheckSucceeded;
-use Spatie\ServerMonitor\Helpers\ConsoleOutput;
 use Spatie\ServerMonitor\Models\Enums\CheckStatus;
+use Spatie\ServerMonitor\Models\Concerns\HasProcess;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\ServerMonitor\CheckDefinitions\CheckDefinition;
 use Spatie\ServerMonitor\Models\Presenters\CheckPresenter;
 use Spatie\ServerMonitor\Exceptions\InvalidCheckDefinition;
+use Spatie\ServerMonitor\Models\Concerns\HandlesCheckResult;
 use Spatie\ServerMonitor\Models\Concerns\HasCustomProperties;
 use Spatie\ServerMonitor\Models\Concerns\ThrottlesFailingNotifications;
 
