@@ -2,7 +2,6 @@
 
 namespace Spatie\ServerMonitor\CheckDefinitions;
 
-use Spatie\Regex\Regex;
 use Symfony\Component\Process\Process;
 
 final class MySql extends CheckDefinition
