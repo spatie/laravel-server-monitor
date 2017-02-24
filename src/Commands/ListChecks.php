@@ -38,7 +38,7 @@ class ListChecks extends BaseCommand
     {
         $this->tableWithTitle(
             'Healthy checks',
-            ['Host', 'Check','Status', 'Message', 'Last checked', 'Next check'],
+            ['Host', 'Check', 'Message','Status', 'Last checked', 'Next check'],
             $this->getTableRows(Check::healthy()->get())
         );
     }
@@ -74,8 +74,8 @@ class ListChecks extends BaseCommand
                 return [
                     'name' => $check->host->name,
                     'check' => $check->type,
-                    'status' => $check->status_as_emoji,
                     'message' => $check->message,
+                    'status' => $check->status_as_emoji,
                     'last_checked' => $check->getLatestRunDiffAttribute(),
                     'next_check' => $check->getNextRunDiffAttribute(),
                 ];
