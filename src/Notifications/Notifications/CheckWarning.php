@@ -51,10 +51,10 @@ class CheckWarning extends BaseNotification
 
     public function shouldSend(): bool
     {
-         if (! $this->getCheck()->hasStatus(CheckStatus::WARNING)) {
-             return false;
-         }
+        if (! $this->getCheck()->hasStatus(CheckStatus::WARNING)) {
+            return false;
+        }
 
-         return ! $this->getCheck()->isThrottlingFailedNotifications();
+        return ! $this->getCheck()->isThrottlingFailedNotifications();
     }
 }

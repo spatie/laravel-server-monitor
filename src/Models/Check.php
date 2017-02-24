@@ -3,7 +3,6 @@
 namespace Spatie\ServerMonitor\Models;
 
 use Carbon\Carbon;
-use Spatie\ServerMonitor\Models\Concerns\ThrottlesFailingNotifications;
 use Symfony\Component\Process\Process;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
@@ -18,6 +17,7 @@ use Spatie\ServerMonitor\CheckDefinitions\CheckDefinition;
 use Spatie\ServerMonitor\Models\Presenters\CheckPresenter;
 use Spatie\ServerMonitor\Exceptions\InvalidCheckDefinition;
 use Spatie\ServerMonitor\Models\Concerns\HasCustomProperties;
+use Spatie\ServerMonitor\Models\Concerns\ThrottlesFailingNotifications;
 
 class Check extends Model
 {

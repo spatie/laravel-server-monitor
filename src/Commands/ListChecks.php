@@ -29,7 +29,7 @@ class ListChecks extends BaseCommand
     {
         $this->tableWithTitle(
             'Unhealthy checks',
-            ['Host', 'Check','Status', 'Message', 'Last checked', 'Next check'],
+            ['Host', 'Check', 'Status', 'Message', 'Last checked', 'Next check'],
             $this->getTableRows(Check::unhealthy()->get())
         );
     }
@@ -38,7 +38,7 @@ class ListChecks extends BaseCommand
     {
         $this->tableWithTitle(
             'Healthy checks',
-            ['Host', 'Check', 'Message','Status', 'Last checked', 'Next check'],
+            ['Host', 'Check', 'Message', 'Status', 'Last checked', 'Next check'],
             $this->getTableRows(Check::healthy()->get())
         );
     }

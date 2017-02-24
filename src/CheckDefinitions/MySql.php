@@ -14,7 +14,7 @@ final class MySql extends CheckDefinition
             $this->check->succeeded('is running');
 
             return;
-        };
+        }
 
         $this->check->failed('is not running');
     }

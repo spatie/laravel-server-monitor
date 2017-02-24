@@ -2,6 +2,6 @@
 
 namespace Spatie\ServerMonitor\Events;
 
-class CheckRestored extends Event {
-
+class CheckRestored extends Event
+{
 }

@@ -2,6 +2,6 @@
 
 namespace Spatie\ServerMonitor\Events;
 
-class CheckSucceeded extends Event {
-
+class CheckSucceeded extends Event
+{
 }
