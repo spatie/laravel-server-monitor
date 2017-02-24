@@ -114,7 +114,9 @@ class Check extends Model
 
     protected function getTarget(): string
     {
-        $target = $this->host->name;
+        $target = empty($this->host->ip)
+            ? $this->host->name
+            : $this->host->ip;
 
         if ($this->host->ssh_user) {
             $target = $this->host->ssh_user.'@'.$target;
