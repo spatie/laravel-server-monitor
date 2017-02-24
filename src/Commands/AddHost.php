@@ -29,6 +29,10 @@ class AddHost extends BaseCommand
             ? $this->ask('Which port?')
             : null;
 
+        $ip = $this->confirm('Should a specific ip address be used?')
+            ? $this->ask('Which ip address?')
+            : null;
+
         $checkNames = array_merge([static::$allChecksLabel], $this->getAllCheckNames());
 
         $chosenChecks = $this->choice('Which checks should be performed?', $checkNames, 0, null, true);
@@ -43,6 +47,7 @@ class AddHost extends BaseCommand
             'name' => $hostName,
             'ssh_user' => $sshUser,
             'port' => $port,
+            'ip' => $ip,
         ])->checks()->saveMany(collect($chosenChecks)->map(function (string $checkName) {
             return new Check([
                 'type' => $checkName,
