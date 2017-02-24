@@ -31,7 +31,7 @@ class Check extends Model
     ];
 
     public $dates = [
-        'checked_at', 'next_check_at',
+        'last_ran_at', 'next_check_at',
     ];
 
     public function host(): BelongsTo
@@ -66,13 +66,13 @@ class Check extends Model
             return false;
         }
 
-        if (is_null($this->checked_at)) {
+        if (is_null($this->last_ran_at)) {
             return true;
         }
 
-        return $this->checked_at
-            ->addMinutes($this->next_check_in_minutes)
-            ->isPast();
+        return ! $this->last_ran_at
+            ->addMinutes($this->next_run_in_minutes)
+            ->isFuture();
     }
 
     public function getDefinition(): CheckDefinition
@@ -189,9 +189,9 @@ class Check extends Model
 
     protected function scheduleNextRun()
     {
-        $this->checked_at = Carbon::now();
+        $this->last_ran_at = Carbon::now();
 
-        $this->next_check_in_minutes = $this->getDefinition()->performNextRunInMinutes();
+        $this->next_run_in_minutes = $this->getDefinition()->performNextRunInMinutes();
         $this->save();
 
         return $this;

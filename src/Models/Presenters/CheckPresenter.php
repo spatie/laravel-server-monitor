@@ -36,19 +36,19 @@ trait CheckPresenter
 
     public function getLatestRunDiffAttribute(): string
     {
-        if (! $this->checked_at) {
+        if (! $this->last_ran_at) {
             return 'Did not run yet';
         }
 
-        return $this->checked_at->diffForHumans();
+        return $this->last_ran_at->diffForHumans();
     }
 
     public function getNextRunDiffAttribute(): string
     {
-        if (! $this->next_check_in_minutes) {
+        if (! $this->next_run_in_minutes) {
             return 'As soon as possible';
         }
 
-        return Carbon::now()->addMinutes($this->next_check_in_minutes)->diffForHumans();
+        return Carbon::now()->addMinutes($this->next_run_in_minutes)->diffForHumans();
     }
 }

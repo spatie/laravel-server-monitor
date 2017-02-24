@@ -2,6 +2,7 @@
 
 namespace Spatie\ServerMonitor\Test\Models;
 
+use Carbon\Carbon;
 use Spatie\ServerMonitor\Models\Host;
 use Spatie\ServerMonitor\Models\Check;
 use Spatie\ServerMonitor\Test\TestCase;
@@ -84,5 +85,42 @@ class CheckTest extends TestCase
         $this->check->getProcessCommand();
 
         $this->assertStringStartsWith("ssh 1.2.3.4  'bash", $this->check->getProcessCommand());
+    }
+
+    /** @test */
+    public function it_will_determine_that_it_should_be_run()
+    {
+        $this->assertTrue($this->check->shouldRun());
+    }
+
+    /** @test */
+    public function it_will_determine_that_it_should_not_run_when_it_is_disabled()
+    {
+        $this->check->enabled = false;
+
+        $this->check->save();
+
+        $this->assertFalse($this->check->shouldRun());
+    }
+
+    /** @test */
+    public function it_will_determine_that_it_should_not_be_run_until_after_a_certain_period_of_time()
+    {
+        $nextRunInMinutes = 5;
+
+        $this->check->last_ran_at = Carbon::now();
+
+        $this->check->next_run_in_minutes = $nextRunInMinutes;
+
+        $this->check->save();
+
+        foreach(range(1, $nextRunInMinutes) as $pastMinutes) {
+
+            $this->assertFalse($this->check->shouldRun());
+
+            $this->progressMinutes(1);
+        }
+
+        $this->assertTrue($this->check->shouldRun());
     }
 }
