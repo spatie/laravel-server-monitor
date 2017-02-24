@@ -140,6 +140,12 @@ class AddHostTest extends TestCase
             ->andReturn('y');
 
         $this->command
+            ->shouldReceive('confirm')
+            ->once()
+            ->with('/Should a specific ip address be used/')
+            ->andReturn('');
+
+        $this->command
             ->shouldReceive('ask')
             ->once()
             ->with('/Which port/')
