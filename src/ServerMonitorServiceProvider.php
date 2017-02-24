@@ -4,10 +4,10 @@ namespace Spatie\ServerMonitor;
 
 use Illuminate\Support\ServiceProvider;
 use Spatie\ServerMonitor\Commands\AddHost;
-use Spatie\ServerMonitor\Commands\DeleteHost;
-use Spatie\ServerMonitor\Commands\ListChecks;
 use Spatie\ServerMonitor\Commands\ListHosts;
 use Spatie\ServerMonitor\Commands\RunChecks;
+use Spatie\ServerMonitor\Commands\DeleteHost;
+use Spatie\ServerMonitor\Commands\ListChecks;
 use Spatie\ServerMonitor\Notifications\EventHandler;
 
 class ServerMonitorServiceProvider extends ServiceProvider

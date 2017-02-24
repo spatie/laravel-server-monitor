@@ -3,14 +3,13 @@
 namespace Spatie\ServerMonitor\Test\Commands;
 
 use Artisan;
-use Spatie\ServerMonitor\Models\Check;
-use Spatie\ServerMonitor\Models\Enums\CheckStatus;
 use Spatie\ServerMonitor\Models\Host;
+use Spatie\ServerMonitor\Models\Check;
 use Spatie\ServerMonitor\Test\TestCase;
+use Spatie\ServerMonitor\Models\Enums\CheckStatus;
 
 class ListHostsTest extends TestCase
 {
-
     /** @test */
     public function it_displays_a_message_when_no_hosts_are_configures()
     {

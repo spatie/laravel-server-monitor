@@ -3,9 +3,9 @@
 namespace Spatie\ServerMonitor\Test\Commands;
 
 use Artisan;
-use Spatie\ServerMonitor\Models\Enums\CheckStatus;
 use Spatie\ServerMonitor\Models\Host;
 use Spatie\ServerMonitor\Test\TestCase;
+use Spatie\ServerMonitor\Models\Enums\CheckStatus;
 
 class DeleteHostTest extends TestCase
 {

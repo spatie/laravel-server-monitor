@@ -165,6 +165,7 @@ abstract class TestCase extends Orchestra
     protected function getArtisanOutput(): string
     {
         $this->consoleOutputCache .= Artisan::output();
+        
         return $this->consoleOutputCache;
     }
 }

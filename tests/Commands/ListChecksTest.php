@@ -3,10 +3,10 @@
 namespace Spatie\ServerMonitor\Test\Commands;
 
 use Artisan;
-use Spatie\ServerMonitor\Models\Check;
-use Spatie\ServerMonitor\Models\Enums\CheckStatus;
 use Spatie\ServerMonitor\Models\Host;
+use Spatie\ServerMonitor\Models\Check;
 use Spatie\ServerMonitor\Test\TestCase;
+use Spatie\ServerMonitor\Models\Enums\CheckStatus;
 
 class ListChecksTest extends TestCase
 {
