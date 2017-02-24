@@ -12,9 +12,11 @@ trait ThrottlesFailingNotifications
             return false;
         }
 
-        $throttleDuration = $this->getDefinition()->resendFailingNotificationEveryMinutes();
+        $throttleDuration = $this->getDefinition()->throttleFailingNotificationsForMinutes();
 
-        $throttlePeriodEnd =  $this->started_throttling_failing_notifications_at->addMinutes($throttleDuration);
+        $throttlePeriodEnd =  $this->started_throttling_failing_notifications_at->copy()->addMinutes($throttleDuration);
+
+
 
         return $throttlePeriodEnd->isFuture();
     }

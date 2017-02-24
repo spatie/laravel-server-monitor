@@ -52,9 +52,9 @@ abstract class CheckDefinition
         $this->check->failed("failed to run: {$process->getErrorOutput()}");
     }
 
-    public function resendFailingNotificationEveryMinutes(): int
+    public function throttleFailingNotificationsForMinutes(): int
     {
-        return config('server-monitor.notifications.resend_failing_check_notification_every_minutes');
+        return config('server-monitor.notifications.throttle_failing_notifications_for_minutes');
     }
 
     abstract public function performNextRunInMinutes(): int;

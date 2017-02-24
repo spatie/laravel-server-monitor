@@ -30,10 +30,10 @@ return [
         ],
 
         /*
-         * To keep reminding you that a check is emitting a warning or is failing,
-         * notifications will be resent every given number of minutes.
+         * To avoid to burying your in notifications, we'll only send one every given amount
+         * of minutes when a check keeps emitting warning or keeps failing.
          */
-        'resend_failing_check_notification_every_minutes' => 60,
+        'throttle_failing_notifications_for_minutes' => 60,
 
         'mail' => [
             'to' => 'your@email.com',

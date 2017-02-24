@@ -4,7 +4,7 @@ namespace Spatie\ServerMonitor\Test\Models\Concerns;
 
 use Spatie\ServerMonitor\Test\TestCase;
 
-class HasCustomProperties extends TestCase
+class HasCustomPropertiesTest extends TestCase
 {
     /** @var \Spatie\ServerMonitor\Models\Check */
     protected $check;
