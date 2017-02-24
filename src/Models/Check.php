@@ -3,6 +3,7 @@
 namespace Spatie\ServerMonitor\Models;
 
 use Carbon\Carbon;
+use Spatie\ServerMonitor\Models\Concerns\ThrottlesFailingNotifications;
 use Symfony\Component\Process\Process;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
@@ -20,7 +21,7 @@ use Spatie\ServerMonitor\Models\Concerns\HasCustomProperties;
 
 class Check extends Model
 {
-    use CheckPresenter, HasCustomProperties;
+    use CheckPresenter, HasCustomProperties, ThrottlesFailingNotifications;
 
     public $guarded = [];
 

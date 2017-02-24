@@ -49,8 +49,12 @@ class CheckFailed extends BaseNotification
         return $this;
     }
 
-    public function isStillRelevant(): bool
+    public function shouldSend(): bool
     {
-        return $this->getCheck()->hasStatus(CheckStatus::FAILED);
+         if (! $this->getCheck()->hasStatus(CheckStatus::FAILED)) {
+             return false;
+         };
+
+         return ! $this->getCheck()->isThrottlingFailedNotifications();
     }
 }

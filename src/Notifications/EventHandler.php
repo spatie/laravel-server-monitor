@@ -8,6 +8,7 @@ use Spatie\ServerMonitor\Events\CheckFailed;
 use Spatie\ServerMonitor\Events\CheckWarning;
 use Spatie\ServerMonitor\Events\CheckRestored;
 use Spatie\ServerMonitor\Events\CheckSucceeded;
+use Spatie\ServerMonitor\Events\Event;
 
 class EventHandler
 {
@@ -28,10 +29,18 @@ class EventHandler
                 return;
             }
 
-            if ($notification->isStillRelevant()) {
+            if ($this->concernsSuccess($event)) {
+                $notification->getCheck()->stopThrottlingFailedNotifications();
+            }
+
+            if ($notification->shouldSend()) {
                 $notifiable = $this->determineNotifiable();
 
                 $notifiable->notify($notification);
+            }
+
+            if (! $this->concernsSuccess($event)) {
+                $notification->getCheck()->startThrottlingFailedNotifications();
             }
         });
     }
@@ -73,5 +82,13 @@ class EventHandler
             CheckWarning::class,
             CheckFailed::class,
         ];
+    }
+
+    protected function concernsSuccess(Event $event): bool
+    {
+        return in_array(get_class($event), [
+            CheckSucceeded::class,
+            CheckRestored::class,
+        ]);
     }
 }

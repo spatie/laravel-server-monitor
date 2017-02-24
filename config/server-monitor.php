@@ -29,6 +29,12 @@ return [
             Spatie\ServerMonitor\Notifications\Notifications\CheckFailed::class => ['slack'],
         ],
 
+        /*
+         * To keep reminding you that a check is emitting a warning or is failing,
+         * notifications will be resent every given number of minutes.
+         */
+        'resend_failing_check_notification_every_minutes' => 60,
+
         'mail' => [
             'to' => 'your@email.com',
         ],
