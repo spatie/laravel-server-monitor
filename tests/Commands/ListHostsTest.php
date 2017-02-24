@@ -10,14 +10,6 @@ use Spatie\ServerMonitor\Test\TestCase;
 
 class ListHostsTest extends TestCase
 {
-    protected $consoleOutputCache;
-
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->consoleOutputCache = null;
-    }
 
     /** @test */
     public function it_displays_a_message_when_no_hosts_are_configures()
@@ -104,39 +96,5 @@ class ListHostsTest extends TestCase
                 ]);
             }));
         });
-    }
-
-    /**
-     * @param string|array $searchStrings
-     */
-    protected function seeInConsoleOutput($searchStrings)
-    {
-        if (! is_array($searchStrings)) {
-            $searchStrings = [$searchStrings];
-        }
-        $output = $this->getArtisanOutput();
-        foreach ($searchStrings as $searchString) {
-            $this->assertContains((string) $searchString, $output);
-        }
-    }
-
-    /**
-     * @param string|array $searchStrings
-     */
-    protected function dontSeeInConsoleOutput($searchStrings)
-    {
-        if (! is_array($searchStrings)) {
-            $searchStrings = [$searchStrings];
-        }
-        $output = $this->getArtisanOutput();
-        foreach ($searchStrings as $searchString) {
-            $this->assertNotContains((string) $searchString, $output);
-        }
-    }
-
-    protected function getArtisanOutput(): string
-    {
-        $this->consoleOutputCache .= Artisan::output();
-        return $this->consoleOutputCache;
     }
 }

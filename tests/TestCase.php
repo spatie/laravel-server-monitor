@@ -2,6 +2,7 @@
 
 namespace Spatie\ServerMonitor\Test;
 
+use Artisan;
 use Carbon\Carbon;
 use Spatie\ServerMonitor\Models\Host;
 use Spatie\ServerMonitor\Models\Check;
@@ -15,9 +16,14 @@ abstract class TestCase extends Orchestra
     /** @var Server */
     public $server;
 
+    /** @var ?string */
+    protected $consoleOutputCache;
+
     public function setUp()
     {
         Carbon::setTestNow(Carbon::create(2016, 1, 1, 00, 00, 00));
+
+        $this->consoleOutputCache = null;
 
         parent::setUp();
     }
@@ -126,5 +132,39 @@ abstract class TestCase extends Orchestra
         $respondWith = "Filesystem 512-blocks      Used Available Capacity  Mounted on\n/dev/disk1  974700800 830137776 144051024    {$diskspaceUsagePercentage}%    /\n";
 
         SshServer::setResponse($listenFor, $respondWith);
+    }
+
+    /**
+     * @param string|array $searchStrings
+     */
+    protected function seeInConsoleOutput($searchStrings)
+    {
+        if (! is_array($searchStrings)) {
+            $searchStrings = [$searchStrings];
+        }
+        $output = $this->getArtisanOutput();
+        foreach ($searchStrings as $searchString) {
+            $this->assertContains((string) $searchString, $output);
+        }
+    }
+
+    /**
+     * @param string|array $searchStrings
+     */
+    protected function dontSeeInConsoleOutput($searchStrings)
+    {
+        if (! is_array($searchStrings)) {
+            $searchStrings = [$searchStrings];
+        }
+        $output = $this->getArtisanOutput();
+        foreach ($searchStrings as $searchString) {
+            $this->assertNotContains((string) $searchString, $output);
+        }
+    }
+
+    protected function getArtisanOutput(): string
+    {
+        $this->consoleOutputCache .= Artisan::output();
+        return $this->consoleOutputCache;
     }
 }
