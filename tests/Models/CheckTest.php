@@ -50,8 +50,10 @@ class CheckTest extends TestCase
     /** @test */
     public function it_uses_its_host_custom_port_in_the_process_command()
     {
-        $this->check->host->port = 'my-ssh-user';
-        $this->check->host->save();
+        tap($this->check->host, function (Host $host) {
+            $host->port = 123;
+            $host->save();
+        });
 
         $this->check->getProcessCommand();
 
@@ -61,8 +63,10 @@ class CheckTest extends TestCase
     /** @test */
     public function it_uses_its_host_custom_ssh_user_in_the_process_command()
     {
-        $this->check->host->user = 'my-ssh-user';
-        $this->check->host->save();
+        tap($this->check->host, function (Host $host) {
+            $host->ssh_user = 'my-ssh-user';
+            $host->save();
+        });
 
         $this->check->getProcessCommand();
 
@@ -72,8 +76,10 @@ class CheckTest extends TestCase
     /** @test */
     public function it_will_use_the_ip_address_instead_of_the_host_name()
     {
-        $this->check->host->ip = '1.2.3.4';
-        $this->check->host->save();
+        tap($this->check->host, function (Host $host) {
+            $host->ip = '1.2.3.4';
+            $host->save();
+        });
 
         $this->check->getProcessCommand();
 
