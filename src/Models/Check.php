@@ -38,6 +38,16 @@ class Check extends Model
         return $this->belongsTo(Host::class);
     }
 
+    public function scopeHealthy($query)
+    {
+        return $query->where('status', CheckStatus::SUCCESS);
+    }
+
+    public function scopeUnhealthy($query)
+    {
+        return $query->where('status', '!=', CheckStatus::SUCCESS);
+    }
+
     public function getAttribute($key)
     {
         if (array_key_exists($key, $this->attributes)) {
