@@ -114,8 +114,7 @@ class CheckTest extends TestCase
 
         $this->check->save();
 
-        foreach(range(1, $nextRunInMinutes) as $pastMinutes) {
-
+        foreach (range(1, $nextRunInMinutes) as $pastMinutes) {
             $this->assertFalse($this->check->shouldRun());
 
             $this->progressMinutes(1);
