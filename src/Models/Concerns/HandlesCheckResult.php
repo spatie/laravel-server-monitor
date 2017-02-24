@@ -3,11 +3,10 @@
 namespace Spatie\ServerMonitor\Models\Concerns;
 
 use Spatie\ServerMonitor\Events\CheckFailed;
-use Spatie\ServerMonitor\Events\CheckSucceeded;
 use Spatie\ServerMonitor\Events\CheckWarning;
+use Spatie\ServerMonitor\Events\CheckSucceeded;
 use Spatie\ServerMonitor\Helpers\ConsoleOutput;
 use Spatie\ServerMonitor\Models\Enums\CheckStatus;
-
 
 trait HandlesCheckResult
 {
@@ -19,7 +18,7 @@ trait HandlesCheckResult
         $this->save();
 
         event(new CheckSucceeded($this));
-        ConsoleOutput::info($this->host->name . ": check `{$this->type}` succeeded");
+        ConsoleOutput::info($this->host->name.": check `{$this->type}` succeeded");
 
         return $this;
     }
@@ -33,7 +32,7 @@ trait HandlesCheckResult
 
         event(new CheckWarning($this));
 
-        ConsoleOutput::info($this->host->name . ": check `{$this->type}` issued warning");
+        ConsoleOutput::info($this->host->name.": check `{$this->type}` issued warning");
 
         return $this;
     }
@@ -47,7 +46,7 @@ trait HandlesCheckResult
 
         event(new CheckFailed($this));
 
-        ConsoleOutput::error($this->host->name . ": check `{$this->type}` failed");
+        ConsoleOutput::error($this->host->name.": check `{$this->type}` failed");
 
         return $this;
     }
