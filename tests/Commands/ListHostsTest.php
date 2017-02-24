@@ -13,7 +13,7 @@ class ListHostsTest extends TestCase
     /** @test */
     public function it_displays_a_message_when_no_hosts_are_configures()
     {
-        Artisan::call('server-monitor:list');
+        Artisan::call('server-monitor:list-hosts');
 
         $this->dontSeeInConsoleOutput(['Checks', 'Health']);
 
@@ -27,7 +27,7 @@ class ListHostsTest extends TestCase
 
         $this->addHosts($testHosts);
 
-        Artisan::call('server-monitor:list');
+        Artisan::call('server-monitor:list-hosts');
 
         $this->dontSeeInConsoleOutput('There are no hosts configured');
 
@@ -41,7 +41,7 @@ class ListHostsTest extends TestCase
 
         $this->addHosts($testHosts);
 
-        Artisan::call('server-monitor:list', ['--host' => $testHosts[0]]);
+        Artisan::call('server-monitor:list-hosts', ['--host' => $testHosts[0]]);
 
         $this->seeInConsoleOutput($testHosts[0]);
 
@@ -53,7 +53,7 @@ class ListHostsTest extends TestCase
     {
         $this->addHosts('test-host', ['correct-check', 'wrong-check']);
 
-        Artisan::call('server-monitor:list', ['--check' => 'correct-check']);
+        Artisan::call('server-monitor:list-hosts', ['--check' => 'correct-check']);
 
         $this->dontSeeInConsoleOutput('wrong-check');
 
@@ -66,7 +66,7 @@ class ListHostsTest extends TestCase
         $this->addHosts('wrong-host');
         $this->addHosts('correct-host', ['wrong-check', 'correct-check']);
 
-        Artisan::call('server-monitor:list', [
+        Artisan::call('server-monitor:list-hosts', [
             '--host' => 'correct-host',
             '--check' => 'correct-check',
         ]);
