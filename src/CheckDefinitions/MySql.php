@@ -18,9 +18,4 @@ final class MySql extends CheckDefinition
 
         $this->check->failed('is not running');
     }
-
-    public function performNextRunInMinutes(): int
-    {
-        return 5;
-    }
 }

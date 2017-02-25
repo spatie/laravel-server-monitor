@@ -20,9 +20,4 @@ final class Elasticsearch extends CheckDefinition
 
         $this->check->failed('is down');
     }
-
-    public function performNextRunInMinutes(): int
-    {
-        return 10;
-    }
 }

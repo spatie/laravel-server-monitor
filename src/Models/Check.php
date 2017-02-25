@@ -33,7 +33,7 @@ class Check extends Model
     ];
 
     public $dates = [
-        'last_ran_at', 'next_check_at',
+        'last_ran_at', 'next_check_at', 'started_throttling_failing_notifications_at',
     ];
 
     public function host(): BelongsTo

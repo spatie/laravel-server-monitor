@@ -4,6 +4,7 @@ namespace Spatie\ServerMonitor\Test;
 
 use Artisan;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Notification;
 use Spatie\ServerMonitor\Models\Host;
 use Spatie\ServerMonitor\Models\Check;
 use Symfony\Component\Process\Process;
@@ -61,10 +62,10 @@ abstract class TestCase extends Orchestra
 
     protected function setUpDatabase()
     {
-        include_once __DIR__.'/../database/migrations/create_hosts_table.php.stub';
+        include_once __DIR__ . '/../database/migrations/create_hosts_table.php.stub';
         (new \CreateHostsTable())->up();
 
-        include_once __DIR__.'/../database/migrations/create_checks_table.php.stub';
+        include_once __DIR__ . '/../database/migrations/create_checks_table.php.stub';
         (new \CreateChecksTable())->up();
     }
 
@@ -139,12 +140,12 @@ abstract class TestCase extends Orchestra
      */
     protected function seeInConsoleOutput($searchStrings)
     {
-        if (! is_array($searchStrings)) {
+        if (!is_array($searchStrings)) {
             $searchStrings = [$searchStrings];
         }
         $output = $this->getArtisanOutput();
         foreach ($searchStrings as $searchString) {
-            $this->assertContains((string) $searchString, $output);
+            $this->assertContains((string)$searchString, $output);
         }
     }
 
@@ -153,12 +154,12 @@ abstract class TestCase extends Orchestra
      */
     protected function dontSeeInConsoleOutput($searchStrings)
     {
-        if (! is_array($searchStrings)) {
+        if (!is_array($searchStrings)) {
             $searchStrings = [$searchStrings];
         }
         $output = $this->getArtisanOutput();
         foreach ($searchStrings as $searchString) {
-            $this->assertNotContains((string) $searchString, $output);
+            $this->assertNotContains((string)$searchString, $output);
         }
     }
 
@@ -167,5 +168,17 @@ abstract class TestCase extends Orchestra
         $this->consoleOutputCache .= Artisan::output();
 
         return $this->consoleOutputCache;
+    }
+
+    protected function resetNotificationAssertions()
+    {
+        Notification::fake();
+    }
+
+    protected function skipIfDummySshServerIsNotRunning()
+    {
+        if ((new Process('ssh localhost -p 65000 "echo"'))->run() === 255) {
+            $this->markTestSkipped('Dummy SSH server is not running.');
+        }
     }
 }

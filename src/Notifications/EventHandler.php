@@ -39,7 +39,7 @@ class EventHandler
                 $notifiable->notify($notification);
             }
 
-            if (! $this->concernsSuccess($event)) {
+            if (! $this->concernsSuccess($event) && ! $notification->getCheck()->isThrottlingFailedNotifications()) {
                 $notification->getCheck()->startThrottlingFailedNotifications();
             }
         });

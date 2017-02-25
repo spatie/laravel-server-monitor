@@ -5,6 +5,8 @@ namespace Spatie\ServerMonitor\Test;
 use Spatie\ServerMonitor\Models\Check;
 use Illuminate\Support\Facades\Artisan;
 use Spatie\ServerMonitor\Models\Enums\CheckStatus;
+use Illuminate\Support\Facades\Notification;
+use Spatie\ServerMonitor\Notifications\Notifications\CheckFailed;
 
 class IntegrationTest extends TestCase
 {
@@ -14,6 +16,8 @@ class IntegrationTest extends TestCase
     public function setUp()
     {
         parent::setUp();
+
+        $this->skipIfDummySshServerIsNotRunning();
 
         $this->host = $this->createHost('localhost', 65000, ['diskspace']);
     }
@@ -56,4 +60,41 @@ class IntegrationTest extends TestCase
         $this->assertEquals('usage at 95%', $check->message);
         $this->assertEquals(CheckStatus::FAILED, $check->status);
     }
+
+    /** @test */
+    public function it_will_throttle_failed_notifications()
+    {
+        Notification::fake();
+
+        $this->letSshServerRespondWithDiskspaceUsagePercentage(95);
+
+        Artisan::call('server-monitor:run-checks');
+
+        Notification::assertSentTo($this->getNotifiable(), CheckFailed::class);
+
+        $minutes = config('server-monitor.notifications.throttle_failing_notifications_for_minutes');
+
+        $this->progressMinutes($minutes - 1);
+
+        $this->resetNotificationAssertions();
+
+        Artisan::call('server-monitor:run-checks');
+
+        Notification::assertNotSentTo($this->getNotifiable(), CheckFailed::class);
+
+        $this->progressMinutes(1);
+
+        Artisan::call('server-monitor:run-checks');
+
+        Notification::assertSentTo($this->getNotifiable(), CheckFailed::class);
+    }
+
+    protected function getNotifiable()
+    {
+        $notifiableClass = config('server-monitor.notifications.notifiable');
+
+        return app($notifiableClass);
+    }
+
+
 }
