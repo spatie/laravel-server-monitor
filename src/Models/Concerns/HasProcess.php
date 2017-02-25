@@ -29,7 +29,9 @@ trait HasProcess
 
         $portArgument = empty($this->host->port) ? '' : "-p {$this->host->port}";
 
-        return "ssh {$this->getTarget()} {$portArgument} 'bash -se <<$delimiter".PHP_EOL
+        $sshCommandSuffix = config('server-monitor.ssh_command_suffix');
+
+        return "ssh {$this->getTarget()} {$portArgument} {$sshCommandSuffix} 'bash -se <<$delimiter".PHP_EOL
             .'set -e'.PHP_EOL
             .$definition->getCommand().PHP_EOL
             .$delimiter."'";
