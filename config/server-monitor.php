@@ -15,7 +15,7 @@ return [
     ],
 
     /*
-     * The performance of the package process can be increased by allowing a high number
+     * The performance of the package can be increased by allowing a high number
      * of concurrent ssh connections. Set this to a lower value if you're
      * getting weird errors running the check.
      */
