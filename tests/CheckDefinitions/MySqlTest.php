@@ -2,15 +2,17 @@
 
 namespace Spatie\ServerMonitor\CheckDefinitions\Test;
 
+use Spatie\ServerMonitor\CheckDefinitions\Memcached;
+use Spatie\ServerMonitor\CheckDefinitions\MySql;
 use Spatie\ServerMonitor\Models\Check;
 use Spatie\ServerMonitor\Test\TestCase;
 use Spatie\ServerMonitor\Models\Enums\CheckStatus;
 use Spatie\ServerMonitor\CheckDefinitions\Elasticsearch;
 
-class ElasticsearchTest extends TestCase
+class MySqlTest extends TestCase
 {
-    /** @var \Spatie\ServerMonitor\CheckDefinitions\Elasticsearch */
-    protected $elasticsearchDefintion;
+    /** @var \Spatie\ServerMonitor\CheckDefinitions\MySql */
+    protected $mySqlCheckDefintion;
 
     /** @var \Spatie\ServerMonitor\Models\Check */
     protected $check;
@@ -23,17 +25,17 @@ class ElasticsearchTest extends TestCase
 
         $this->check = Check::first();
 
-        $this->elasticsearchDefintion = (new Elasticsearch())->setCheck($this->check);
+        $this->mySqlCheckDefintion = (new MySql())->setCheck($this->check);
     }
 
     /** @test */
     public function it_can_determine_success()
     {
         $process = $this->getSuccessfulProcessWithOutput(
-            'output something something lucene_version something something'
+            '1410 ?        00:20:36 mysqld'
         );
 
-        $this->elasticsearchDefintion->handleSuccessfulProcess($process);
+        $this->mySqlCheckDefintion->handleSuccessfulProcess($process);
 
         $this->check->fresh();
 
@@ -45,10 +47,10 @@ class ElasticsearchTest extends TestCase
     public function it_can_determine_failure()
     {
         $process = $this->getSuccessfulProcessWithOutput(
-            'output something something something something'
+            ''
         );
 
-        $this->elasticsearchDefintion->handleSuccessfulProcess($process);
+        $this->mySqlCheckDefintion->handleSuccessfulProcess($process);
 
         $this->check->fresh();
 

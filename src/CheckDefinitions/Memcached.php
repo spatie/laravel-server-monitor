@@ -4,15 +4,13 @@ namespace Spatie\ServerMonitor\CheckDefinitions;
 
 use Symfony\Component\Process\Process;
 
-final class Elasticsearch extends CheckDefinition
+final class Memcached extends CheckDefinition
 {
-    public $command = 'curl http://localhost:9200';
+    public $command = 'service memcached status';
 
     public function handleSuccessfulProcess(Process $process)
     {
-        $checkSucceeded = str_contains($process->getOutput(), 'lucene_version');
-
-        if ($checkSucceeded) {
+        if (str_contains($process->getOutput(), 'memcached is running')) {
             $this->check->succeeded('is running');
 
             return;

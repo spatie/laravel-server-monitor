@@ -6,7 +6,7 @@ use Symfony\Component\Process\Process;
 
 final class MySql extends CheckDefinition
 {
-    public $command = 'ps -e | grep mysql';
+    public $command = 'ps -e | grep mysqld$';
 
     public function handleSuccessfulProcess(Process $process)
     {

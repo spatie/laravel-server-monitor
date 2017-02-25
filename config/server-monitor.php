@@ -10,6 +10,7 @@ return [
     'checks' => [
         'diskspace' => Spatie\ServerMonitor\CheckDefinitions\Diskspace::class,
         'elasticsearch' => Spatie\ServerMonitor\CheckDefinitions\Elasticsearch::class,
+        'memcached' => Spatie\ServerMonitor\CheckDefinitions\Memcached::class,
         'mysql' => Spatie\ServerMonitor\CheckDefinitions\MySql::class,
     ],
 
