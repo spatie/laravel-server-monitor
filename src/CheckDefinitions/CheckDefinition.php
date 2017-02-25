@@ -65,6 +65,10 @@ abstract class CheckDefinition
         }
 
         return 0;
+    }
 
+    public function timeoutInSeconds(): int
+    {
+        return 10;
     }
 }

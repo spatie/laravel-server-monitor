@@ -11,7 +11,11 @@ trait HasProcess
         static $processes = [];
 
         if (! isset($processes[$this->id])) {
-            $processes[$this->id] = new Process($this->getProcessCommand());
+            $process = new Process($this->getProcessCommand());
+
+            $process->setTimeout($this->getDefinition()->timeoutInSeconds());
+
+            $processes[$this->id] = $process;
         }
 
         return $processes[$this->id];
