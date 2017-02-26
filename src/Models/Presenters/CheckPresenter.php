@@ -26,6 +26,10 @@ trait CheckPresenter
             return Emoji::unknown();
         }
 
+        if (is_null($this->status)) {
+            return Emoji::unknown();
+        }
+
         return '';
     }
 

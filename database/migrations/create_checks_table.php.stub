@@ -21,7 +21,7 @@ class CreateChecksTable extends Migration
             $table->string('type');
             $table->text('message')->nullable();
             $table->json('process_output')->nullable();
-            $table->string('status');
+            $table->string('status')->nullable();
             $table->boolean('enabled')->default(true);
             $table->timestamp('last_ran_at')->nullable();
             $table->integer('next_run_in_minutes')->nullable();

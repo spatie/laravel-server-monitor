@@ -24,10 +24,10 @@ class DeleteHostTest extends TestCase
 
         Artisan::call('server-monitor:delete-host', ['name' => 'test-host']);
 
-        $this->seeInConsoleOutput('test-host deleted!');
+        $this->seeInConsoleOutput('Host `test-host` was deleted');
 
         $host = Host::where('name', 'test-host')->first();
 
-        $this->assertEmpty($host, 'Host was not deleted');
+        $this->assertEmpty($host);
     }
 }

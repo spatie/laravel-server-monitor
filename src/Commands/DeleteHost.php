@@ -18,11 +18,11 @@ class DeleteHost extends BaseCommand
         $host = Host::where('name', $name)->first();
 
         if (! $host) {
-            return $this->error("Host with name '{$name}' not found.");
+            return $this->error("Host with name `{$name}` not found.");
         }
 
         $host->delete();
 
-        $this->info("Host {$name}  was deleted!");
+        $this->info("Host `{$name}` was deleted!");
     }
 }
