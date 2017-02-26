@@ -4,8 +4,8 @@ namespace Spatie\ServerMonitor\Test;
 
 use Spatie\ServerMonitor\Models\Check;
 use Illuminate\Support\Facades\Artisan;
-use Spatie\ServerMonitor\Models\Enums\CheckStatus;
 use Illuminate\Support\Facades\Notification;
+use Spatie\ServerMonitor\Models\Enums\CheckStatus;
 use Spatie\ServerMonitor\Notifications\Notifications\CheckFailed;
 
 class IntegrationTest extends TestCase
@@ -95,6 +95,4 @@ class IntegrationTest extends TestCase
 
         return app($notifiableClass);
     }
-
-
 }
