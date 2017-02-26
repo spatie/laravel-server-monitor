@@ -7,7 +7,7 @@ use Spatie\ServerMonitor\Models\Host;
 class DeleteHost extends BaseCommand
 {
     protected $signature = 'server-monitor:delete-host
-                            {name : The host\'s name}';
+                            {name : The name of the host to be deleted}';
 
     protected $description = 'Delete a host';
 
@@ -23,6 +23,6 @@ class DeleteHost extends BaseCommand
 
         $host->delete();
 
-        $this->info("{$name} deleted!");
+        $this->info("Host {$name}  was deleted!");
     }
 }
