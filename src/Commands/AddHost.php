@@ -13,7 +13,7 @@ class AddHost extends BaseCommand
 
     protected $description = 'Add a host';
 
-    public static $allChecksLabel = '<every check>';
+    public static $allChecksLabel = '<all checks>';
 
     public function handle()
     {
