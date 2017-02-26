@@ -12,7 +12,7 @@ trait HasProcess
 
         if (! isset($processes[$this->id])) {
             $process = new Process($this->getProcessCommand());
-            
+
             $process->setTimeout($this->getDefinition()->timeoutInSeconds());
 
             $processes[$this->id] = $process;

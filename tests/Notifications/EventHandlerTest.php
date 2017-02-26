@@ -106,6 +106,4 @@ class EventHandlerTest extends TestCase
             [['mail', 'slack']],
         ];
     }
-
-
 }

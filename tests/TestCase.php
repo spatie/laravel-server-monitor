@@ -4,10 +4,10 @@ namespace Spatie\ServerMonitor\Test;
 
 use Artisan;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Notification;
 use Spatie\ServerMonitor\Models\Host;
 use Spatie\ServerMonitor\Models\Check;
 use Symfony\Component\Process\Process;
+use Illuminate\Support\Facades\Notification;
 use Orchestra\Testbench\TestCase as Orchestra;
 use Spatie\ServerMonitor\Models\Enums\CheckStatus;
 use Spatie\ServerMonitor\ServerMonitorServiceProvider;
@@ -62,10 +62,10 @@ abstract class TestCase extends Orchestra
 
     protected function setUpDatabase()
     {
-        include_once __DIR__ . '/../database/migrations/create_hosts_table.php.stub';
+        include_once __DIR__.'/../database/migrations/create_hosts_table.php.stub';
         (new \CreateHostsTable())->up();
 
-        include_once __DIR__ . '/../database/migrations/create_checks_table.php.stub';
+        include_once __DIR__.'/../database/migrations/create_checks_table.php.stub';
         (new \CreateChecksTable())->up();
     }
 
@@ -140,12 +140,12 @@ abstract class TestCase extends Orchestra
      */
     protected function seeInConsoleOutput($searchStrings)
     {
-        if (!is_array($searchStrings)) {
+        if (! is_array($searchStrings)) {
             $searchStrings = [$searchStrings];
         }
         $output = $this->getArtisanOutput();
         foreach ($searchStrings as $searchString) {
-            $this->assertContains((string)$searchString, $output);
+            $this->assertContains((string) $searchString, $output);
         }
     }
 
@@ -154,12 +154,12 @@ abstract class TestCase extends Orchestra
      */
     protected function dontSeeInConsoleOutput($searchStrings)
     {
-        if (!is_array($searchStrings)) {
+        if (! is_array($searchStrings)) {
             $searchStrings = [$searchStrings];
         }
         $output = $this->getArtisanOutput();
         foreach ($searchStrings as $searchString) {
-            $this->assertNotContains((string)$searchString, $output);
+            $this->assertNotContains((string) $searchString, $output);
         }
     }
 

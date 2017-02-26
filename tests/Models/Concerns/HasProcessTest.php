@@ -2,8 +2,8 @@
 
 namespace Spatie\ServerMonitor\Test\Models\Concerns;
 
-use Spatie\ServerMonitor\Models\Check;
 use Spatie\ServerMonitor\Models\Host;
+use Spatie\ServerMonitor\Models\Check;
 use Spatie\ServerMonitor\Test\TestCase;
 
 class HasProcessTest extends TestCase
