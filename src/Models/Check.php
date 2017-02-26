@@ -56,17 +56,6 @@ class Check extends Model
         $query->where('enabled', 1);
     }
 
-    public function getAttribute($key)
-    {
-        if (array_key_exists($key, $this->attributes)) {
-            return parent::getAttribute($key);
-        }
-
-        $properties = json_decode($this->attributes['custom_properties'], true);
-
-        return array_get($properties, $key, parent::getAttribute($key));
-    }
-
     public function shouldRun(): bool
     {
         if (! $this->enabled) {
