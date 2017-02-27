@@ -17,7 +17,7 @@ class SyncFileTest extends TestCase
             'ssh_user' => 'root',
             'port' => 22,
         ])->checks()->create([
-            'type' => 'test-check'
+            'type' => 'test-check',
         ]);
     }
 
@@ -61,7 +61,7 @@ class SyncFileTest extends TestCase
     {
         Artisan::call('server-monitor:sync-file', [
             'path' => __DIR__.'/../stubs/file-sync-original.json',
-            '--delete-missing' => true
+            '--delete-missing' => true,
         ]);
 
         $deletedHost = Host::where('name', 'original-host')->first();

@@ -49,7 +49,7 @@ class SyncFile extends BaseCommand
             $host = collect($host);
 
             $hostModel = Host::firstOrNew([
-                'name' => $host['name']
+                'name' => $host['name'],
             ]);
 
             $hostModel
