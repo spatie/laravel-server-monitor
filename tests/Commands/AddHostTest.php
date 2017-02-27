@@ -46,6 +46,12 @@ class AddHostTest extends TestCase
             ->andReturn('');
 
         $this->command
+            ->shouldReceive('confirm')
+            ->once()
+            ->with('/Should a specific ip address be used/')
+            ->andReturn('');
+
+        $this->command
             ->shouldReceive('choice')
             ->once()
             ->andReturn([AddHost::$allChecksLabel]);
@@ -82,6 +88,12 @@ class AddHostTest extends TestCase
             ->shouldReceive('confirm')
             ->once()
             ->with('/Should a custom port be used/')
+            ->andReturn('');
+
+        $this->command
+            ->shouldReceive('confirm')
+            ->once()
+            ->with('/Should a specific ip address be used/')
             ->andReturn('');
 
         $this->command
@@ -126,6 +138,12 @@ class AddHostTest extends TestCase
             ->once()
             ->with('/Should a custom port be used/')
             ->andReturn('y');
+
+        $this->command
+            ->shouldReceive('confirm')
+            ->once()
+            ->with('/Should a specific ip address be used/')
+            ->andReturn('');
 
         $this->command
             ->shouldReceive('ask')

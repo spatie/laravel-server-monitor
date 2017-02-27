@@ -16,6 +16,8 @@ class CheckSucceededTest extends TestCase
     {
         parent::setUp();
 
+        $this->skipIfDummySshServerIsNotRunning();
+
         Event::fake();
 
         $this->check = $this->createHost()->checks->first();

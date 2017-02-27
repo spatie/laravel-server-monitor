@@ -2,7 +2,7 @@
 
 namespace Spatie\ServerMonitor\Test\Models;
 
-use Spatie\ServerMonitor\Models\Host;
+use Carbon\Carbon;
 use Spatie\ServerMonitor\Models\Check;
 use Spatie\ServerMonitor\Test\TestCase;
 use Spatie\ServerMonitor\CheckDefinitions\Diskspace;
@@ -29,7 +29,7 @@ class CheckTest extends TestCase
     }
 
     /** @test */
-    public function it_will_throw_an_exception_when_it_has_an_unkown_type()
+    public function it_will_throw_an_exception_when_it_has_an_unknown_type()
     {
         $this->check->type = 'bla bla';
         $this->check->save();
@@ -40,36 +40,38 @@ class CheckTest extends TestCase
     }
 
     /** @test */
-    public function it_uses_the_host_in_the_process_command()
+    public function it_will_determine_that_it_should_be_run()
     {
-        $this->check->getProcessCommand();
-
-        $this->assertStringStartsWith("ssh my-host  'bash", $this->check->getProcessCommand());
+        $this->assertTrue($this->check->shouldRun());
     }
 
     /** @test */
-    public function it_uses_its_host_custom_port_in_the_process_command()
+    public function it_will_determine_that_it_should_not_run_when_it_is_disabled()
     {
-        tap($this->check->host, function (Host $host) {
-            $host->port = 123;
-            $host->save();
-        });
+        $this->check->enabled = false;
 
-        $this->check->getProcessCommand();
+        $this->check->save();
 
-        $this->assertStringStartsWith("ssh my-host -p 123 'bash", $this->check->getProcessCommand());
+        $this->assertFalse($this->check->shouldRun());
     }
 
     /** @test */
-    public function it_uses_its_host_custom_ssh_user_in_the_process_command()
+    public function it_will_determine_that_it_should_not_be_run_until_after_a_certain_period_of_time()
     {
-        tap($this->check->host, function (Host $host) {
-            $host->ssh_user = 'my-ssh-user';
-            $host->save();
-        });
+        $nextRunInMinutes = 5;
 
-        $this->check->getProcessCommand();
+        $this->check->last_ran_at = Carbon::now();
 
-        $this->assertStringStartsWith("ssh my-ssh-user@my-host  'bash", $this->check->getProcessCommand());
+        $this->check->next_run_in_minutes = $nextRunInMinutes;
+
+        $this->check->save();
+
+        foreach (range(1, $nextRunInMinutes) as $pastMinutes) {
+            $this->assertFalse($this->check->shouldRun());
+
+            $this->progressMinutes(1);
+        }
+
+        $this->assertTrue($this->check->shouldRun());
     }
 }

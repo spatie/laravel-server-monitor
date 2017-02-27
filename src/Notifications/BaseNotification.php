@@ -32,4 +32,6 @@ abstract class BaseNotification extends Notification
     {
         return "{$this->getCheck()->type} on {$this->getCheck()->host->name}";
     }
+
+    abstract public function shouldSend(): bool;
 }

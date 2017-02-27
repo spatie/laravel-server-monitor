@@ -5,6 +5,7 @@ namespace Spatie\ServerMonitor\CheckDefinitions;
 use Exception;
 use Spatie\ServerMonitor\Models\Check;
 use Symfony\Component\Process\Process;
+use Spatie\ServerMonitor\Models\Enums\CheckStatus;
 
 abstract class CheckDefinition
 {
@@ -52,5 +53,33 @@ abstract class CheckDefinition
         $this->check->failed("failed to run: {$process->getErrorOutput()}");
     }
 
-    abstract public function performNextRunInMinutes(): int;
+    /**
+     * When a check is emitting a warning or is failing, a notification will only
+     * be sent once in given amount of minutes.
+     *
+     * @return int
+     */
+    public function throttleFailingNotificationsForMinutes(): int
+    {
+        return config('server-monitor.notifications.throttle_failing_notifications_for_minutes');
+    }
+
+    public function performNextRunInMinutes(): int
+    {
+        if ($this->check->hasStatus(CheckStatus::SUCCESS)) {
+            return 10;
+        }
+
+        return 0;
+    }
+
+    /**
+     * The amount of seconds that check may run.
+     *
+     * @return int
+     */
+    public function timeoutInSeconds(): int
+    {
+        return 10;
+    }
 }

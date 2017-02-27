@@ -13,7 +13,7 @@ class AddHost extends BaseCommand
 
     protected $description = 'Add a host';
 
-    public static $allChecksLabel = '<every check>';
+    public static $allChecksLabel = '<all checks>';
 
     public function handle()
     {
@@ -27,6 +27,10 @@ class AddHost extends BaseCommand
 
         $port = $this->confirm('Should a custom port be used?')
             ? $this->ask('Which port?')
+            : null;
+
+        $ip = $this->confirm('Should a specific ip address be used?')
+            ? $this->ask('Which ip address?')
             : null;
 
         $checkNames = array_merge([static::$allChecksLabel], $this->getAllCheckNames());
@@ -43,6 +47,7 @@ class AddHost extends BaseCommand
             'name' => $hostName,
             'ssh_user' => $sshUser,
             'port' => $port,
+            'ip' => $ip,
         ])->checks()->saveMany(collect($chosenChecks)->map(function (string $checkName) {
             return new Check([
                 'type' => $checkName,

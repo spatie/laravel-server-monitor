@@ -2,6 +2,7 @@
 
 namespace Spatie\ServerMonitor\Models\Presenters;
 
+use Exception;
 use Spatie\ServerMonitor\Helpers\Emoji;
 
 trait HostPresenter

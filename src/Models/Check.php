@@ -6,21 +6,24 @@ use Carbon\Carbon;
 use Symfony\Component\Process\Process;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
-use Spatie\ServerMonitor\Events\CheckFailed;
-use Spatie\ServerMonitor\Events\CheckWarning;
 use Spatie\ServerMonitor\Events\CheckRestored;
-use Spatie\ServerMonitor\Events\CheckSucceeded;
-use Spatie\ServerMonitor\Helpers\ConsoleOutput;
 use Spatie\ServerMonitor\Models\Enums\CheckStatus;
+use Spatie\ServerMonitor\Models\Concerns\HasProcess;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\ServerMonitor\CheckDefinitions\CheckDefinition;
 use Spatie\ServerMonitor\Models\Presenters\CheckPresenter;
 use Spatie\ServerMonitor\Exceptions\InvalidCheckDefinition;
+use Spatie\ServerMonitor\Models\Concerns\HandlesCheckResult;
 use Spatie\ServerMonitor\Models\Concerns\HasCustomProperties;
+use Spatie\ServerMonitor\Models\Concerns\ThrottlesFailingNotifications;
 
 class Check extends Model
 {
-    use CheckPresenter, HasCustomProperties;
+    use CheckPresenter,
+        HasCustomProperties,
+        ThrottlesFailingNotifications,
+        HasProcess,
+        HandlesCheckResult;
 
     public $guarded = [];
 
@@ -30,7 +33,7 @@ class Check extends Model
     ];
 
     public $dates = [
-        'checked_at', 'next_check_at',
+        'last_ran_at', 'next_check_at', 'started_throttling_failing_notifications_at',
     ];
 
     public function host(): BelongsTo
@@ -38,15 +41,19 @@ class Check extends Model
         return $this->belongsTo(Host::class);
     }
 
-    public function getAttribute($key)
+    public function scopeHealthy($query)
     {
-        if (array_key_exists($key, $this->attributes)) {
-            return parent::getAttribute($key);
-        }
+        return $query->where('status', CheckStatus::SUCCESS);
+    }
 
-        $properties = json_decode($this->attributes['custom_properties'], true);
+    public function scopeUnhealthy($query)
+    {
+        return $query->where('status', '!=', CheckStatus::SUCCESS);
+    }
 
-        return array_get($properties, $key, parent::getAttribute($key));
+    public function scopeEnabled(Builder $query)
+    {
+        $query->where('enabled', 1);
     }
 
     public function shouldRun(): bool
@@ -55,13 +62,13 @@ class Check extends Model
             return false;
         }
 
-        if (is_null($this->checked_at)) {
+        if (is_null($this->last_ran_at)) {
             return true;
         }
 
-        return $this->checked_at
-            ->addMinutes($this->next_check_in_minutes)
-            ->isPast();
+        return ! $this->last_ran_at
+            ->addMinutes($this->next_run_in_minutes)
+            ->isFuture();
     }
 
     public function getDefinition(): CheckDefinition
@@ -75,88 +82,6 @@ class Check extends Model
         }
 
         return app($definitionClass)->setCheck($this);
-    }
-
-    public function getProcess(): Process
-    {
-        static $processes = [];
-
-        if (! isset($processes[$this->id])) {
-            $processes[$this->id] = new Process($this->getProcessCommand());
-        }
-
-        return $processes[$this->id];
-    }
-
-    public function getProcessCommand(): string
-    {
-        $delimiter = 'EOF-LARAVEL-SERVER-MONITOR';
-
-        $definition = $this->getDefinition();
-
-        $portArgument = empty($this->host->port) ? '' : "-p {$this->host->port}";
-
-        return "ssh {$this->getTarget()} {$portArgument} 'bash -se <<$delimiter".PHP_EOL
-            .'set -e'.PHP_EOL
-            .$definition->getCommand().PHP_EOL
-            .$delimiter."'";
-    }
-
-    protected function getTarget(): string
-    {
-        $target = $this->host->name;
-
-        if ($this->host->ssh_user) {
-            $target = $this->host->ssh_user.'@'.$target;
-        }
-
-        return $target;
-    }
-
-    public function succeeded(string $message = '')
-    {
-        $this->status = CheckStatus::SUCCESS;
-        $this->message = $message;
-
-        $this->save();
-
-        event(new CheckSucceeded($this));
-        ConsoleOutput::info($this->host->name.": check `{$this->type}` succeeded");
-
-        return $this;
-    }
-
-    public function warn(string $warningMessage = '')
-    {
-        $this->status = CheckStatus::WARNING;
-        $this->message = $warningMessage;
-
-        $this->save();
-
-        event(new CheckWarning($this));
-
-        ConsoleOutput::info($this->host->name.": check `{$this->type}` issued warning");
-
-        return $this;
-    }
-
-    public function failed(string $failureReason = '')
-    {
-        $this->status = CheckStatus::FAILED;
-        $this->message = $failureReason;
-
-        $this->save();
-
-        event(new CheckFailed($this));
-
-        ConsoleOutput::error($this->host->name.": check `{$this->type}` failed");
-
-        return $this;
-    }
-
-    public function scopeEnabled(Builder $query)
-    {
-        $query->where('enabled', 1);
     }
 
     public function handleFinishedProcess()
@@ -174,11 +99,20 @@ class Check extends Model
         return $this;
     }
 
+    protected function shouldFireRestoredEvent(?string $originalStatus, ?string $newStatus)
+    {
+        if (! in_array($originalStatus, [CheckStatus::FAILED, CheckStatus::WARNING])) {
+            return false;
+        }
+
+        return $newStatus === CheckStatus::SUCCESS;
+    }
+
     protected function scheduleNextRun()
     {
-        $this->checked_at = Carbon::now();
+        $this->last_ran_at = Carbon::now();
 
-        $this->next_check_in_minutes = $this->getDefinition()->performNextRunInMinutes();
+        $this->next_run_in_minutes = $this->getDefinition()->performNextRunInMinutes();
         $this->save();
 
         return $this;
@@ -187,15 +121,6 @@ class Check extends Model
     public function hasStatus(string $status): bool
     {
         return $this->status === $status;
-    }
-
-    protected function shouldFireRestoredEvent(?string $originalStatus, ?string $newStatus)
-    {
-        if (! in_array($originalStatus, [CheckStatus::FAILED, CheckStatus::WARNING])) {
-            return false;
-        }
-
-        return $newStatus === CheckStatus::SUCCESS;
     }
 
     public function storeProcessOutput(Process $process)

@@ -4,15 +4,13 @@ namespace Spatie\ServerMonitor\CheckDefinitions;
 
 use Symfony\Component\Process\Process;
 
-final class Elasticsearch extends CheckDefinition
+final class MySql extends CheckDefinition
 {
-    public $command = 'curl http://localhost:9200';
+    public $command = 'ps -e | grep mysqld$';
 
     public function handleSuccessfulProcess(Process $process)
     {
-        $checkSucceeded = str_contains($process->getOutput(), 'lucene_version');
-
-        if ($checkSucceeded) {
+        if (str_contains($process->getOutput(), 'mysql')) {
             $this->check->succeeded('is running');
 
             return;

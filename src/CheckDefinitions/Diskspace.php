@@ -30,11 +30,6 @@ final class Diskspace extends CheckDefinition
         $this->check->succeeded($message);
     }
 
-    public function performNextRunInMinutes(): int
-    {
-        return 10;
-    }
-
     protected function getDiskUsagePercentage(string $commandOutput): int
     {
         return (int) Regex::match('/(\d?\d)%/', $commandOutput)->group(1);

@@ -8,7 +8,7 @@ use Spatie\ServerMonitor\Models\Check;
 
 class ListHosts extends BaseCommand
 {
-    protected $signature = 'server-monitor:list
+    protected $signature = 'server-monitor:list-hosts
                             {--host= : Filter hosts by name}
                             {--check= : Filter checks by type}';
 
@@ -16,6 +16,10 @@ class ListHosts extends BaseCommand
 
     public function handle()
     {
+        if (Host::count() === 0) {
+            return $this->info('There are no hosts configured');
+        }
+
         $this->table(
             ['Host', 'Health', 'Checks'],
             $this->getTableRows(Host::all())
@@ -25,12 +29,12 @@ class ListHosts extends BaseCommand
     protected function getTableRows(Collection $hosts): array
     {
         if ($hostName = $this->option('host')) {
-            $hosts->filter(function (Host $host) use ($hostName) {
+            $hosts = $hosts->filter(function (Host $host) use ($hostName) {
                 return $host->name === $hostName;
             });
         }
 
-        return Host::all()
+        return $hosts
             ->map(function (Host $host) {
                 return [
                     'name' => $host->name,

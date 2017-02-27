@@ -21,10 +21,11 @@ class CreateChecksTable extends Migration
             $table->string('type');
             $table->text('message')->nullable();
             $table->json('process_output')->nullable();
-            $table->string('status');
+            $table->string('status')->nullable();
             $table->boolean('enabled')->default(true);
-            $table->timestamp('checked_at')->nullable();
-            $table->integer('next_check_in_minutes')->nullable();
+            $table->timestamp('last_ran_at')->nullable();
+            $table->integer('next_run_in_minutes')->nullable();
+            $table->timestamp('started_throttling_failing_notifications_at')->nullable();
             $table->json('custom_properties')->nullable();
             $table->timestamps();
         });

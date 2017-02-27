@@ -32,7 +32,7 @@ class CheckFailed extends BaseNotification
     public function toSlack($notifiable)
     {
         return (new SlackMessage)
-            ->warning()
+            ->error()
             ->attachment(function (SlackAttachment $attachment) {
                 $attachment
                     ->title($this->getSubject())
@@ -49,8 +49,12 @@ class CheckFailed extends BaseNotification
         return $this;
     }
 
-    public function isStillRelevant(): bool
+    public function shouldSend(): bool
     {
-        return $this->getCheck()->hasStatus(CheckStatus::FAILED);
+        if (! $this->getCheck()->hasStatus(CheckStatus::FAILED)) {
+            return false;
+        }
+
+        return ! $this->getCheck()->isThrottlingFailedNotifications();
     }
 }

@@ -19,6 +19,7 @@ class CreateHostsTable extends Migration
             $table->string('name');
             $table->string('ssh_user')->nullable();
             $table->integer('port')->nullable();
+            $table->string('ip')->nullable();
             $table->json('custom_properties')->nullable();
             $table->timestamps();
         });

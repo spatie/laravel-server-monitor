@@ -49,7 +49,7 @@ class CheckRestored extends BaseNotification
         return $this;
     }
 
-    public function isStillRelevant(): bool
+    public function shouldSend(): bool
     {
         return $this->getCheck()->hasStatus(CheckStatus::SUCCESS);
     }
