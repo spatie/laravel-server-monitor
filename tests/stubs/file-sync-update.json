@@ -1,0 +1,11 @@
+[
+    {
+        "name": "original-host",
+        "ssh_user": "root-updated",
+        "port": null,
+        "ip": null,
+        "checks": [
+            "test-check-updated"
+        ]
+    }
+]
