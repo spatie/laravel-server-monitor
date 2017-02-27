@@ -40,7 +40,7 @@ class DeleteHostTest extends TestCase
         $this->command
             ->shouldReceive('confirm')
             ->once()
-            ->with('/Are you sure you wish to delete \'test-host\'?/')
+            ->with('/Are you sure you wish to delete `test-host`?/')
             ->andReturn('y');
 
         Artisan::call('server-monitor:delete-host', ['name' => 'test-host']);
@@ -68,7 +68,7 @@ class DeleteHostTest extends TestCase
         $this->command
             ->shouldReceive('confirm')
             ->once()
-            ->with('/Are you sure you wish to delete \'test-host\'?/')
+            ->with('/Are you sure you wish to delete `test-host`?/')
             ->andReturn('');
 
         Artisan::call('server-monitor:delete-host', ['name' => 'test-host']);
