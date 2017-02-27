@@ -21,6 +21,10 @@ class DeleteHost extends BaseCommand
             return $this->error("Host with name `{$name}` not found.");
         }
 
+        if (! $this->confirm("Are you sure you wish to delete `{$name}`?")) {
+            return;
+        }
+
         $host->delete();
 
         $this->info("Host `{$name}` was deleted!");
