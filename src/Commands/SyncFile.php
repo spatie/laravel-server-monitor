@@ -10,70 +10,20 @@ use Spatie\ServerMonitor\Models\Check;
 class SyncFile extends BaseCommand
 {
     protected $signature = 'server-monitor:sync-file
-                            {--force-export : Overwrite existing entries in hosts file with database entries}
+                            {filename : JSON file with hosts}
                             {--delete-missing : Delete hosts from the database that are not in the hosts file}';
 
-    protected $description = 'Syncs hosts in file with the database';
-
-    protected $path;
-
-    protected $filename = 'hosts.json';
+    protected $description = 'One way sync hosts from JSON file to database';
 
     public function handle()
     {
-        $this->prepareStorageDirectory();
+        $json = File::get($this->argument('filename'));
 
-        if($this->option('force-export') || ! File::exists($this->getFilepath())) {
-            $this->exportAll();
-
-            return;
-        }
-
-        $hostsInFile = collect(json_decode(File::get($this->getFilepath()), true));
+        $hostsInFile = collect(json_decode($json, true));
 
         $this->updateOrCreateHosts($hostsInFile);
 
         $this->deleteMissingHosts($hostsInFile);
-
-        $this->writeToFile(Host::all());
-    }
-
-    protected function getFilepath(): string
-    {
-        return $this->path.DIRECTORY_SEPARATOR.$this->filename;
-    }
-
-    protected function writeToFile(Collection $hosts)
-    {
-        $json = $hosts
-            ->map(function (Host $host) {
-                $checks = $host->checks->pluck('type');
-                $host = collect($host)->only('name', 'ssh_user', 'ip', 'port')->toArray();
-                $host['checks'] = $checks;
-
-                return $host;
-            })
-            ->toJson();
-
-        File::put($this->getFilepath(), $json);
-    }
-
-    protected function prepareStorageDirectory()
-    {
-        $this->path = storage_path('server-monitor');
-
-        if (!File::exists($this->path)) {
-            File::makeDirectory($this->path);
-        }
-    }
-
-    protected function exportAll()
-    {
-        $this->writeToFile(Host::all());
-
-        $this->info('Exported all hosts from database to ' . $this->getFilepath());
-
-        return;
     }
 
     /**
