@@ -4,6 +4,7 @@ namespace Spatie\ServerMonitor;
 
 use Illuminate\Support\ServiceProvider;
 use Spatie\ServerMonitor\Commands\AddHost;
+use Spatie\ServerMonitor\Commands\SyncFile;
 use Spatie\ServerMonitor\Commands\ListHosts;
 use Spatie\ServerMonitor\Commands\RunChecks;
 use Spatie\ServerMonitor\Commands\DeleteHost;
@@ -33,6 +34,7 @@ class ServerMonitorServiceProvider extends ServiceProvider
         $this->app->bind('command.server-monitor:run-checks', RunChecks::class);
         $this->app->bind('command.server-monitor:add-host', AddHost::class);
         $this->app->bind('command.server-monitor:delete-host', DeleteHost::class);
+        $this->app->bind('command.server-monitor:sync-file', SyncFile::class);
         $this->app->bind('command.server-monitor:list', ListHosts::class);
         $this->app->bind('command.server-monitor:list-checks', ListChecks::class);
 
@@ -40,6 +42,7 @@ class ServerMonitorServiceProvider extends ServiceProvider
             'command.server-monitor:run-checks',
             'command.server-monitor:add-host',
             'command.server-monitor:delete-host',
+            'command.server-monitor:sync-file',
             'command.server-monitor:list',
             'command.server-monitor:list-checks',
         ]);
