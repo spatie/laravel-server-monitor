@@ -3,7 +3,6 @@
 namespace Spatie\ServerMonitor\Commands;
 
 use File;
-use Illuminate\Database\Eloquent\Collection;
 use Spatie\ServerMonitor\Models\Host;
 use Spatie\ServerMonitor\Models\Check;
 
@@ -33,7 +32,7 @@ class SyncFile extends BaseCommand
     {
         if ($this->option('delete-missing')) {
             Host::all()->each(function (Host $host) use ($hostsInFile) {
-                if (!$hostsInFile->contains('name', $host->name)) {
+                if (! $hostsInFile->contains('name', $host->name)) {
                     $this->comment("Deleted host '{$host->name}' from database (was not found in hosts file)");
                     $host->delete();
                 }
@@ -57,7 +56,7 @@ class SyncFile extends BaseCommand
 
             // Delete checks that were deleted from the file
             $hostModel->checks->each(function (Check $check) use ($host) {
-                if (!in_array($check->type, $host['checks'])) {
+                if (! in_array($check->type, $host['checks'])) {
                     $this->comment("Deleted '{$check->type}' from host '{$host['name']}' (not found in hosts file)");
                     $check->delete();
                 }
