@@ -29,7 +29,7 @@ class Check extends Model
 
     public $casts = [
         'custom_properties' => 'array',
-        'process_output' => 'array',
+        'last_run_output' => 'array',
     ];
 
     public $dates = [
@@ -125,7 +125,7 @@ class Check extends Model
 
     public function storeProcessOutput(Process $process)
     {
-        $this->process_output = [
+        $this->last_run_output = [
             'output' => $process->getOutput(),
             'error_output' => $process->getErrorOutput(),
             'exit_code' => $process->getExitCode(),

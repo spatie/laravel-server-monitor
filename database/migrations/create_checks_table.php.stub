@@ -22,7 +22,7 @@ class CreateChecksTable extends Migration
             $table->string('status')->nullable();
             $table->boolean('enabled')->default(true);
             $table->text('last_run_message')->nullable();
-            $table->json('process_output')->nullable();
+            $table->json('last_run_output')->nullable();
             $table->timestamp('last_ran_at')->nullable();
             $table->integer('next_run_in_minutes')->nullable();
             $table->timestamp('started_throttling_failing_notifications_at')->nullable();
