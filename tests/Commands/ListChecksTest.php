@@ -123,7 +123,7 @@ class ListChecksTest extends TestCase
                 return new Check([
                     'type' => $checkName,
                     'status' => CheckStatus::SUCCESS,
-                    'message' => 'check-message',
+                    'last_run_message' => 'check-message',
                     'custom_properties' => [],
                 ]);
             })->merge(collect($unhealthyChecks)

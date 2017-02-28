@@ -66,6 +66,6 @@ class CheckDefinitionTest extends TestCase
 
         $this->assertEquals(CheckStatus::FAILED, $this->check->status);
 
-        $this->assertEquals('Exception occurred: my exception message', $this->check->message);
+        $this->assertEquals('Exception occurred: my exception message', $this->check->last_run_message);
     }
 }

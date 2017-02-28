@@ -42,7 +42,7 @@ class DiskspaceTest extends TestCase
 
         $this->check->fresh();
 
-        $this->assertStringContains("{$diskspaceUsed}%", $this->check->message);
+        $this->assertStringContains("{$diskspaceUsed}%", $this->check->last_run_message);
         $this->assertEquals($status, $this->check->status);
     }
 

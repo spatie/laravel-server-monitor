@@ -13,7 +13,7 @@ trait HandlesCheckResult
     public function succeeded(string $message = '')
     {
         $this->status = CheckStatus::SUCCESS;
-        $this->message = $message;
+        $this->last_run_message = $message;
 
         $this->save();
 
@@ -26,7 +26,7 @@ trait HandlesCheckResult
     public function warn(string $warningMessage = '')
     {
         $this->status = CheckStatus::WARNING;
-        $this->message = $warningMessage;
+        $this->last_run_message = $warningMessage;
 
         $this->save();
 
@@ -40,7 +40,7 @@ trait HandlesCheckResult
     public function failed(string $failureReason = '')
     {
         $this->status = CheckStatus::FAILED;
-        $this->message = $failureReason;
+        $this->last_run_message = $failureReason;
 
         $this->save();
 

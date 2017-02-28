@@ -37,7 +37,7 @@ class ElasticsearchTest extends TestCase
 
         $this->check->fresh();
 
-        $this->assertStringContains('is running', $this->check->message);
+        $this->assertStringContains('is running', $this->check->last_run_message);
         $this->assertEquals(CheckStatus::SUCCESS, $this->check->status);
     }
 
@@ -52,7 +52,7 @@ class ElasticsearchTest extends TestCase
 
         $this->check->fresh();
 
-        $this->assertStringContains('is not running', $this->check->message);
+        $this->assertStringContains('is not running', $this->check->last_run_message);
         $this->assertEquals(CheckStatus::FAILED, $this->check->status);
     }
 }

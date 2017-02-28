@@ -74,7 +74,7 @@ class ListChecks extends BaseCommand
                 return [
                     'name' => $check->host->name,
                     'check' => $check->type,
-                    'message' => $check->message,
+                    'last_run_message' => $check->last_run_message,
                     'status' => $check->status_as_emoji,
                     'last_checked' => $check->getLatestRunDiffAttribute(),
                     'next_check' => $check->getNextRunDiffAttribute(),

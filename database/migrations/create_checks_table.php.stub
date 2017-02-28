@@ -19,10 +19,10 @@ class CreateChecksTable extends Migration
             $table->integer('host_id')->unsigned();
             $table->foreign('host_id')->references('id')->on('hosts')->onDelete('cascade');
             $table->string('type');
-            $table->text('message')->nullable();
-            $table->json('process_output')->nullable();
             $table->string('status')->nullable();
             $table->boolean('enabled')->default(true);
+            $table->text('last_run_message')->nullable();
+            $table->json('process_output')->nullable();
             $table->timestamp('last_ran_at')->nullable();
             $table->integer('next_run_in_minutes')->nullable();
             $table->timestamp('started_throttling_failing_notifications_at')->nullable();

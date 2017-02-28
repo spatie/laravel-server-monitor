@@ -31,7 +31,7 @@ class IntegrationTest extends TestCase
 
         $check = Check::where('host_id', $this->host->id)->where('type', 'diskspace')->first();
 
-        $this->assertEquals('usage at 40%', $check->message);
+        $this->assertEquals('usage at 40%', $check->last_run_message);
         $this->assertEquals(CheckStatus::SUCCESS, $check->status);
     }
 
@@ -44,7 +44,7 @@ class IntegrationTest extends TestCase
 
         $check = Check::where('host_id', $this->host->id)->where('type', 'diskspace')->first();
 
-        $this->assertEquals('usage at 85%', $check->message);
+        $this->assertEquals('usage at 85%', $check->last_run_message);
         $this->assertEquals(CheckStatus::WARNING, $check->status);
     }
 
@@ -57,7 +57,7 @@ class IntegrationTest extends TestCase
 
         $check = Check::where('host_id', $this->host->id)->where('type', 'diskspace')->first();
 
-        $this->assertEquals('usage at 95%', $check->message);
+        $this->assertEquals('usage at 95%', $check->last_run_message);
         $this->assertEquals(CheckStatus::FAILED, $check->status);
     }
 
