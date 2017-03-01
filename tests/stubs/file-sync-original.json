@@ -2,8 +2,6 @@
     {
         "name": "test-import-one",
         "ssh_user": "root",
-        "port": null,
-        "ip": null,
         "checks": [
             "test-check-one"
         ]
@@ -11,8 +9,6 @@
     {
         "name": "test-import-two",
         "ssh_user": "root",
-        "port": null,
-        "ip": null,
         "checks": [
             "test-check-one",
             "test-check-two"
