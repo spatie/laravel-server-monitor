@@ -88,7 +88,7 @@ class Check extends Model
     {
         $originalStatus = $this->status;
 
-        $this->getDefinition()->handleFinishedProcess($this->getProcess());
+        $this->getDefinition()->determineResult($this->getProcess());
 
         $this->scheduleNextRun();
 

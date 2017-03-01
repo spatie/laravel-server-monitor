@@ -34,7 +34,7 @@ class CheckDefinitionTest extends TestCase
     {
         $process = $this->getFailedProcess();
 
-        $this->diskspaceCheckDefinition->handleFinishedProcess($process);
+        $this->diskspaceCheckDefinition->determineResult($process);
 
         $this->check->fresh();
 
@@ -45,7 +45,7 @@ class CheckDefinitionTest extends TestCase
     public function it_will_mark_the_check_as_failed_when_a_check_definition_throws_an_exception()
     {
         $checkDefinition = new class extends CheckDefinition {
-            public function handleSuccessfulProcess(Process $process)
+            public function resolve(Process $process)
             {
                 throw new Exception('my exception message');
             }
@@ -60,7 +60,7 @@ class CheckDefinitionTest extends TestCase
 
         $process = $this->getSuccessfulProcessWithOutput();
 
-        $checkDefinition->handleFinishedProcess($process);
+        $checkDefinition->determineResult($process);
 
         $this->check->fresh();
 

@@ -34,7 +34,7 @@ class MemcachedTest extends TestCase
             '* memcached is running'
         );
 
-        $this->memcachedDefinition->handleSuccessfulProcess($process);
+        $this->memcachedDefinition->resolve($process);
 
         $this->check->fresh();
 
@@ -49,7 +49,7 @@ class MemcachedTest extends TestCase
             ''
         );
 
-        $this->memcachedDefinition->handleSuccessfulProcess($process);
+        $this->memcachedDefinition->resolve($process);
 
         $this->check->fresh();
 

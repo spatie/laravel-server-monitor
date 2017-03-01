@@ -33,7 +33,7 @@ class ElasticsearchTest extends TestCase
             'output something something lucene_version something something'
         );
 
-        $this->elasticsearchDefintion->handleSuccessfulProcess($process);
+        $this->elasticsearchDefintion->resolve($process);
 
         $this->check->fresh();
 
@@ -48,7 +48,7 @@ class ElasticsearchTest extends TestCase
             'output something something something something'
         );
 
-        $this->elasticsearchDefintion->handleSuccessfulProcess($process);
+        $this->elasticsearchDefintion->resolve($process);
 
         $this->check->fresh();
 

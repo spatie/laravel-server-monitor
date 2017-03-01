@@ -8,7 +8,7 @@ final class Memcached extends CheckDefinition
 {
     public $command = 'service memcached status';
 
-    public function handleSuccessfulProcess(Process $process)
+    public function resolve(Process $process)
     {
         if (str_contains($process->getOutput(), 'memcached is running')) {
             $this->check->succeed('is running');

@@ -8,7 +8,7 @@ final class MySql extends CheckDefinition
 {
     public $command = 'ps -e | grep mysqld$';
 
-    public function handleSuccessfulProcess(Process $process)
+    public function resolve(Process $process)
     {
         if (str_contains($process->getOutput(), 'mysql')) {
             $this->check->succeed('is running');

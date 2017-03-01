@@ -9,7 +9,7 @@ final class Diskspace extends CheckDefinition
 {
     public $command = 'df -P .';
 
-    public function handleSuccessfulProcess(Process $process)
+    public function resolve(Process $process)
     {
         $percentage = $this->getDiskUsagePercentage($process->getOutput());
 

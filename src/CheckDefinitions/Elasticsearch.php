@@ -8,7 +8,7 @@ final class Elasticsearch extends CheckDefinition
 {
     public $command = 'curl http://localhost:9200';
 
-    public function handleSuccessfulProcess(Process $process)
+    public function resolve(Process $process)
     {
         $checkSucceeded = str_contains($process->getOutput(), 'lucene_version');
 

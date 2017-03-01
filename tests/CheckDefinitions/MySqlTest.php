@@ -34,7 +34,7 @@ class MySqlTest extends TestCase
             '1410 ?        00:20:36 mysqld'
         );
 
-        $this->mySqlCheckDefintion->handleSuccessfulProcess($process);
+        $this->mySqlCheckDefintion->resolve($process);
 
         $this->check->fresh();
 
@@ -49,7 +49,7 @@ class MySqlTest extends TestCase
             ''
         );
 
-        $this->mySqlCheckDefintion->handleSuccessfulProcess($process);
+        $this->mySqlCheckDefintion->resolve($process);
 
         $this->check->fresh();
 

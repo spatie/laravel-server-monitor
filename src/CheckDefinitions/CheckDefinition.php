@@ -29,26 +29,26 @@ abstract class CheckDefinition
         return $this->command;
     }
 
-    public function handleFinishedProcess(Process $process)
+    public function determineResult(Process $process)
     {
         $this->check->storeProcessOutput($process);
 
         try {
             if (! $process->isSuccessful()) {
-                $this->handleFailedProcess($process);
+                $this->resolveFailed($process);
 
                 return;
             }
 
-            $this->handleSuccessfulProcess($process);
+            $this->resolve($process);
         } catch (Exception $exception) {
             $this->check->fail('Exception occurred: '.$exception->getMessage());
         }
     }
 
-    abstract public function handleSuccessfulProcess(Process $process);
+    abstract public function resolve(Process $process);
 
-    public function handleFailedProcess(Process $process)
+    public function resolveFailed(Process $process)
     {
         $this->check->fail("failed to run: {$process->getErrorOutput()}");
     }

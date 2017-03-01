@@ -38,7 +38,7 @@ class DiskspaceTest extends TestCase
             "/dev/disk1  974700800 830137776 144051024   {$diskspaceUsed}%    /"
         );
 
-        $this->diskspaceCheckDefinition->handleSuccessfulProcess($process);
+        $this->diskspaceCheckDefinition->resolve($process);
 
         $this->check->fresh();
 
