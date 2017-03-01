@@ -9,6 +9,7 @@ use Spatie\ServerMonitor\Commands\ListHosts;
 use Spatie\ServerMonitor\Commands\RunChecks;
 use Spatie\ServerMonitor\Commands\DeleteHost;
 use Spatie\ServerMonitor\Commands\ListChecks;
+use Spatie\ServerMonitor\Manipulators\Manipulator;
 use Spatie\ServerMonitor\Notifications\EventHandler;
 
 class ServerMonitorServiceProvider extends ServiceProvider
@@ -28,6 +29,8 @@ class ServerMonitorServiceProvider extends ServiceProvider
     public function register()
     {
         $this->mergeConfigFrom(__DIR__.'/../config/server-monitor.php', 'server-monitor');
+
+        $this->app->bind(Manipulator::class, config('server-monitor.process_manipulator'));
 
         $this->app['events']->subscribe(EventHandler::class);
 

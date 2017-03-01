@@ -2,6 +2,7 @@
 
 namespace Spatie\ServerMonitor\Models\Concerns;
 
+use Spatie\ServerMonitor\Manipulators\Manipulator;
 use Symfony\Component\Process\Process;
 
 trait HasProcess
@@ -14,6 +15,10 @@ trait HasProcess
             $process = new Process($this->getProcessCommand());
 
             $process->setTimeout($this->getDefinition()->timeoutInSeconds());
+
+            $manipulator = app(Manipulator::class);
+
+            $process = $manipulator->manipulateProcess($process, $this);
 
             $processes[$this->id] = $process;
         }
