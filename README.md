@@ -1,5 +1,3 @@
-**PACKAGE IN DEVELOPMENT, DO NOT USE YET**
-
 # An easy to use powerful server monitor
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/spatie/laravel-server-monitor.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-server-monitor)
@@ -9,11 +7,15 @@
 [![StyleCI](https://styleci.io/repos/82051379/shield?branch=master)](https://styleci.io/repos/82051379)
 [![Total Downloads](https://img.shields.io/packagist/dt/spatie/laravel-server-monitor.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-server-monitor)
 
-We all dream over servers that need no maintenance at all. But unfortunately in reality this is not the case. Disks can get full, processes can crash, the server can run out of memory. 
+We all dream of servers that need no maintenance at all. But unfortunately in reality this is not the case. Disks can get full, processes can crash, the server can run out of memory...
 
-Using this package you can keep an eye on the health of your server. There are a few checks that come out of the box. Adding new checks is a breeze.
+This package keeps an eye on the health of all your servers. There are a few [checks that come out of the box](https://docs.spatie.be/laravel-server-monitor/v1/monitoring-basics/built-in-checks). [Adding new checks](https://docs.spatie.be/laravel-server-monitor/v1/monitoring-basics/writing-your-own-checks) is a breeze.
 
-When something goes wrong it can notify via Slack or mail. Behind the scenes [Laravel's native notification system]() is leveraged so you can use one of the [many notification drivers](http://laravel-notification-channels.com/).
+When something goes wrong it can [notify you](https://docs.spatie.be/laravel-server-monitor/v1/monitoring-basics/notifications-and-events) via Slack or mail. Here's how a Slack notifications look like:
+
+<img src="/images/server-monitor/check-failed.jpg" class="screenshot -slack">
+
+Behind the scenes [Laravel's native notification system](https://laravel.com/docs/5.4/notifications) is leveraged so you can use one of the [many notification drivers](http://laravel-notification-channels.com/).
 
 ## Postcardware
 
