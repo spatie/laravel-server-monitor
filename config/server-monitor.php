@@ -36,7 +36,7 @@ return [
         ],
 
         /*
-         * To avoid to burying your in notifications, we'll only send one every given amount
+         * To avoid burying you in notifications, we'll only send one every given amount
          * of minutes when a check keeps emitting warning or keeps failing.
          */
         'throttle_failing_notifications_for_minutes' => 60,
