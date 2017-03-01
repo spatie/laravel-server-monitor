@@ -2,7 +2,6 @@
 
 namespace Spatie\ServerMonitor\Commands;
 
-use File;
 use Spatie\ServerMonitor\Models\Host;
 use Spatie\ServerMonitor\Models\Check;
 
@@ -16,62 +15,86 @@ class SyncFile extends BaseCommand
 
     public function handle()
     {
-        $json = File::get($this->argument('path'));
+        $json = file_get_contents($this->argument('path'));
 
         $hostsInFile = collect(json_decode($json, true));
 
-        $this->updateOrCreateHosts($hostsInFile);
+        $this->createOrUpdateHostsFromFile($hostsInFile);
 
         $this->deleteMissingHosts($hostsInFile);
     }
 
-    /**
-     * @param $hostsInFile
-     */
-    protected function deleteMissingHosts($hostsInFile)
+    protected function createOrUpdateHostsFromFile($hostsInFile)
     {
-        if ($this->option('delete-missing')) {
-            Host::all()->each(function (Host $host) use ($hostsInFile) {
-                if (! $hostsInFile->contains('name', $host->name)) {
-                    $this->comment("Deleted host `{$host->name}` from database (was not found in hosts file)");
-                    $host->delete();
-                }
-            });
-        }
-    }
+        $hostsInFile->each(function ($hostAttributes) {
 
-    /**
-     * @param $hostsInFile
-     */
-    protected function updateOrCreateHosts($hostsInFile)
-    {
-        $hostsInFile->each(function ($host) {
-            $host = collect($host);
+            $host = $this->createOrUpdateHost($hostAttributes);
 
-            $hostModel = Host::firstOrNew([
-                'name' => $host['name'],
-            ]);
-
-            $hostModel
-                ->fill($host->except('checks')->toArray())
-                ->save();
-
-            // Delete checks that were deleted from the file
-            $hostModel->checks->each(function (Check $check) use ($host) {
-                if (! in_array($check->type, $host['checks'])) {
-                    $this->comment("Deleted `{$check->type}` from host `{$host['name']}` (not found in hosts file)");
-                    $check->delete();
-                }
-            });
-
-            // Add checks that do not exist in db
-            foreach ($host['checks'] as $check) {
-                if ($hostModel->checks->where('type', $check)->count() === 0) {
-                    $hostModel->checks()->create(['type' => $check]);
-                }
-            }
+            $this->syncChecks($host, $hostAttributes['checks']);
         });
 
         $this->info("Synced {$hostsInFile->count()} host(s) to database");
+    }
+
+    protected function deleteMissingHosts($hostsInFile)
+    {
+        if (!$this->option('delete-missing')) {
+            return;
+        }
+
+        Host::all()
+            ->reject(function (Host $host) use ($hostsInFile) {
+                return $hostsInFile->contains('name', $host->name);
+            })
+            ->each(function (Host $host) {
+                $this->comment("Deleted host `{$host->name}` from database because was not found in hosts file");
+                $host->delete();
+            });
+
+    }
+
+    protected function createOrUpdateHost(array $hostAttributes): Host
+    {
+        unset($hostAttributes['checks']);
+
+        return tap(Host::firstOrNew([
+            'name' => $hostAttributes['name'],
+        ]), function (Host $hostModel) use ($hostAttributes) {
+            $hostModel
+                ->fill($hostAttributes)
+                ->save();
+        });
+    }
+
+    protected function syncChecks(Host $host, array $checkTypes): Host
+    {
+        $this->removeChecksNotInArray($host, $checkTypes);
+
+        $this->addChecksFromArray($host, $checkTypes);
+
+        return $host;
+    }
+
+    protected function removeChecksNotInArray(Host $host, array $checkTypes)
+    {
+        $host->checks
+            ->filter(function (Check $check) use ($checkTypes) {
+                return !in_array($check->type, $checkTypes);
+            })
+            ->each(function (Check $check) use ($host) {
+                $this->comment("Deleted `{$check->type}` from host `{$host->name}` (not found in hosts file)");
+                return $check->delete();
+            });
+    }
+
+    protected function addChecksFromArray(Host $host, array $checkTypes)
+    {
+        collect($checkTypes)
+            ->reject(function (string $checkType) use ($host) {
+                return $host->hasCheckType($checkType);
+            })
+            ->each(function (string $checkType) use ($host) {
+                $host->checks()->create(['type' => $checkType]);
+            });
     }
 }
