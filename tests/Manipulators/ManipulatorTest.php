@@ -39,7 +39,5 @@ class PassThroughTest extends TestCase
         $this->app->bind(Manipulator::class, get_class($manipulator));
 
         $this->assertEquals('modified', $this->check->getProcess()->getCommandLine());
-
-
     }
 }
