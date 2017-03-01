@@ -24,7 +24,7 @@ abstract class CheckDefinition
         return $this;
     }
 
-    public function getCommand(): string
+    public function command(): string
     {
         return $this->command;
     }
