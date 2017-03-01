@@ -9,7 +9,7 @@ class SyncFile extends BaseCommand
 {
     protected $signature = 'server-monitor:sync-file
                             {path : Path to JSON file with hosts}
-                            {--delete-missing : Delete hosts from the database that are not in the hosts file}';
+                            {--delete-missing : Delete hosts from the database which are not in the hosts file}';
 
     protected $description = 'One way sync hosts from JSON file to database';
 
