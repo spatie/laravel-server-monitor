@@ -24,8 +24,6 @@ class PassThroughTest extends TestCase
     /** @test */
     public function it_will_manipulate_the_process_of_a_check()
     {
-        $this->assertNotEquals('modified', $this->check->getProcess()->getCommandLine());
-
         $manipulator = new class implements Manipulator {
             public function manipulateProcess(Process $process, Check $check): Process
             {
