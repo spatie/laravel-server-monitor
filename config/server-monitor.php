@@ -68,7 +68,7 @@ return [
      */
     'check_model' => Spatie\ServerMonitor\Models\Check::class,
 
-    /**
+    /*
      * Right before running a check it's process will be given to this class. Here you
      * can perform some last minute manipulations on it before it will
      * actually be run.

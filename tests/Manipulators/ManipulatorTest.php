@@ -2,10 +2,10 @@
 
 namespace Spatie\ServerMonitor\Test\Manipulators;
 
-use Spatie\ServerMonitor\Manipulators\Manipulator;
 use Spatie\ServerMonitor\Models\Check;
-use Spatie\ServerMonitor\Test\TestCase;
 use Symfony\Component\Process\Process;
+use Spatie\ServerMonitor\Test\TestCase;
+use Spatie\ServerMonitor\Manipulators\Manipulator;
 
 class PassThroughTest extends TestCase
 {
@@ -26,8 +26,7 @@ class PassThroughTest extends TestCase
     {
         $this->assertNotEquals('modified', $this->check->getProcess()->getCommandLine());
 
-        $manipulator = new class implements Manipulator
-        {
+        $manipulator = new class implements Manipulator {
             public function manipulateProcess(Process $process, Check $check): Process
             {
                 $process->setCommandLine('modified');

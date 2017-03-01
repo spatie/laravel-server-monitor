@@ -27,7 +27,6 @@ class SyncFile extends BaseCommand
     protected function createOrUpdateHostsFromFile($hostsInFile)
     {
         $hostsInFile->each(function ($hostAttributes) {
-
             $host = $this->createOrUpdateHost($hostAttributes);
 
             $this->syncChecks($host, $hostAttributes['checks']);
@@ -38,7 +37,7 @@ class SyncFile extends BaseCommand
 
     protected function deleteMissingHosts($hostsInFile)
     {
-        if (!$this->option('delete-missing')) {
+        if (! $this->option('delete-missing')) {
             return;
         }
 
@@ -50,7 +49,6 @@ class SyncFile extends BaseCommand
                 $this->comment("Deleted host `{$host->name}` from database because was not found in hosts file");
                 $host->delete();
             });
-
     }
 
     protected function createOrUpdateHost(array $hostAttributes): Host
@@ -79,10 +77,11 @@ class SyncFile extends BaseCommand
     {
         $host->checks
             ->filter(function (Check $check) use ($checkTypes) {
-                return !in_array($check->type, $checkTypes);
+                return ! in_array($check->type, $checkTypes);
             })
             ->each(function (Check $check) use ($host) {
                 $this->comment("Deleted `{$check->type}` from host `{$host->name}` (not found in hosts file)");
+
                 return $check->delete();
             });
     }

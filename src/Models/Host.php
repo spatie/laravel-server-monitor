@@ -64,9 +64,8 @@ class Host extends Model
 
     public function hasCheckType(string $type): bool
     {
-        return $this->checks->contains(function(Check $check) use ($type) {
+        return $this->checks->contains(function (Check $check) use ($type) {
             return $check->type === $type;
         });
     }
-
 }
