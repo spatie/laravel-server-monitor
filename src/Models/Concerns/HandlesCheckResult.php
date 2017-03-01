@@ -10,7 +10,7 @@ use Spatie\ServerMonitor\Models\Enums\CheckStatus;
 
 trait HandlesCheckResult
 {
-    public function succeeded(string $message = '')
+    public function succeed(string $message = '')
     {
         $this->status = CheckStatus::SUCCESS;
         $this->last_run_message = $message;
@@ -37,7 +37,7 @@ trait HandlesCheckResult
         return $this;
     }
 
-    public function failed(string $failureReason = '')
+    public function fail(string $failureReason = '')
     {
         $this->status = CheckStatus::FAILED;
         $this->last_run_message = $failureReason;

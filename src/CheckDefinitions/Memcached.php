@@ -11,11 +11,11 @@ final class Memcached extends CheckDefinition
     public function handleSuccessfulProcess(Process $process)
     {
         if (str_contains($process->getOutput(), 'memcached is running')) {
-            $this->check->succeeded('is running');
+            $this->check->succeed('is running');
 
             return;
         }
 
-        $this->check->failed('is not running');
+        $this->check->fail('is not running');
     }
 }

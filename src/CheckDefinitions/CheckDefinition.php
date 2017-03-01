@@ -42,7 +42,7 @@ abstract class CheckDefinition
 
             $this->handleSuccessfulProcess($process);
         } catch (Exception $exception) {
-            $this->check->failed('Exception occurred: '.$exception->getMessage());
+            $this->check->fail('Exception occurred: '.$exception->getMessage());
         }
     }
 
@@ -50,7 +50,7 @@ abstract class CheckDefinition
 
     public function handleFailedProcess(Process $process)
     {
-        $this->check->failed("failed to run: {$process->getErrorOutput()}");
+        $this->check->fail("failed to run: {$process->getErrorOutput()}");
     }
 
     /**

@@ -16,7 +16,7 @@ final class Diskspace extends CheckDefinition
         $message = "usage at {$percentage}%";
 
         if ($percentage >= 90) {
-            $this->check->failed($message);
+            $this->check->fail($message);
 
             return;
         }
@@ -27,7 +27,7 @@ final class Diskspace extends CheckDefinition
             return;
         }
 
-        $this->check->succeeded($message);
+        $this->check->succeed($message);
     }
 
     protected function getDiskUsagePercentage(string $commandOutput): int
