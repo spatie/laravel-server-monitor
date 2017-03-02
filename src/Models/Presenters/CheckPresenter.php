@@ -57,6 +57,12 @@ trait CheckPresenter
             return 'As soon as possible';
         }
 
+        $nextRun = $this->last_ran_at->addMinutes($this->next_run_in_minutes);
+
+        if ($nextRun->isPast()) {
+            return 'As soon as possible';
+        }
+
         return $this->last_ran_at->addMinutes($this->next_run_in_minutes)->diffForHumans();
     }
 }

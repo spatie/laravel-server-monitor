@@ -3,6 +3,7 @@
 namespace Spatie\ServerMonitor\Test\Commands;
 
 use Artisan;
+use Carbon\Carbon;
 use Spatie\ServerMonitor\Models\Host;
 use Spatie\ServerMonitor\Models\Check;
 use Spatie\ServerMonitor\Test\TestCase;
@@ -112,10 +113,34 @@ class ListChecksTest extends TestCase
         $this->dontSeeInConsoleOutput(['check-2', 'check-3', 'host-2']);
     }
 
-    public function addHosts($names, array $healthyChecks = [], array $unhealthyChecks = [])
+    /** @test */
+    public function it_can_work_with_check_that_already_have_run()
     {
-        if (! is_array($names)) {
-            $names = [$names];
+        $this->addHosts('host-1', ['check-1']);
+
+        $check = Check::first();
+
+        $check->last_ran_at = Carbon::now()->subMinutes(10);
+        $check->next_run_in_minutes = 5;
+        $check->save();
+
+        Artisan::call('server-monitor:list-checks');
+
+        $this->seeInConsoleOutput('As soon as possible');
+
+        $check->last_ran_at = Carbon::now()->subMinutes(10);
+        $check->next_run_in_minutes = 15;
+        $check->save();
+
+        Artisan::call('server-monitor:list-checks');
+
+        $this->seeInConsoleOutput('5 minutes from now');
+    }
+
+    public function addHosts($hostNames, array $healthyChecks = [], array $unhealthyChecks = [])
+    {
+        if (! is_array($hostNames)) {
+            $hostNames = [$hostNames];
         }
 
         $checks = collect($healthyChecks)
@@ -136,7 +161,7 @@ class ListChecksTest extends TestCase
                 })
             );
 
-        collect($names)->each(function ($name) use ($checks) {
+        collect($hostNames)->each(function ($name) use ($checks) {
             Host::create([
                 'name' => $name,
                 'ssh_user' => 'user',
