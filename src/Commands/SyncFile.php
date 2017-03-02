@@ -76,8 +76,8 @@ class SyncFile extends BaseCommand
     protected function removeChecksNotInArray(Host $host, array $checkTypes)
     {
         $host->checks
-            ->filter(function (Check $check) use ($checkTypes) {
-                return ! in_array($check->type, $checkTypes);
+            ->reject(function (Check $check) use ($checkTypes) {
+                return in_array($check->type, $checkTypes);
             })
             ->each(function (Check $check) use ($host) {
                 $this->comment("Deleted `{$check->type}` from host `{$host->name}` (not found in hosts file)");
