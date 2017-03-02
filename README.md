@@ -98,7 +98,7 @@ return [
         ],
 
         /*
-         * To avoid to burying your in notifications, we'll only send one every given amount
+         * To avoid burying you in notifications, we'll only send one every given amount
          * of minutes when a check keeps emitting warning or keeps failing.
          */
         'throttle_failing_notifications_for_minutes' => 60,
@@ -129,6 +129,15 @@ return [
      * extend the `Check` model provided by this package.
      */
     'check_model' => Spatie\ServerMonitor\Models\Check::class,
+
+    /*
+     * Right before running a check it's process will be given to this class. Here you
+     * can perform some last minute manipulations on it before it will
+     * actually be run.
+     *
+     * This class should implement Spatie\ServerMonitor\Manipulators\Manipulator
+     */
+    'process_manipulator' => Spatie\ServerMonitor\Manipulators\Passthrough::class,
 ];
 ```
 
