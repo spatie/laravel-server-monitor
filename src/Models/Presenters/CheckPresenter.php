@@ -2,7 +2,6 @@
 
 namespace Spatie\ServerMonitor\Models\Presenters;
 
-use Carbon\Carbon;
 use Spatie\ServerMonitor\Helpers\Emoji;
 use Spatie\ServerMonitor\Models\Enums\CheckStatus;
 
