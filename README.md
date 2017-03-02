@@ -11,11 +11,15 @@ We all dream of servers that need no maintenance at all. But unfortunately in re
 
 This package keeps an eye on the health of all your servers. There are a few [checks that come out of the box](https://docs.spatie.be/laravel-server-monitor/v1/monitoring-basics/built-in-checks). [Adding new checks](https://docs.spatie.be/laravel-server-monitor/v1/monitoring-basics/writing-your-own-checks) is a breeze.
 
-When something goes wrong it can [notify you](https://docs.spatie.be/laravel-server-monitor/v1/monitoring-basics/notifications-and-events) via Slack or mail. Here's how a Slack notifications look like:
+When something goes wrong it can [notify you](https://docs.spatie.be/laravel-server-monitor/v1/monitoring-basics/notifications-and-events) via Slack or mail. Here's how a Slack notification look like:
 
 <img src="https://docs.spatie.be/images/server-monitor/check-failed.jpg" class="screenshot -slack">
 
 Behind the scenes [Laravel's native notification system](https://laravel.com/docs/5.4/notifications) is leveraged so you can use one of the [many notification drivers](http://laravel-notification-channels.com/).
+
+## Documentation
+
+The full documentation is available on [our documentation site](https://docs.spatie.be/laravel-server-monitor).
 
 ## Postcardware
 
@@ -141,9 +145,6 @@ return [
 ];
 ```
 
-## Documentation
-
-The full documentation is available on [our documentation site](https://docs.spatie.be/laravel-server-monitor).
 
 ## Changelog
 
