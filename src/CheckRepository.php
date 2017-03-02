@@ -24,7 +24,7 @@ class CheckRepository
 
     protected static function determineCheckModel(): string
     {
-        $monitorModel = config('laravel-server-monitor.check_model') ?? Check::class;
+        $monitorModel = config('server-monitor.check_model') ?? Check::class;
 
         if (! is_a($monitorModel, Check::class, true)) {
             throw InvalidConfiguration::modelIsNotValid($monitorModel);
