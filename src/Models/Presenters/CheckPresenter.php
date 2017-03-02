@@ -53,6 +53,10 @@ trait CheckPresenter
             return 'As soon as possible';
         }
 
-        return Carbon::now()->addMinutes($this->next_run_in_minutes)->diffForHumans();
+        if (! $this->last_ran_at) {
+            return 'As soon as possible';
+        }
+
+        return Carbon::now()->addMinutes($this->last_ran_at)->diffForHumans();
     }
 }
