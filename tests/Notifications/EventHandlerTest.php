@@ -1,6 +1,6 @@
 <?php
 
-namespace Spatie\UptimeMonitor\Test\Integration\Notifications;
+namespace Spatie\ServerMonitor\Test\Integration\Notifications;
 
 use Notification;
 use Spatie\ServerMonitor\Test\TestCase;
