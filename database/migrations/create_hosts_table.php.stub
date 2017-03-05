@@ -1,7 +1,5 @@
 <?php
 
-use Spatie\ServerMonitor\Models\Enums\CertificateStatus;
-use Spatie\ServerMonitor\Models\Enums\UptimeStatus;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
