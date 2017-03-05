@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-server-monitor` will be documented in this file
 
+## 1.0.6 - 2017-03-05
+
+- fix mail notifications
+
 ## 1.0.5 - 2017-03-05
 
 - clean up migrations
