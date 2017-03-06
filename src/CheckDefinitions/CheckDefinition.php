@@ -34,7 +34,7 @@ abstract class CheckDefinition
         $this->check->storeProcessOutput($process);
 
         try {
-            if (! $process->isSuccessful()) {
+            if (! empty($process->getErrorOutput())) {
                 $this->resolveFailed($process);
 
                 return;
