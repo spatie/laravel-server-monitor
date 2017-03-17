@@ -2,7 +2,6 @@
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/spatie/laravel-server-monitor.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-server-monitor)
 [![Build Status](https://img.shields.io/travis/spatie/laravel-server-monitor/master.svg?style=flat-square)](https://travis-ci.org/spatie/laravel-server-monitor)
-[![SensioLabsInsight](https://img.shields.io/sensiolabs/i/f28c2e98-ba1f-468a-9a5c-7ef4fe41a78a.svg?style=flat-square)](https://insight.sensiolabs.com/projects/f28c2e98-ba1f-468a-9a5c-7ef4fe41a78a)
 [![Quality Score](https://img.shields.io/scrutinizer/g/spatie/laravel-server-monitor.svg?style=flat-square)](https://scrutinizer-ci.com/g/spatie/laravel-server-monitor)
 [![StyleCI](https://styleci.io/repos/82051379/shield?branch=master)](https://styleci.io/repos/82051379)
 [![Total Downloads](https://img.shields.io/packagist/dt/spatie/laravel-server-monitor.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-server-monitor)

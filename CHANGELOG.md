@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-server-monitor` will be documented in this file
 
+## 1.0.7 - 2017-03-07
+
+- improve the detection of failed processes
+
 ## 1.0.6 - 2017-03-05
 
 - fix mail notifications
