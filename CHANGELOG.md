@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-server-monitor` will be documented in this file
 
+## 1.0.8 - 2017-03-21
+
+- don't show output of curl in Elasticsearch check
+
 ## 1.0.7 - 2017-03-07
 
 - improve the detection of failed processes
