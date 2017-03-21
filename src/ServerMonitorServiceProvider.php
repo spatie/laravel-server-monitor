@@ -2,8 +2,8 @@
 
 namespace Spatie\ServerMonitor;
 
-use Illuminate\Support\ServiceProvider;
 use Spatie\Blink\Blink;
+use Illuminate\Support\ServiceProvider;
 use Spatie\ServerMonitor\Commands\AddHost;
 use Spatie\ServerMonitor\Commands\SyncFile;
 use Spatie\ServerMonitor\Commands\ListHosts;
