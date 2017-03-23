@@ -10,15 +10,15 @@ trait HostPresenter
     public function getHealthAsEmojiAttribute(): string
     {
         if ($this->isHealthy()) {
-            return "✅";
+            return '✅';
         }
 
         if ($this->isUnhealthy()) {
-            return "❌";
+            return '❌';
         }
 
         if ($this->hasWarning()) {
-            return "⚠️";
+            return '⚠️';
         }
 
         throw new Exception("Could not determine health emoji for host `{$this->id}`");
