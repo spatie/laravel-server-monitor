@@ -4,7 +4,7 @@ namespace Spatie\ServerMonitor\CheckDefinitions;
 
 use Symfony\Component\Process\Process;
 
-final class Elasticsearch extends CheckDefinition
+class Elasticsearch extends CheckDefinition
 {
     public $command = 'curl http://localhost:9200';
 

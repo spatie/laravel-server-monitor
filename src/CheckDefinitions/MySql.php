@@ -4,7 +4,7 @@ namespace Spatie\ServerMonitor\CheckDefinitions;
 
 use Symfony\Component\Process\Process;
 
-final class MySql extends CheckDefinition
+class MySql extends CheckDefinition
 {
     public $command = 'ps -e | grep mysqld$';
 

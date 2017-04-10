@@ -4,7 +4,7 @@ namespace Spatie\ServerMonitor\CheckDefinitions;
 
 use Symfony\Component\Process\Process;
 
-final class Memcached extends CheckDefinition
+class Memcached extends CheckDefinition
 {
     public $command = 'service memcached status';
 

@@ -5,7 +5,7 @@ namespace Spatie\ServerMonitor\CheckDefinitions;
 use Spatie\Regex\Regex;
 use Symfony\Component\Process\Process;
 
-final class Diskspace extends CheckDefinition
+class Diskspace extends CheckDefinition
 {
     public $command = 'df -P .';
 
