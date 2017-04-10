@@ -25,7 +25,6 @@ All notable changes to `laravel-server-monitor` will be documented in this file
 ## 1.0.4 - 2017-03-02
 
 - fix for bug when using a custom model
->>>>>>> 9e230e5b6cbafb65d658e6431491b4f85c1d137c
 
 ## 1.0.3 - 2017-03-02
 
