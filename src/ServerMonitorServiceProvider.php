@@ -2,6 +2,7 @@
 
 namespace Spatie\ServerMonitor;
 
+use Spatie\Blink\Blink;
 use Illuminate\Support\ServiceProvider;
 use Spatie\ServerMonitor\Commands\AddHost;
 use Spatie\ServerMonitor\Commands\SyncFile;
@@ -40,6 +41,7 @@ class ServerMonitorServiceProvider extends ServiceProvider
         $this->app->bind('command.server-monitor:sync-file', SyncFile::class);
         $this->app->bind('command.server-monitor:list', ListHosts::class);
         $this->app->bind('command.server-monitor:list-checks', ListChecks::class);
+        $this->app->singleton('blink', Blink::class);
 
         $this->commands([
             'command.server-monitor:run-checks',

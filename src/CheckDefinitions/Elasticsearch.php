@@ -6,7 +6,7 @@ use Symfony\Component\Process\Process;
 
 class Elasticsearch extends CheckDefinition
 {
-    public $command = 'curl http://localhost:9200';
+    public $command = 'curl --silent http://localhost:9200';
 
     public function resolve(Process $process)
     {

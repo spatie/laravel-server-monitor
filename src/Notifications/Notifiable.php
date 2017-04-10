@@ -10,7 +10,7 @@ class Notifiable
 
     public function routeNotificationForMail(): ?string
     {
-        return config('laravel-uptime-monitor.notifications.mail.to');
+        return config('server-monitor.notifications.mail.to');
     }
 
     public function routeNotificationForSlack(): ?string

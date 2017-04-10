@@ -2,8 +2,6 @@
 
 namespace Spatie\ServerMonitor\Models\Presenters;
 
-use Carbon\Carbon;
-use Spatie\ServerMonitor\Helpers\Emoji;
 use Spatie\ServerMonitor\Models\Enums\CheckStatus;
 
 trait CheckPresenter
@@ -11,23 +9,23 @@ trait CheckPresenter
     public function getStatusAsEmojiAttribute(): string
     {
         if ($this->status === CheckStatus::SUCCESS) {
-            return Emoji::ok();
+            return '✅';
         }
 
         if ($this->status === CheckStatus::FAILED) {
-            return Emoji::notOk();
+            return '❌';
         }
 
         if ($this->status === CheckStatus::WARNING) {
-            return Emoji::warning();
+            return '⚠️';
         }
 
         if ($this->status === CheckStatus::NOT_YET_CHECKED) {
-            return Emoji::unknown();
+            return '';
         }
 
         if (is_null($this->status)) {
-            return Emoji::unknown();
+            return '❓';
         }
 
         return '';

@@ -9,21 +9,15 @@ trait HasProcess
 {
     public function getProcess(): Process
     {
-        static $processes = [];
-
-        if (! isset($processes[$this->id])) {
+        return blink()->once("process.{$this->id}", function () {
             $process = new Process($this->getProcessCommand());
 
             $process->setTimeout($this->getDefinition()->timeoutInSeconds());
 
             $manipulator = app(Manipulator::class);
 
-            $process = $manipulator->manipulateProcess($process, $this);
-
-            $processes[$this->id] = $process;
-        }
-
-        return $processes[$this->id];
+            return $manipulator->manipulateProcess($process, $this);
+        });
     }
 
     public function getProcessCommand(): string

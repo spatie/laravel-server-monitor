@@ -22,6 +22,7 @@
         "illuminate/database": "^5.4",
         "illuminate/events": "^5.4",
         "illuminate/support": "^5.4",
+        "spatie/laravel-blink": "^1.0",
         "spatie/regex": "^1.1",
         "symfony/process": "^3.2"
     },
