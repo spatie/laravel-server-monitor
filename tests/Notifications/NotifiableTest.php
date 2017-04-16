@@ -2,12 +2,10 @@
 
 namespace Spatie\ServerMonitor\Test\Integration\Notifications;
 
-use Notification;
 use Spatie\ServerMonitor\Models\Check;
 use Spatie\ServerMonitor\Test\TestCase;
 use Spatie\ServerMonitor\Events\CheckSucceeded;
 use Spatie\ServerMonitor\Notifications\Notifiable;
-
 
 class NotifiableTest extends TestCase
 {
@@ -34,7 +32,5 @@ class NotifiableTest extends TestCase
         $notifiable->setEvent($event);
 
         $this->assertEquals($notifiable->getEvent(), $event);
-
     }
-
 }
