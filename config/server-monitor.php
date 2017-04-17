@@ -76,4 +76,16 @@ return [
      * This class should implement Spatie\ServerMonitor\Manipulators\Manipulator
      */
     'process_manipulator' => Spatie\ServerMonitor\Manipulators\Passthrough::class,
+
+    /*
+     * Database table name for the Host and Check models.
+     *
+     * If you decide to change the database table name(s) after running the initial migrations,
+     * you will need to create a new migration to rename the table(s).
+     *
+     * eg. Schema::rename('hosts', 'my_custom_hosts');
+     */
+    'hosts_table' => 'hosts',
+
+    'checks_table' => 'checks',
 ];
