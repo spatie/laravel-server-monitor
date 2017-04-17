@@ -20,6 +20,11 @@ class Host extends Model
 
     public $guarded = [];
 
+    public function getTable(): String
+    {
+        return config('server-monitor.hosts_table');
+    }
+
     public function checks(): HasMany
     {
         return $this->hasMany(Check::class);

@@ -76,4 +76,10 @@ return [
      * This class should implement Spatie\ServerMonitor\Manipulators\Manipulator
      */
     'process_manipulator' => Spatie\ServerMonitor\Manipulators\Passthrough::class,
+
+    /*
+     * Modify the default table names
+     */
+    'hosts_table' => 'hosts',
+    'checks_table' => 'checks',
 ];
