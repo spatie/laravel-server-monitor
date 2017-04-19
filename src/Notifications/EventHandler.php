@@ -36,6 +36,8 @@ class EventHandler
             if ($notification->shouldSend()) {
                 $notifiable = $this->determineNotifiable();
 
+                $notifiable->setEvent($event);
+
                 $notifiable->notify($notification);
             }
 
