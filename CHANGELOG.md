@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-server-monitor` will be documented in this file
 
+## 1.1.0 - 2017-04-19
+
+- the notifiable now has access to the event that triggered the notification
+
 ## 1.0.9 - 2017-04-10
 
 - make checks extensible
