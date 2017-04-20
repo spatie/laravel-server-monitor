@@ -36,6 +36,11 @@ class Check extends Model
         'last_ran_at', 'next_check_at', 'started_throttling_failing_notifications_at',
     ];
 
+    public function getTable(): String
+    {
+        return config('server-monitor.checks_table');
+    }
+
     public function host(): BelongsTo
     {
         return $this->belongsTo(Host::class);
