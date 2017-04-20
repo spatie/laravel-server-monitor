@@ -25,6 +25,11 @@ class Host extends Model
         return $this->hasMany(Check::class);
     }
 
+    public function getTable()
+    {
+        return config('server-monitor.hosts_table');
+    }
+
     public function getEnabledChecksAttribute(): Collection
     {
         return $this->checks()->enabled()->get();

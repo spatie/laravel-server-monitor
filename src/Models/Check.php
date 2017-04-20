@@ -41,6 +41,11 @@ class Check extends Model
         return $this->belongsTo(Host::class);
     }
 
+    public function getTable()
+    {
+        return config('server-monitor.checks_table');
+    }
+
     public function scopeHealthy($query)
     {
         return $query->where('status', CheckStatus::SUCCESS);
