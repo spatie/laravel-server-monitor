@@ -37,7 +37,7 @@ class AddHost extends BaseCommand
 
         $chosenChecks = $this->choice('Which checks should be performed?', $checkNames, 0, null, true);
 
-        $chosenChecks = $this->determineChecks($chosenChecks, $checkNames);
+        $chosenChecks = $this->determineChecks($chosenChecks);
 
         if (Host::where('name', $hostName)->first()) {
             throw new InvalidArgumentException("Host `{$hostName}` already exitst");
@@ -59,9 +59,9 @@ class AddHost extends BaseCommand
         $this->info("Host `{$hostName}` added");
     }
 
-    protected function determineChecks(array $chosenChecks, array $checkNames): array
+    protected function determineChecks(array $chosenChecks): array
     {
-        if (in_array(static::$allChecksLabel, $chosenChecks)) {
+        if (in_array(static::$allChecksLabel, $chosenChecks, true)) {
             return $this->getAllCheckNames();
         }
 

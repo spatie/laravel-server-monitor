@@ -91,6 +91,6 @@ class EventHandler
         return in_array(get_class($event), [
             CheckSucceeded::class,
             CheckRestored::class,
-        ]);
+        ], true);
     }
 }

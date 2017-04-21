@@ -49,7 +49,7 @@ class ListHosts extends BaseCommand
     {
         return $host->checks
             ->filter(function (Check $check) use ($typeFilter) {
-                if (is_null($typeFilter)) {
+                if (null === $typeFilter) {
                     return true;
                 }
 
