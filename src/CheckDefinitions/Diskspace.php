@@ -15,7 +15,10 @@ class Diskspace extends CheckDefinition
 
         $message = "usage at {$percentage}%";
 
-        $thresholds = config('server-monitor.diskspace_percentage_threshold');
+        $thresholds = config('server-monitor.diskspace_percentage_threshold', [
+            'fail' => 80,
+            'warning' => 90,
+        ]);
 
         if ($percentage >= $thresholds['fail']) {
             $this->check->fail($message);
