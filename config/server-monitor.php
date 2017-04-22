@@ -77,7 +77,7 @@ return [
      */
     'process_manipulator' => Spatie\ServerMonitor\Manipulators\Passthrough::class,
 
-    /**
+    /*
      * The threshold for disk space.
      */
     'diskspace_percentage_threshold' => [

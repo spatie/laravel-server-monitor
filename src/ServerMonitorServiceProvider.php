@@ -53,7 +53,7 @@ class ServerMonitorServiceProvider extends ServiceProvider
         ]);
     }
 
-    protected function publishesMigration(string $className, string $fileName, int $timestampSuffix): void
+    protected function publishesMigration(string $className, string $fileName, int $timestampSuffix)
     {
         if (! class_exists($className)) {
             $timestamp = date('Y_m_d_His', time()).$timestampSuffix;
