@@ -78,7 +78,7 @@ return [
     'process_manipulator' => Spatie\ServerMonitor\Manipulators\Passthrough::class,
 
     /*
-     * The threshold for disk space.
+     * Thresholds for disk space's alert.
      */
     'diskspace_percentage_threshold' => [
         'warning' => 80,
