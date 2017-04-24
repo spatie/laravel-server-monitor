@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-server-monitor` will be documented in this file
 
+## 1.1.0 - 2017-04-24
+
+- make diskspace thresholds configurable
+
 ## 1.0.9 - 2017-04-10
 
 - make checks extensible
