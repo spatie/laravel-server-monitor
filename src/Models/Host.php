@@ -22,7 +22,7 @@ class Host extends Model
 
     public function checks(): HasMany
     {
-        return $this->hasMany(Check::class);
+        return $this->hasMany(config('server-monitor.check_model', Check::class));
     }
 
     public function getEnabledChecksAttribute(): Collection

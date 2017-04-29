@@ -62,6 +62,13 @@ return [
     ],
 
     /*
+     * To add or modify behaviour to the `Host` model you can specify your
+     * own model here. The only requirement is that they should
+     * extend the `Host` model provided by this package.
+     */
+    'host_model' => Spatie\ServerMonitor\Models\Host::class,
+
+    /*
      * To add or modify behaviour to the `Check` model you can specify your
      * own model here. The only requirement is that they should
      * extend the `Check` model provided by this package.
