@@ -16,13 +16,13 @@ class ListHosts extends BaseCommand
 
     public function handle()
     {
-        if (Host::count() === 0) {
+        if ($this->determineHostModelClass()::count() === 0) {
             return $this->info('There are no hosts configured');
         }
 
         $this->table(
             ['Host', 'Health', 'Checks'],
-            $this->getTableRows(Host::all())
+            $this->getTableRows($this->determineHostModelClass()::all())
         );
     }
 

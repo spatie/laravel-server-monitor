@@ -41,7 +41,7 @@ class SyncFile extends BaseCommand
             return;
         }
 
-        Host::all()
+        $this->determineHostModelClass()::all()
             ->reject(function (Host $host) use ($hostsInFile) {
                 return $hostsInFile->contains('name', $host->name);
             })
@@ -55,7 +55,7 @@ class SyncFile extends BaseCommand
     {
         unset($hostAttributes['checks']);
 
-        return tap(Host::firstOrNew([
+        return tap($this->determineHostModelClass()::firstOrNew([
             'name' => $hostAttributes['name'],
         ]), function (Host $hostModel) use ($hostAttributes) {
             $hostModel
