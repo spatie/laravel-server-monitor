@@ -27,7 +27,7 @@ class CheckRepository
         $monitorModel = config('server-monitor.check_model') ?? Check::class;
 
         if (! is_a($monitorModel, Check::class, true)) {
-            throw InvalidConfiguration::modelIsNotValid($monitorModel);
+            throw InvalidConfiguration::checkModelIsNotValid($monitorModel);
         }
 
         return $monitorModel;

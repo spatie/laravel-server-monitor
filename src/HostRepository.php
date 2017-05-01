@@ -19,7 +19,7 @@ class HostRepository
         $hostModel = config('server-monitor.host_model') ?? Host::class;
 
         if (! is_a($hostModel, Host::class, true)) {
-            throw InvalidConfiguration::modelIsNotValid($hostModel);
+            throw InvalidConfiguration::hostModelIsNotValid($hostModel);
         }
 
         return $hostModel;
