@@ -3,7 +3,6 @@
 namespace Spatie\ServerMonitor\Commands;
 
 use Illuminate\Support\Collection;
-use Spatie\ServerMonitor\Models\Host;
 use Spatie\ServerMonitor\Models\Check;
 
 class ListChecks extends BaseCommand
@@ -16,7 +15,7 @@ class ListChecks extends BaseCommand
 
     public function handle()
     {
-        if (Host::count() === 0) {
+        if ($this->determineHostModelClass()::count() === 0) {
             return $this->info('There are no hosts configured');
         }
 
@@ -30,7 +29,7 @@ class ListChecks extends BaseCommand
         $this->tableWithTitle(
             'Unhealthy checks',
             ['Host', 'Check', 'Status', 'Message', 'Last checked', 'Next check'],
-            $this->getTableRows(Check::unhealthy()->get())
+            $this->getTableRows($this->determineCheckModelClass()::unhealthy()->get())
         );
     }
 
@@ -39,7 +38,7 @@ class ListChecks extends BaseCommand
         $this->tableWithTitle(
             'Healthy checks',
             ['Host', 'Check', 'Message', 'Status', 'Last checked', 'Next check'],
-            $this->getTableRows(Check::healthy()->get())
+            $this->getTableRows(self::determineCheckModelClass()::healthy()->get())
         );
     }
 

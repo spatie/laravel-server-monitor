@@ -2,8 +2,6 @@
 
 namespace Spatie\ServerMonitor\Commands;
 
-use Spatie\ServerMonitor\Models\Host;
-
 class DeleteHost extends BaseCommand
 {
     protected $signature = 'server-monitor:delete-host
@@ -15,7 +13,7 @@ class DeleteHost extends BaseCommand
     {
         $name = $this->argument('name');
 
-        $host = Host::where('name', $name)->first();
+        $host = $this->determineHostModelClass()::where('name', $name)->first();
 
         if (! $host) {
             return $this->error("Host with name `{$name}` not found.");

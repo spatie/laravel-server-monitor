@@ -2,6 +2,14 @@
 
 All notable changes to `laravel-server-monitor` will be documented in this file
 
+## 1.2.0 - 2017-05-01
+
+- make `Host` model configurable
+
+## 1.1.1 - 2017-04-24
+
+- make diskspace thresholds configurable
+
 ## 1.1.0 - 2017-04-19
 
 - the notifiable now has access to the event that triggered the notification

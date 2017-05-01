@@ -141,6 +141,14 @@ return [
      * This class should implement Spatie\ServerMonitor\Manipulators\Manipulator
      */
     'process_manipulator' => Spatie\ServerMonitor\Manipulators\Passthrough::class,
+    
+    /*
+     * Thresholds for disk space's alert.
+     */
+    'diskspace_percentage_threshold' => [
+        'warning' => 80,
+        'fail' => 90,
+    ],
 ];
 ```
 
