@@ -18,18 +18,18 @@
     "require": {
         "php": "^7.1",
         "guzzlehttp/guzzle": "^6.2",
-        "illuminate/console": "^5.4",
-        "illuminate/database": "^5.4",
-        "illuminate/events": "^5.4",
-        "illuminate/support": "^5.4",
+        "illuminate/console": "^5.4|~5.5.x-dev|~5.5.x-dev",
+        "illuminate/database": "^5.4|~5.5.x-dev|~5.5.x-dev",
+        "illuminate/events": "^5.4|~5.5.x-dev|~5.5.x-dev",
+        "illuminate/support": "^5.4|~5.5.x-dev|~5.5.x-dev",
         "spatie/laravel-blink": "^1.0",
         "spatie/regex": "^1.1",
         "symfony/process": "^3.2"
     },
     "require-dev": {
         "mockery/mockery": "^0.9.8",
-        "orchestra/testbench": "^3.4.5",
-        "phpunit/phpunit": "^5.7"
+        "orchestra/testbench": "^3.4.5|~3.5.x-dev|~3.5.x-dev",
+        "phpunit/phpunit": "^6.2"
     },
     "autoload": {
         "psr-4": {
@@ -55,3 +55,4 @@
         }
     }
 }
+
