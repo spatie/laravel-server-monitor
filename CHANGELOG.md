@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-server-monitor` will be documented in this file
 
+## 1.2.1 - 2017-09-02
+
+- add support for L5.5 auto discovery
+
 ## 1.2.0 - 2017-05-01
 
 - make `Host` model configurable
