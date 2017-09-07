@@ -17,7 +17,7 @@
     ],
     "require": {
         "php": "^7.1",
-        "guzzlehttp/guzzle": "^6.2",
+        "guzzlehttp/guzzle": "^6.3",
         "illuminate/console": "~5.4|~5.5",
         "illuminate/database": "~5.4|~5.5",
         "illuminate/events": "~5.4|~5.5",
