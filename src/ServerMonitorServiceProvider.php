@@ -56,7 +56,7 @@ class ServerMonitorServiceProvider extends ServiceProvider
     protected function publishesMigration(string $className, string $fileName, int $timestampSuffix)
     {
         if (! class_exists($className)) {
-            $timestamp = date('Y_m_d_His', time()).$timestampSuffix;
+            $timestamp = (new DateTime())->format('Y_m_d_His').$timestampSuffix;
 
             $this->publishes([
                 __DIR__."/../database/migrations/{$fileName}.php.stub" => database_path('migrations/'.$timestamp."_{$fileName}.php"),
