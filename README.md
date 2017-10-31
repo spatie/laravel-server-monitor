@@ -28,7 +28,7 @@ You can install this package via composer using this command:
 composer require spatie/laravel-server-monitor
 ```
 
-Next, you must install the service provider:
+In Laravel 5.5 the service provider will automatically get registered. In older versions of the framework, you must install the service provider:
 
 ```php
 // config/app.php
