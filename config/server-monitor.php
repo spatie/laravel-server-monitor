@@ -42,7 +42,7 @@ return [
         'throttle_failing_notifications_for_minutes' => 60,
 
         'mail' => [
-            'to' => 'your@email.com',
+            'to' => env('SERVER_MONITOR_MAIL_TO'),
         ],
 
         'slack' => [
