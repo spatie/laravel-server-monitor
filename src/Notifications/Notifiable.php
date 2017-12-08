@@ -11,9 +11,9 @@ class Notifiable
     /** @var \Spatie\ServerMonitor\Events\Event */
     protected $event;
 
-    public function routeNotificationForMail(): ?string
+    public function routeNotificationForMail(): ?array
     {
-        return config('server-monitor.notifications.mail.to');
+        return $this->explodeArray(config('server-monitor.notifications.mail.to'));
     }
 
     public function routeNotificationForSlack(): ?string
@@ -48,5 +48,13 @@ class Notifiable
         $this->event = $event;
 
         return $this;
+    }
+
+    protected function explodeArray($mails): ?array
+    {
+        if(!is_array($mails)) {
+            return explode(',', $mails);
+        }
+        return $mails;
     }
 }

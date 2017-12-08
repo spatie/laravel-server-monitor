@@ -33,4 +33,20 @@ class NotifiableTest extends TestCase
 
         $this->assertEquals($notifiable->getEvent(), $event);
     }
+
+    public function testRouteNotificationForMail()
+    {
+		$this->app['config']->set('server-monitor.notifications.mail.to', 'test@test.com,other@other.com');
+        $notifiable = new Notifiable();
+        $mails = $notifiable->routeNotificationForMail();
+
+        $this->assertEquals($mails[0], 'test@test.com');
+        $this->assertEquals($mails[1], 'other@other.com');
+
+        $this->app['config']->set('server-monitor.notifications.mail.to', ['test@test.com', 'other@other.com']);
+        $mails = $notifiable->routeNotificationForMail();
+
+        $this->assertEquals($mails[0], 'test@test.com');
+        $this->assertEquals($mails[1], 'other@other.com');
+    }
 }
