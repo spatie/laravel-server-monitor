@@ -13,7 +13,13 @@ class Notifiable
 
     public function routeNotificationForMail(): ?array
     {
-        return $this->explodeArray(config('server-monitor.notifications.mail.to'));
+        $mails = config('server-monitor.notifications.mail.to');
+
+        if (is_string($mails)) {
+            $mails = explode(',', $mails);
+        }
+
+        return $mails;
     }
 
     public function routeNotificationForSlack(): ?string
@@ -48,13 +54,5 @@ class Notifiable
         $this->event = $event;
 
         return $this;
-    }
-
-    protected function explodeArray($mails): ?array
-    {
-        if(!is_array($mails)) {
-            return explode(',', $mails);
-        }
-        return $mails;
     }
 }
