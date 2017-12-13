@@ -41,6 +41,7 @@ return [
          */
         'throttle_failing_notifications_for_minutes' => 60,
 
+		// Separate the email by , to add many recipients
         'mail' => [
             'to' => 'your@email.com',
         ],
