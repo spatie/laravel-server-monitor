@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-server-monitor` will be documented in this file
 
+## 1.3.0 - 2017-12-13
+
+- add ability to specify multiple mail addresses in the notifiable
+
 ## 1.2.1 - 2017-09-02
 
 - add support for L5.5 auto discovery
