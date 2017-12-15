@@ -2,6 +2,7 @@
 
 namespace Spatie\ServerMonitor;
 
+use DateTime;
 use Spatie\Blink\Blink;
 use Illuminate\Support\ServiceProvider;
 use Spatie\ServerMonitor\Commands\AddHost;
