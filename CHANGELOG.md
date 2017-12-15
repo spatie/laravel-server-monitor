@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-server-monitor` will be documented in this file
 
+## 1.3.1 - 2017-12-15
+
+- fix missing import in service provider
+
 ## 1.3.0 - 2017-12-13
 
 - add ability to specify multiple mail addresses in the notifiable
