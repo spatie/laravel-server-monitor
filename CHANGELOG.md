@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-server-monitor` will be documented in this file
 
+## 1.3.2 - 2018-02-18
+
+- add support for L5.6
+
 ## 1.3.1 - 2017-12-15
 
 - fix missing import in service provider
