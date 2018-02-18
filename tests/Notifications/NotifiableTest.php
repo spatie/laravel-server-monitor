@@ -36,7 +36,7 @@ class NotifiableTest extends TestCase
 
     public function testRouteNotificationForMail()
     {
-		$this->app['config']->set('server-monitor.notifications.mail.to', 'test@test.com,other@other.com');
+        $this->app['config']->set('server-monitor.notifications.mail.to', 'test@test.com,other@other.com');
         $notifiable = new Notifiable();
         $mails = $notifiable->routeNotificationForMail();
 

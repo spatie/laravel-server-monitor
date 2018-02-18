@@ -49,7 +49,7 @@ class Notifiable
      *
      * @return Notifiable
      */
-    public function setEvent(\Spatie\ServerMonitor\Events\Event $event): Notifiable
+    public function setEvent(\Spatie\ServerMonitor\Events\Event $event): self
     {
         $this->event = $event;
 
