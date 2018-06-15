@@ -31,7 +31,7 @@ trait HasProcess
         $sshCommandSuffix = config('server-monitor.ssh_command_suffix');
         $sshCommandPrefix = config('server-monitor.ssh_command_prefix');
 
-        return "ssh $sshCommandPrefix {$this->getTarget()} {$portArgument} {$sshCommandSuffix} 'bash -se <<$delimiter".PHP_EOL
+        return "ssh {$sshCommandPrefix} {$this->getTarget()} {$portArgument} {$sshCommandSuffix} 'bash -se <<$delimiter".PHP_EOL
             .'set -e'.PHP_EOL
             .$definition->command().PHP_EOL
             .$delimiter."'";
