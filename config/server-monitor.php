@@ -88,7 +88,7 @@ return [
 
     /*
      * When you connect to a ssh it should give you warning like a "POSSIBLE BREAK-IN ATTEMPT!"
-     * and it should fail your check so you can skip some errors with this. You need to just add
+     * and it can fail your check so you can skip some errors with this. You need to just add
      * unique part of error string and it will skip it.
      */
     'excluded_errors'=>[
