@@ -3,6 +3,7 @@
 namespace Spatie\ServerMonitor\CheckDefinitions;
 
 use Exception;
+use Spatie\ServerMonitor\Excluded\ExcludedErrors;
 use Spatie\ServerMonitor\Models\Check;
 use Symfony\Component\Process\Process;
 use Spatie\ServerMonitor\Models\Enums\CheckStatus;
@@ -34,7 +35,7 @@ abstract class CheckDefinition
         $this->check->storeProcessOutput($process);
 
         try {
-            if (! empty($process->getErrorOutput())) {
+            if (!ExcludedErrors::hasExcludedError($process->getErrorOutput()) && ! empty($process->getErrorOutput())) {
                 $this->resolveFailed($process);
 
                 return;

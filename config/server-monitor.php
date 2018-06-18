@@ -85,6 +85,19 @@ return [
      */
     'process_manipulator' => Spatie\ServerMonitor\Manipulators\Passthrough::class,
 
+
+    /*
+     * When you connect to a ssh it should give you warning like a "POSSIBLE BREAK-IN ATTEMPT!"
+     * and it can fail your check so you can skip some errors with this. You need to just add
+     * unique part of error string and it will skip it.
+     */
+    'excluded_errors'=>[
+
+        "POSSIBLE BREAK-IN ATTEMPT!",
+
+    ],
+
+
     /*
      * Thresholds for disk space's alert.
      */
