@@ -9,6 +9,7 @@
 namespace Spatie\ServerMonitor\Excluded;
 
 
+use Illuminate\Support\Facades\Config;
 use phpDocumentor\Reflection\Types\Boolean;
 
 class ExcludedErrors
@@ -19,7 +20,7 @@ class ExcludedErrors
     public static function getExcludedErrors() : array
     {
 
-        return config("server-monitor.excluded_errors");
+        return Config::get("server-monitor.excluded_errors",[]);
 
     }
 
