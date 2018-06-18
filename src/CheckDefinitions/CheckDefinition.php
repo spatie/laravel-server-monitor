@@ -35,7 +35,7 @@ abstract class CheckDefinition
         $this->check->storeProcessOutput($process);
 
         try {
-            if (ExcludedErrors::hasExcludedError($process->getErrorOutput()) && ! empty($process->getErrorOutput())) {
+            if (!ExcludedErrors::hasExcludedError($process->getErrorOutput()) && ! empty($process->getErrorOutput())) {
                 $this->resolveFailed($process);
 
                 return;

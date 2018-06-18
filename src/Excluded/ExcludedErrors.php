@@ -35,10 +35,10 @@ class ExcludedErrors
         {
             $counter=0;
             str_replace($excludedError,"_REPLACE_",$errorString,$counter);
-            if($counter>0) return false;
+            if($counter>0) return true;
         }
 
-        return true;
+        return false;
 
     }
 
