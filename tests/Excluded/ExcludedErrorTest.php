@@ -16,7 +16,7 @@ class ExcludedErrorTest extends TestCase
     {
 
         //pretending like a error comes from SSH connection because i dont know how to emulate this situation
-        $error = "POSSIBLE BREAK-IN ATTEMPT!";
+        $error = "reverse mapping checking getaddrinfo for 192-168-1-243.foo.bar.net failed - POSSIBLE BREAK-IN ATTEMPT!";
 
 
 
