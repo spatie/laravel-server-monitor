@@ -68,6 +68,23 @@ class HasProcessTest extends TestCase
     }
 
     /** @test */
+    public function it_will_use_the_prefix_specified_in_the_config_file()
+    {
+        $prefix = '-q';
+
+        $this->app['config']->set('server-monitor.ssh_command_prefix', $prefix);
+
+        tap($this->check->host, function (Host $host) {
+            $host->ip = '1.2.3.4';
+            $host->save();
+        });
+
+        $this->check->getProcessCommand();
+
+        $this->assertStringStartsWith("ssh {$prefix} 1.2.3.4   'bash", $this->check->getProcessCommand());
+    }
+
+    /** @test */
     public function it_will_use_the_suffix_specified_in_the_config_file()
     {
         $suffix = '-o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no';
@@ -83,4 +100,5 @@ class HasProcessTest extends TestCase
 
         $this->assertStringStartsWith("ssh 1.2.3.4  {$suffix} 'bash", $this->check->getProcessCommand());
     }
+
 }
