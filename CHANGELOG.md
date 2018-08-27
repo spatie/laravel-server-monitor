@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-server-monitor` will be documented in this file
 
+## 1.4.1 - 2018-08-27
+
+- add support for Laravel 5.7
+
 ## 1.4.0 - 2018-07-02
 
 - add `ssh_command_prefix` to config file
