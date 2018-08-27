@@ -100,5 +100,4 @@ class HasProcessTest extends TestCase
 
         $this->assertStringStartsWith("ssh 1.2.3.4  {$suffix} 'bash", $this->check->getProcessCommand());
     }
-
 }
