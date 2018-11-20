@@ -11,6 +11,7 @@ use Spatie\ServerMonitor\Commands\ListHosts;
 use Spatie\ServerMonitor\Commands\RunChecks;
 use Spatie\ServerMonitor\Commands\DeleteHost;
 use Spatie\ServerMonitor\Commands\ListChecks;
+use Spatie\ServerMonitor\Commands\DumpChecks;
 use Spatie\ServerMonitor\Manipulators\Manipulator;
 use Spatie\ServerMonitor\Notifications\EventHandler;
 
@@ -42,6 +43,7 @@ class ServerMonitorServiceProvider extends ServiceProvider
         $this->app->bind('command.server-monitor:sync-file', SyncFile::class);
         $this->app->bind('command.server-monitor:list', ListHosts::class);
         $this->app->bind('command.server-monitor:list-checks', ListChecks::class);
+        $this->app->bind('command.server-monitor:dump-checks', DumpChecks::class);
         $this->app->singleton('blink', Blink::class);
 
         $this->commands([
@@ -51,6 +53,7 @@ class ServerMonitorServiceProvider extends ServiceProvider
             'command.server-monitor:sync-file',
             'command.server-monitor:list',
             'command.server-monitor:list-checks',
+            'command.server-monitor:dump-checks',
         ]);
     }
 
