@@ -38,7 +38,7 @@ class AddHost extends BaseCommand
         $chosenChecks = $this->determineChecks($chosenChecks, $checkNames);
 
         if ($this->determineHostModelClass()::where('name', $hostName)->first()) {
-            throw new InvalidArgumentException("Host `{$hostName}` already exitst");
+            throw new InvalidArgumentException("Host `{$hostName}` already exists");
         }
 
         $this->determineHostModelClass()::create([
