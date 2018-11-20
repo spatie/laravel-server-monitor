@@ -2,9 +2,9 @@
 
 namespace Spatie\ServerMonitor;
 
+use Spatie\ServerMonitor\Models\Host;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
-use Spatie\ServerMonitor\Models\Host;
 use Spatie\ServerMonitor\Exceptions\InvalidConfiguration;
 
 class HostRepository

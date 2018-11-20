@@ -10,8 +10,8 @@ use Spatie\ServerMonitor\Commands\SyncFile;
 use Spatie\ServerMonitor\Commands\ListHosts;
 use Spatie\ServerMonitor\Commands\RunChecks;
 use Spatie\ServerMonitor\Commands\DeleteHost;
-use Spatie\ServerMonitor\Commands\ListChecks;
 use Spatie\ServerMonitor\Commands\DumpChecks;
+use Spatie\ServerMonitor\Commands\ListChecks;
 use Spatie\ServerMonitor\Manipulators\Manipulator;
 use Spatie\ServerMonitor\Notifications\EventHandler;
 

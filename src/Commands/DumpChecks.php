@@ -2,9 +2,9 @@
 
 namespace Spatie\ServerMonitor\Commands;
 
-use Spatie\ServerMonitor\HostRepository;
-use Spatie\ServerMonitor\Models\Check;
 use Spatie\ServerMonitor\Models\Host;
+use Spatie\ServerMonitor\Models\Check;
+use Spatie\ServerMonitor\HostRepository;
 
 class DumpChecks extends BaseCommand
 {
@@ -17,7 +17,7 @@ class DumpChecks extends BaseCommand
     {
         $file = $this->argument('path');
         $data = $this->getHostsWithChecks();
-        file_put_contents($file, json_encode($data, JSON_PRETTY_PRINT) . PHP_EOL);
+        file_put_contents($file, json_encode($data, JSON_PRETTY_PRINT).PHP_EOL);
     }
 
     protected function getHostsWithChecks()
@@ -30,15 +30,17 @@ class DumpChecks extends BaseCommand
                         return $check->type;
                     }
                 )->toArray();
+
                 return [
                     'name' => $host->name,
                     'ssh_user' => $host->ssh_user,
                     'port' => $host->port,
                     'ip' => $host->ip,
-                    'checks' => $checks
+                    'checks' => $checks,
                 ];
             }
         )->toArray();
+
         return $result;
     }
 }
