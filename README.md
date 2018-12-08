@@ -144,6 +144,9 @@ return [
 ];
 ```
 
+## Need a UI?
+
+The package doesn't come with any screens out of the box. You may use the [Nova package by @paras-malhotra](https://github.com/insenseanalytics/nova-server-monitor) for monitoring servers on [Laravel Nova](https://nova.laravel.com).
 
 ## Changelog
 
