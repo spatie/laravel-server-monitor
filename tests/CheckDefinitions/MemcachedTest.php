@@ -6,7 +6,6 @@ use Spatie\ServerMonitor\Models\Check;
 use Spatie\ServerMonitor\Test\TestCase;
 use Spatie\ServerMonitor\Models\Enums\CheckStatus;
 use Spatie\ServerMonitor\CheckDefinitions\Memcached;
-use Spatie\ServerMonitor\CheckDefinitions\Elasticsearch;
 
 class MemcachedTest extends TestCase
 {
@@ -31,7 +30,7 @@ class MemcachedTest extends TestCase
     public function it_can_determine_success()
     {
         $process = $this->getSuccessfulProcessWithOutput(
-            '* memcached is running'
+            '* active (running)'
         );
 
         $this->memcachedDefinition->resolve($process);
