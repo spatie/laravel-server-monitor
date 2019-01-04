@@ -14,7 +14,7 @@ class Elasticsearch extends CheckDefinition
 
         $customIp = $this->check->getCustomProperty('ip');
 
-        if (!empty($customIp)) {
+        if (! empty($customIp)) {
             $command = str_replace('localhost', $customIp, $command);
         }
 
