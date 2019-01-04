@@ -4,8 +4,8 @@ namespace Spatie\ServerMonitor\CheckDefinitions\Test;
 
 use Spatie\ServerMonitor\Models\Check;
 use Spatie\ServerMonitor\Test\TestCase;
-use Spatie\ServerMonitor\Models\Enums\CheckStatus;
 use Spatie\ServerMonitor\CheckDefinitions\Redis;
+use Spatie\ServerMonitor\Models\Enums\CheckStatus;
 
 class RedisTest extends TestCase
 {
