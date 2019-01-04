@@ -10,7 +10,7 @@ class Memcached extends CheckDefinition
 
     public function resolve(Process $process)
     {
-        if (str_contains($process->getOutput(), 'memcached is running')) {
+        if (str_contains($process->getOutput(), 'memcached is running')) || (str_contains($process->getOutput(), 'active (running)') ) {
             $this->check->succeed('is running');
 
             return;
