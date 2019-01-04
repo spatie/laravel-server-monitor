@@ -30,7 +30,7 @@ class MemcachedTest extends TestCase
     public function it_can_determine_success()
     {
         $process = $this->getSuccessfulProcessWithOutput(
-            '* active (running)'
+            '* memcached is running'
         );
 
         $this->memcachedDefinition->resolve($process);
