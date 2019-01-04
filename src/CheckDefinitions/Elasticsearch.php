@@ -8,6 +8,19 @@ class Elasticsearch extends CheckDefinition
 {
     public $command = 'curl --silent http://localhost:9200';
 
+    public function command(): string
+    {
+        $command = $this->command;
+
+        $customIp = $this->check->getCustomProperty('ip');
+
+        if (!empty($customIp)) {
+            $command = str_replace('localhost', $customIp, $command);
+        }
+
+        return $command;
+    }
+
     public function resolve(Process $process)
     {
         $checkSucceeded = str_contains($process->getOutput(), 'lucene_version');
