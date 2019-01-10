@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-server-monitor` will be documented in this file
 
+## 1.4.2 - 2018-01-10
+
+- fix memcached check
+
 ## 1.4.1 - 2018-08-27
 
 - add support for Laravel 5.7
