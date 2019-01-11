@@ -6,7 +6,6 @@ use Spatie\ServerMonitor\Models\Check;
 use Spatie\ServerMonitor\Test\TestCase;
 use Spatie\ServerMonitor\Models\Enums\CheckStatus;
 use Spatie\ServerMonitor\CheckDefinitions\Memcached;
-use Spatie\ServerMonitor\CheckDefinitions\Elasticsearch;
 
 class MemcachedTest extends TestCase
 {
