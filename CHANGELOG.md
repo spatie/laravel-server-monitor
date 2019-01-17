@@ -2,11 +2,11 @@
 
 All notable changes to `laravel-server-monitor` will be documented in this file
 
-## 1.5.0 - 2018-01-10
+## 1.5.0 - 2019-01-10
 
 - allow elastic search check to check other ips
 
-## 1.4.2 - 2018-01-10
+## 1.4.2 - 2019-01-10
 
 - fix memcached check
 
