@@ -16,8 +16,8 @@ class DumpChecks extends BaseCommand
     public function handle()
     {
         $file = $this->argument('path');
-        $data = $this->getHostsWithChecks();
-        file_put_contents($file, json_encode($data, JSON_PRETTY_PRINT).PHP_EOL);
+        $jsonEncodedHosts = json_encode($this->getHostsWithChecks(), JSON_PRETTY_PRINT) . PHP_EOL);
+        file_put_contents($file, $jsonEncodedHosts);
     }
 
     protected function getHostsWithChecks()
