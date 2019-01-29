@@ -64,6 +64,11 @@ class IntegrationTest extends TestCase
     /** @test */
     public function it_will_throttle_failed_notifications()
     {
+        $this->app['config']->set(
+            'server-monitor.notifications.notifications.'.CheckFailed::class,
+            ['slack']
+        );
+
         Notification::fake();
 
         $this->letSshServerRespondWithDiskspaceUsagePercentage(95);
