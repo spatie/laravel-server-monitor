@@ -35,7 +35,7 @@ trait HasProcess
         if ($sshCommandPrefix) {
             $result .= ' '.$sshCommandPrefix;
         }
-        $result .= ' ' . $this->getTarget();
+        $result .= ' '.$this->getTarget();
         if ($portArgument) {
             $result .= ' '.$portArgument;
         }
@@ -46,7 +46,7 @@ trait HasProcess
             .'set -e'.PHP_EOL
             .$definition->command().PHP_EOL
             .$delimiter."'";
-        
+
         return $result;
     }
 
