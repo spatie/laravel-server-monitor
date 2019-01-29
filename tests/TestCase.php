@@ -46,6 +46,10 @@ abstract class TestCase extends Orchestra
      */
     protected function getEnvironmentSetUp($app)
     {
+        foreach ($app['config']->get('server-monitor.notifications.notifications') as $class => $notification) {
+            $app['config']->set('server-monitor.notifications.notifications', []);
+        }
+
         $app['config']->set('database.default', 'sqlite');
 
         $app['config']->set('mail.driver', 'log');
