@@ -25,7 +25,7 @@ class HasProcessTest extends TestCase
     {
         $this->check->getProcessCommand();
 
-        $this->assertStringStartsWith("ssh  my-host   'bash", $this->check->getProcessCommand());
+        $this->assertStringStartsWith("ssh my-host 'bash", $this->check->getProcessCommand());
     }
 
     /** @test */
@@ -38,7 +38,7 @@ class HasProcessTest extends TestCase
 
         $this->check->getProcessCommand();
 
-        $this->assertStringStartsWith("ssh  my-host -p 123  'bash", $this->check->getProcessCommand());
+        $this->assertStringStartsWith("ssh my-host -p 123 'bash", $this->check->getProcessCommand());
     }
 
     /** @test */
@@ -51,7 +51,7 @@ class HasProcessTest extends TestCase
 
         $this->check->getProcessCommand();
 
-        $this->assertStringStartsWith("ssh  my-ssh-user@my-host   'bash", $this->check->getProcessCommand());
+        $this->assertStringStartsWith("ssh my-ssh-user@my-host 'bash", $this->check->getProcessCommand());
     }
 
     /** @test */
@@ -64,7 +64,7 @@ class HasProcessTest extends TestCase
 
         $this->check->getProcessCommand();
 
-        $this->assertStringStartsWith("ssh  1.2.3.4   'bash", $this->check->getProcessCommand());
+        $this->assertStringStartsWith("ssh 1.2.3.4 'bash", $this->check->getProcessCommand());
     }
 
     /** @test */
@@ -81,7 +81,7 @@ class HasProcessTest extends TestCase
 
         $this->check->getProcessCommand();
 
-        $this->assertStringStartsWith("ssh {$prefix} 1.2.3.4   'bash", $this->check->getProcessCommand());
+        $this->assertStringStartsWith("ssh {$prefix} 1.2.3.4 'bash", $this->check->getProcessCommand());
     }
 
     /** @test */
@@ -98,6 +98,6 @@ class HasProcessTest extends TestCase
 
         $this->check->getProcessCommand();
 
-        $this->assertStringStartsWith("ssh  1.2.3.4  {$suffix} 'bash", $this->check->getProcessCommand());
+        $this->assertStringStartsWith("ssh 1.2.3.4 {$suffix} 'bash", $this->check->getProcessCommand());
     }
 }
