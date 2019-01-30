@@ -3,7 +3,6 @@
 namespace Spatie\ServerMonitor\Test\Commands;
 
 use Artisan;
-use Spatie\ServerMonitor\Models\Host;
 use Spatie\ServerMonitor\Test\TestCase;
 
 class DumpChecksTest extends TestCase
