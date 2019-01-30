@@ -16,7 +16,7 @@ class DumpChecks extends BaseCommand
     public function handle()
     {
         $file = $this->argument('path');
-        $jsonEncodedHosts = json_encode($this->getHostsWithChecks(), JSON_PRETTY_PRINT) . PHP_EOL);
+        $jsonEncodedHosts = json_encode($this->getHostsWithChecks(), JSON_PRETTY_PRINT) . PHP_EOL;
         file_put_contents($file, $jsonEncodedHosts);
     }
 
@@ -31,13 +31,18 @@ class DumpChecks extends BaseCommand
                     }
                 )->toArray();
 
-                return [
+                $result = [
                     'name' => $host->name,
                     'ssh_user' => $host->ssh_user,
-                    'port' => $host->port,
-                    'ip' => $host->ip,
                     'checks' => $checks,
                 ];
+                if ($host->port) {
+                    $result['port'] = $host->port;
+                }
+                if ($host->ip) {
+                    $result['ip'] = $host->ip;
+                }
+                return $result;
             }
         )->toArray();
 
