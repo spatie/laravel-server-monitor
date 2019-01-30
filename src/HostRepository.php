@@ -3,10 +3,26 @@
 namespace Spatie\ServerMonitor;
 
 use Spatie\ServerMonitor\Models\Host;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Spatie\ServerMonitor\Exceptions\InvalidConfiguration;
 
 class HostRepository
 {
+    public static function all(): Collection
+    {
+        $hosts = self::query()->get();
+
+        return $hosts;
+    }
+
+    protected static function query(): Builder
+    {
+        $modelClass = static::determineHostModel();
+
+        return $modelClass::query();
+    }
+
     /**
      * Determine the host model class name.
      *
