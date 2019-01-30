@@ -45,7 +45,7 @@ class EventHandlerTest extends TestCase
         $checkStatus
     ) {
         $this->app['config']->set(
-            'server-monitor.notifications.notifications.'.CheckSucceededNotification::class,
+            'server-monitor.notifications.notifications.'.$notificationClass,
             ['slack']
         );
 
