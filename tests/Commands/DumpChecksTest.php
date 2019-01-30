@@ -8,7 +8,7 @@ use Spatie\ServerMonitor\Test\TestCase;
 
 class DumpChecksTest extends TestCase
 {
-    private $tempFile = __DIR__ . '/temp.json';
+    private $tempFile = __DIR__.'/temp.json';
 
     public function setUp()
     {
@@ -36,10 +36,10 @@ class DumpChecksTest extends TestCase
     /** @test */
     public function it_creates_the_same_output_for_synced_file()
     {
-        Artisan::call('server-monitor:sync-file', ['path' => __DIR__ . '/../stubs/file-sync-original.json']);
+        Artisan::call('server-monitor:sync-file', ['path' => __DIR__.'/../stubs/file-sync-original.json']);
         Artisan::call('server-monitor:dump-checks', ['path' => $this->tempFile]);
         $this->assertFileExists($this->tempFile);
-        $this->assertJsonFileEqualsJsonFile(__DIR__ . '/../stubs/file-sync-original.json', $this->tempFile);
+        $this->assertJsonFileEqualsJsonFile(__DIR__.'/../stubs/file-sync-original.json', $this->tempFile);
     }
 
 //    /** @test */
