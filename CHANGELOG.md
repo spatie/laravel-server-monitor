@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-server-monitor` will be documented in this file
 
+## 1.6.0 - 2019-01-31
+
+- add `dump-checks` command
+
 ## 1.5.0 - 2019-01-10
 
 - allow elastic search check to check other ips
