@@ -9,9 +9,9 @@ use Spatie\ServerMonitor\HostRepository;
 class DumpChecks extends BaseCommand
 {
     protected $signature = 'server-monitor:dump-checks
-                            {path : Path to JSON file}';
+                            {path : Path to json file}';
 
-    protected $description = 'Dump current configuration to JSON file';
+    protected $description = 'Dump current configuration to json file';
 
     public function handle()
     {
