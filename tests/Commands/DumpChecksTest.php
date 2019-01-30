@@ -27,6 +27,7 @@ class DumpChecksTest extends TestCase
     public function it_creates_an_empty_file_for_an_empty_database()
     {
         Artisan::call('server-monitor:dump-checks', ['path' => $this->tempFile]);
+
         $this->assertFileExists($this->tempFile);
         $contents = file_get_contents($this->tempFile);
         $this->assertJson($contents);
@@ -38,39 +39,8 @@ class DumpChecksTest extends TestCase
     {
         Artisan::call('server-monitor:sync-file', ['path' => __DIR__.'/../stubs/file-sync-original.json']);
         Artisan::call('server-monitor:dump-checks', ['path' => $this->tempFile]);
+
         $this->assertFileExists($this->tempFile);
         $this->assertJsonFileEqualsJsonFile(__DIR__.'/../stubs/file-sync-original.json', $this->tempFile);
     }
-
-//    /** @test */
-//    public function it_can_update_hosts()
-//    {
-//        Artisan::call('server-monitor:sync-file', ['path' => __DIR__.'/../stubs/file-sync-update.json']);
-//
-//        $updatedHost = Host::where('name', 'original-host')->first();
-//
-//        $this->seeInConsoleOutput('Synced 1 host(s) to database');
-//        $this->seeInConsoleOutput('Deleted `test-check` from host `original-host`');
-//
-//        $this->assertEquals('root-updated', $updatedHost->ssh_user);
-//
-//        $this->assertTrue($updatedHost->checks->contains('type', 'test-check-updated'));
-//
-//        $this->assertFalse($updatedHost->checks->contains('type', 'test-check'));
-//    }
-//
-//    /** @test */
-//    public function it_can_delete_hosts_not_found_in_file()
-//    {
-//        Artisan::call('server-monitor:sync-file', [
-//            'path' => __DIR__.'/../stubs/file-sync-original.json',
-//            '--delete-missing' => true,
-//        ]);
-//
-//        $deletedHost = Host::where('name', 'original-host')->first();
-//
-//        $this->seeInConsoleOutput('Deleted host `original-host`');
-//
-//        $this->assertEmpty($deletedHost);
-//    }
 }
