@@ -2,11 +2,13 @@
 
 namespace Spatie\ServerMonitor\Models\Concerns;
 
+use Illuminate\Support\Arr;
+
 trait HasCustomProperties
 {
     public function hasCustomProperty(string $propertyName): bool
     {
-        return array_has($this->custom_properties, $propertyName);
+        return Arr::has(($this->custom_properties, $propertyName);
     }
 
     /**
@@ -17,7 +19,7 @@ trait HasCustomProperties
      */
     public function getCustomProperty(string $propertyName, $default = null)
     {
-        return array_get($this->custom_properties, $propertyName, $default);
+        return Arr::get($this->custom_properties, $propertyName, $default);
     }
 
     /**
@@ -30,7 +32,7 @@ trait HasCustomProperties
     {
         $customProperties = $this->custom_properties;
 
-        array_set($customProperties, $name, $value);
+        Arr::set($customProperties, $name, $value);
 
         $this->custom_properties = $customProperties;
 
@@ -46,7 +48,7 @@ trait HasCustomProperties
     {
         $customProperties = $this->custom_properties;
 
-        array_forget($customProperties, $name);
+        Arr::forget($customProperties, $name);
 
         $this->custom_properties = $customProperties;
 
