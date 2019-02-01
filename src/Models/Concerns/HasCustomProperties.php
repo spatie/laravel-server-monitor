@@ -8,7 +8,7 @@ trait HasCustomProperties
 {
     public function hasCustomProperty(string $propertyName): bool
     {
-        return Arr::has(($this->custom_properties, $propertyName);
+        return Arr::has($this->custom_properties, $propertyName);
     }
 
     /**
