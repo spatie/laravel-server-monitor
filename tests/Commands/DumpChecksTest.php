@@ -9,12 +9,12 @@ class DumpChecksTest extends TestCase
 {
     private $tempFile = __DIR__.'/temp.json';
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         if (file_exists($this->tempFile)) {

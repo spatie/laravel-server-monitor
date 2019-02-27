@@ -13,7 +13,7 @@ class CheckTest extends TestCase
     /** @var \Spatie\ServerMonitor\Models\Check */
     protected $check;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 

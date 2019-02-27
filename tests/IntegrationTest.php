@@ -13,7 +13,7 @@ class IntegrationTest extends TestCase
     /** @var \Spatie\ServerMonitor\Models\Host */
     protected $host;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 

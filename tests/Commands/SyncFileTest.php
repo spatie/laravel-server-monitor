@@ -8,7 +8,7 @@ use Spatie\ServerMonitor\Test\TestCase;
 
 class SyncFileTest extends TestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 

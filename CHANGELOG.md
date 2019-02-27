@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-server-monitor` will be documented in this file
 
+## 1.6.2 - 2019-02-27
+
+- add support for Laravel 5.8
+
 ## 1.6.1 - 2019-02-01
 
 - use Arr:: and Str:: functions
