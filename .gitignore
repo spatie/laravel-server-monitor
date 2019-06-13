@@ -1,6 +1,5 @@
 build
 composer.lock
-docs
 vendor
 tests/server/node_modules
 tests/server/store.json
