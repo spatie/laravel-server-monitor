@@ -9,7 +9,7 @@ This package keeps an eye on the health of all your servers. There are a few [ch
 
 When something goes wrong it can [notify you](https://docs.spatie.be/laravel-server-monitor/v1/monitoring-basics/notifications-and-events) via Slack or mail. Here's what a Slack notification looks like:
 
-<img src="../../images//check-failed.jpg" class="screenshot -slack">
+<img src="../../images/check-failed.jpg" class="screenshot -slack">
 
 Behind the scenes [Laravel's native notification system](https://laravel.com/docs/5.4/notifications) is leveraged so you can use one of the [many notification drivers](http://laravel-notification-channels.com/).
 

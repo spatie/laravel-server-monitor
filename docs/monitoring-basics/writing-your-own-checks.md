@@ -7,7 +7,7 @@ Writing your own checks is very easy. Let's create a check that'll verify if `ng
 
 Let's take a look at how to manually verify if Nginx is running. The easiest way is to run `systemctl is-active nginx`. This command outputs `active` if Nginx is running.
 
-<img src="../../images//nginx.jpg" class="screenshot -cli">
+<img src="../../images/nginx.jpg" class="screenshot -cli">
 
 Let's create an automatic check using that command.
 

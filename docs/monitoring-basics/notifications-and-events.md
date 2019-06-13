@@ -23,7 +23,7 @@ This notification is sent when calling `$this-check->fail()` in a check. This al
 
 This is how the notification looks in Slack.
 
-<img src="../../images//check-failed.jpg" class="screenshot -slack" />
+<img src="../../images/check-failed.jpg" class="screenshot -slack" />
 
 ### CheckWarning
 
@@ -33,7 +33,7 @@ This notification is sent when calling `$this-check->warn()` in a check. This al
 
 The notification looks like this in Slack.
 
-<img src="../../images//check-warning.jpg" class="screenshot -slack" />
+<img src="../../images/check-warning.jpg" class="screenshot -slack" />
 
 ### CheckRestored
 
@@ -44,7 +44,7 @@ This notification is sent when a check succeeds after it had been failing. The
 
 The notification looks like this in Slack.
 
-<img src="../../images//check-restored.jpg" class="screenshot -slack" />
+<img src="../../images/check-restored.jpg" class="screenshot -slack" />
 
 ### CheckSucceeded
 

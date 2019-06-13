@@ -9,7 +9,7 @@ Let's illustrate this with the `memcached` check provided out of the box. This v
 
 When a check fails, and on other events, the package can send you a notification. Notifications looks like this in Slack.
  
-<img src="../../images//check-failed.jpg" class="screenshot -slack">
+<img src="../../images/check-failed.jpg" class="screenshot -slack">
  
 You can specify which channels will send notifications [in the config file](https://docs.spatie.be/laravel-server-monitor/v1/installation-and-setup#basic-installation). By default the package has support for [Slack](https://slack.com/) and mail notifications. Because the package leverages Laravel's native notifications you can use any of the [community supported drivers](https://github.com/laravel-notification-channels) or [write your own](https://laravel.com/docs/5.4/notifications#custom-channels).
  
