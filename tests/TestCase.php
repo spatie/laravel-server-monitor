@@ -4,6 +4,7 @@ namespace Spatie\ServerMonitor\Test;
 
 use Artisan;
 use Carbon\Carbon;
+use Illuminate\Support\Str;
 use Spatie\ServerMonitor\Models\Host;
 use Spatie\ServerMonitor\Models\Check;
 use Symfony\Component\Process\Process;
@@ -127,7 +128,7 @@ abstract class TestCase extends Orchestra
 
     protected function assertStringContains($needle, $haystack)
     {
-        $this->assertTrue(str_contains($haystack, $needle), "String `{$haystack}` did not contain `{$needle}`");
+        $this->assertTrue(Str::contains($haystack, $needle), "String `{$haystack}` did not contain `{$needle}`");
     }
 
     protected function letSshServerRespondWithDiskspaceUsagePercentage(int $diskspaceUsagePercentage)

@@ -2,6 +2,7 @@
 
 namespace Spatie\ServerMonitor\CheckDefinitions;
 
+use Illuminate\Support\Str;
 use Symfony\Component\Process\Process;
 
 class Memcached extends CheckDefinition
@@ -10,7 +11,7 @@ class Memcached extends CheckDefinition
 
     public function resolve(Process $process)
     {
-        if (str_contains($process->getOutput(), ['memcached is running', 'active (running)'])) {
+        if (Str::contains($process->getOutput(), ['memcached is running', 'active (running)'])) {
             $this->check->succeed('is running');
 
             return;

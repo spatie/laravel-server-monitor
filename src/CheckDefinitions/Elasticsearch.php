@@ -2,6 +2,7 @@
 
 namespace Spatie\ServerMonitor\CheckDefinitions;
 
+use Illuminate\Support\Str;
 use Symfony\Component\Process\Process;
 
 class Elasticsearch extends CheckDefinition
@@ -23,7 +24,7 @@ class Elasticsearch extends CheckDefinition
 
     public function resolve(Process $process)
     {
-        $checkSucceeded = str_contains($process->getOutput(), 'lucene_version');
+        $checkSucceeded = Str::contains($process->getOutput(), 'lucene_version');
 
         if ($checkSucceeded) {
             $this->check->succeed('is running');
