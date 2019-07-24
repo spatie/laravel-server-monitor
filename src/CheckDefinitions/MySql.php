@@ -2,6 +2,7 @@
 
 namespace Spatie\ServerMonitor\CheckDefinitions;
 
+use Illuminate\Support\Str;
 use Symfony\Component\Process\Process;
 
 class MySql extends CheckDefinition
@@ -10,7 +11,7 @@ class MySql extends CheckDefinition
 
     public function resolve(Process $process)
     {
-        if (str_contains($process->getOutput(), 'mysql')) {
+        if (Str::contains($process->getOutput(), 'mysql')) {
             $this->check->succeed('is running');
 
             return;
