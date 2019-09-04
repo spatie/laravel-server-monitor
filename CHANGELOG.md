@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-server-monitor` will be documented in this file
 
+## 1.8.0 - 2019-09-04
+
+- add support for Laravel 6
+
 ## 1.7.0 - 2019-02-27
 
 - drop support for Laravel 5.7 and below
