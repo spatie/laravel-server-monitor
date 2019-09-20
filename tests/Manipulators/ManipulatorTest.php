@@ -7,7 +7,7 @@ use Symfony\Component\Process\Process;
 use Spatie\ServerMonitor\Test\TestCase;
 use Spatie\ServerMonitor\Manipulators\Manipulator;
 
-class PassThroughTest extends TestCase
+class ManipulatorTest extends TestCase
 {
     /** @var \Spatie\ServerMonitor\Models\Check */
     protected $check;
