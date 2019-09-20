@@ -15,6 +15,12 @@ return [
     ],
 
     /*
+     * The default value for how often the checks will run,
+     * after the last successful one.
+     */
+    'next_run_in_minutes' => env('SERVER_MONITOR_NEXT_RUN_IN_MINUTES', 10),
+
+    /*
      * The performance of the package can be increased by allowing a high number
      * of concurrent ssh connections. Set this to a lower value if you're
      * getting weird errors running the check.
