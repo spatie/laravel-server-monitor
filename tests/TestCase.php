@@ -104,7 +104,7 @@ abstract class TestCase extends Orchestra
 
     protected function getSuccessfulProcessWithOutput(string $output = 'my output'): Process
     {
-        $process = new Process("echo {$output}");
+        $process = Process::fromShellCommandline("echo {$output}");
 
         $process->start();
 
@@ -116,7 +116,7 @@ abstract class TestCase extends Orchestra
 
     protected function getFailedProcess(): Process
     {
-        $process = new Process('blablabla');
+        $process = Process::fromShellCommandline('blablabla');
 
         $process->start();
 
@@ -182,7 +182,7 @@ abstract class TestCase extends Orchestra
 
     protected function skipIfDummySshServerIsNotRunning()
     {
-        if ((new Process('ssh localhost -p 65000 "echo"'))->run() === 255) {
+        if ((Process::fromShellCommandline('ssh localhost -p 65000 "echo"'))->run() === 255) {
             $this->markTestSkipped('Dummy SSH server is not running.');
         }
     }
