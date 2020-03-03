@@ -182,7 +182,7 @@ abstract class TestCase extends Orchestra
 
     protected function skipIfDummySshServerIsNotRunning()
     {
-        if ((new Process('ssh localhost -p 65000 "echo"'))->run() === 255) {
+        if (Process::fromShellCommandline('ssh localhost -p 65000 "echo"')->run() === 255) {
             $this->markTestSkipped('Dummy SSH server is not running.');
         }
     }
