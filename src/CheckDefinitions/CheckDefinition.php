@@ -4,8 +4,8 @@ namespace Spatie\ServerMonitor\CheckDefinitions;
 
 use Exception;
 use Spatie\ServerMonitor\Models\Check;
-use Symfony\Component\Process\Process;
 use Spatie\ServerMonitor\Models\Enums\CheckStatus;
+use Symfony\Component\Process\Process;
 
 abstract class CheckDefinition
 {

@@ -4,8 +4,8 @@ namespace Spatie\ServerMontior\Test\Events;
 
 use Event;
 use Illuminate\Support\Facades\Artisan;
-use Spatie\ServerMonitor\Test\TestCase;
 use Spatie\ServerMonitor\Events\CheckWarning;
+use Spatie\ServerMonitor\Test\TestCase;
 
 class CheckWarningTest extends TestCase
 {

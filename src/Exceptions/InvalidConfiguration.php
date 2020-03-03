@@ -3,8 +3,8 @@
 namespace Spatie\ServerMonitor\Exceptions;
 
 use Exception;
-use Spatie\ServerMonitor\Models\Host;
 use Spatie\ServerMonitor\Models\Check;
+use Spatie\ServerMonitor\Models\Host;
 
 class InvalidConfiguration extends Exception
 {

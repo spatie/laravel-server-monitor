@@ -4,11 +4,11 @@ namespace Spatie\ServerMonitor\Notifications\Notifications;
 
 use Carbon\Carbon;
 use Illuminate\Notifications\Messages\MailMessage;
-use Spatie\ServerMonitor\Models\Enums\CheckStatus;
-use Illuminate\Notifications\Messages\SlackMessage;
 use Illuminate\Notifications\Messages\SlackAttachment;
-use Spatie\ServerMonitor\Notifications\BaseNotification;
+use Illuminate\Notifications\Messages\SlackMessage;
 use Spatie\ServerMonitor\Events\CheckWarning as CheckWarningEvent;
+use Spatie\ServerMonitor\Models\Enums\CheckStatus;
+use Spatie\ServerMonitor\Notifications\BaseNotification;
 
 class CheckWarning extends BaseNotification
 {

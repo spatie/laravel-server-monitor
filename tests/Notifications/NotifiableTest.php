@@ -2,10 +2,10 @@
 
 namespace Spatie\ServerMonitor\Test\Integration\Notifications;
 
-use Spatie\ServerMonitor\Models\Check;
-use Spatie\ServerMonitor\Test\TestCase;
 use Spatie\ServerMonitor\Events\CheckSucceeded;
+use Spatie\ServerMonitor\Models\Check;
 use Spatie\ServerMonitor\Notifications\Notifiable;
+use Spatie\ServerMonitor\Test\TestCase;
 
 class NotifiableTest extends TestCase
 {

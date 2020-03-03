@@ -2,13 +2,13 @@
 
 namespace Spatie\ServerMonitor\Models;
 
-use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Spatie\ServerMonitor\Models\Enums\HostHealth;
-use Spatie\ServerMonitor\Models\Enums\CheckStatus;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Spatie\ServerMonitor\Models\Presenters\HostPresenter;
+use Illuminate\Support\Collection;
 use Spatie\ServerMonitor\Models\Concerns\HasCustomProperties;
+use Spatie\ServerMonitor\Models\Enums\CheckStatus;
+use Spatie\ServerMonitor\Models\Enums\HostHealth;
+use Spatie\ServerMonitor\Models\Presenters\HostPresenter;
 
 class Host extends Model
 {

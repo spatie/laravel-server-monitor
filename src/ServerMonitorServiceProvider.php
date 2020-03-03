@@ -3,15 +3,15 @@
 namespace Spatie\ServerMonitor;
 
 use DateTime;
-use Spatie\Blink\Blink;
 use Illuminate\Support\ServiceProvider;
+use Spatie\Blink\Blink;
 use Spatie\ServerMonitor\Commands\AddHost;
-use Spatie\ServerMonitor\Commands\SyncFile;
-use Spatie\ServerMonitor\Commands\ListHosts;
-use Spatie\ServerMonitor\Commands\RunChecks;
 use Spatie\ServerMonitor\Commands\DeleteHost;
 use Spatie\ServerMonitor\Commands\DumpChecks;
 use Spatie\ServerMonitor\Commands\ListChecks;
+use Spatie\ServerMonitor\Commands\ListHosts;
+use Spatie\ServerMonitor\Commands\RunChecks;
+use Spatie\ServerMonitor\Commands\SyncFile;
 use Spatie\ServerMonitor\Manipulators\Manipulator;
 use Spatie\ServerMonitor\Notifications\EventHandler;
 

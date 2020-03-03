@@ -2,8 +2,8 @@
 
 namespace Spatie\ServerMonitor\Notifications;
 
-use Spatie\ServerMonitor\Models\Check;
 use Illuminate\Notifications\Notification;
+use Spatie\ServerMonitor\Models\Check;
 
 abstract class BaseNotification extends Notification
 {
