@@ -104,7 +104,7 @@ abstract class TestCase extends Orchestra
 
     protected function getSuccessfulProcessWithOutput(string $output = 'my output'): Process
     {
-        $process = new Process("echo {$output}");
+        $process = Process::fromShellCommandline("echo {$output}");
 
         $process->start();
 
@@ -116,7 +116,7 @@ abstract class TestCase extends Orchestra
 
     protected function getFailedProcess(): Process
     {
-        $process = new Process('blablabla');
+        $process = Process::fromShellCommandline('blabla');
 
         $process->start();
 
