@@ -2,9 +2,9 @@
 
 namespace Spatie\ServerMonitor;
 
-use Spatie\ServerMonitor\Models\Check;
 use Illuminate\Database\Eloquent\Builder;
 use Spatie\ServerMonitor\Exceptions\InvalidConfiguration;
+use Spatie\ServerMonitor\Models\Check;
 
 class CheckRepository
 {

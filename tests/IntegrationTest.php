@@ -2,9 +2,9 @@
 
 namespace Spatie\ServerMonitor\Test;
 
-use Spatie\ServerMonitor\Models\Check;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Notification;
+use Spatie\ServerMonitor\Models\Check;
 use Spatie\ServerMonitor\Models\Enums\CheckStatus;
 use Spatie\ServerMonitor\Notifications\Notifications\CheckFailed;
 

@@ -2,11 +2,11 @@
 
 namespace Spatie\ServerMonitor\Test\Models;
 
-use Spatie\ServerMonitor\Models\Host;
 use Spatie\ServerMonitor\Models\Check;
-use Spatie\ServerMonitor\Test\TestCase;
-use Spatie\ServerMonitor\Models\Enums\HostHealth;
 use Spatie\ServerMonitor\Models\Enums\CheckStatus;
+use Spatie\ServerMonitor\Models\Enums\HostHealth;
+use Spatie\ServerMonitor\Models\Host;
+use Spatie\ServerMonitor\Test\TestCase;
 
 class HostTest extends TestCase
 {

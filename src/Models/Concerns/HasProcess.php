@@ -2,8 +2,8 @@
 
 namespace Spatie\ServerMonitor\Models\Concerns;
 
-use Symfony\Component\Process\Process;
 use Spatie\ServerMonitor\Manipulators\Manipulator;
+use Symfony\Component\Process\Process;
 
 trait HasProcess
 {

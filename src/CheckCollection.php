@@ -4,8 +4,8 @@ namespace Spatie\ServerMonitor;
 
 use Countable;
 use Illuminate\Support\Collection;
-use Spatie\ServerMonitor\Models\Check;
 use Spatie\ServerMonitor\Helpers\ConsoleOutput;
+use Spatie\ServerMonitor\Models\Check;
 
 class CheckCollection implements Countable
 {
