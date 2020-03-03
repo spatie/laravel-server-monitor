@@ -2,10 +2,10 @@
 
 namespace Spatie\ServerMonitor\Test\Manipulators;
 
-use Spatie\ServerMonitor\Models\Check;
-use Symfony\Component\Process\Process;
-use Spatie\ServerMonitor\Test\TestCase;
 use Spatie\ServerMonitor\Manipulators\Manipulator;
+use Spatie\ServerMonitor\Models\Check;
+use Spatie\ServerMonitor\Test\TestCase;
+use Symfony\Component\Process\Process;
 
 class ManipulatorTest extends TestCase
 {

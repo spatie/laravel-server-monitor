@@ -3,8 +3,8 @@
 namespace Spatie\ServerMonitor\Commands;
 
 use Illuminate\Support\Collection;
-use Spatie\ServerMonitor\Models\Host;
 use Spatie\ServerMonitor\Models\Check;
+use Spatie\ServerMonitor\Models\Host;
 
 class ListHosts extends BaseCommand
 {

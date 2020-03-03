@@ -2,8 +2,8 @@
 
 namespace Spatie\ServerMonitor\Events;
 
-use Spatie\ServerMonitor\Models\Check;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Spatie\ServerMonitor\Models\Check;
 
 abstract class Event implements ShouldQueue
 {

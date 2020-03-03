@@ -2,8 +2,8 @@
 
 namespace Spatie\ServerMonitor\Commands;
 
-use Spatie\ServerMonitor\Models\Host;
 use Spatie\ServerMonitor\Models\Check;
+use Spatie\ServerMonitor\Models\Host;
 
 class SyncFile extends BaseCommand
 {

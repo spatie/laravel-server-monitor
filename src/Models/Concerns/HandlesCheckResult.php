@@ -3,8 +3,8 @@
 namespace Spatie\ServerMonitor\Models\Concerns;
 
 use Spatie\ServerMonitor\Events\CheckFailed;
-use Spatie\ServerMonitor\Events\CheckWarning;
 use Spatie\ServerMonitor\Events\CheckSucceeded;
+use Spatie\ServerMonitor\Events\CheckWarning;
 use Spatie\ServerMonitor\Helpers\ConsoleOutput;
 use Spatie\ServerMonitor\Models\Enums\CheckStatus;
 

@@ -3,9 +3,9 @@
 namespace Spatie\ServerMonitor\Commands;
 
 use Illuminate\Console\Command;
-use Spatie\ServerMonitor\HostRepository;
 use Spatie\ServerMonitor\CheckRepository;
 use Spatie\ServerMonitor\Helpers\ConsoleOutput;
+use Spatie\ServerMonitor\HostRepository;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 

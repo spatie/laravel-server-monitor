@@ -2,9 +2,9 @@
 
 namespace Spatie\ServerMonitor\Commands;
 
-use Spatie\ServerMonitor\Models\Host;
-use Spatie\ServerMonitor\Models\Check;
 use Spatie\ServerMonitor\HostRepository;
+use Spatie\ServerMonitor\Models\Check;
+use Spatie\ServerMonitor\Models\Host;
 
 class DumpChecks extends BaseCommand
 {
