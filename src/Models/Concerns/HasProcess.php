@@ -10,7 +10,7 @@ trait HasProcess
     public function getProcess(): Process
     {
         return blink()->once("process.{$this->id}", function () {
-            $process = new Process($this->getProcessCommand());
+            $process = Process::fromShellCommandline($this->getProcessCommand());
 
             $process->setTimeout($this->getDefinition()->timeoutInSeconds());
 
