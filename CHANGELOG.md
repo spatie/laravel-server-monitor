@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-server-monitor` will be documented in this file
 
+## 1.9.2 - 2020-09-09
+
+- add support for Laravel 8
+
 ## 1.9.1 - 2020-08-20
 
 - allow Guzzle 7
