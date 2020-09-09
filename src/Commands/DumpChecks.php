@@ -33,7 +33,8 @@ class DumpChecks extends BaseCommand
                         ->map(
                             function (Check $check) {
                                 return $check->type;
-                            })
+                            }
+                        )
                         ->toArray(),
                 ]);
             })

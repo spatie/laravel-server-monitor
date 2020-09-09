@@ -151,7 +151,8 @@ class ListChecksTest extends TestCase
                     'last_run_message' => 'check-message',
                     'custom_properties' => [],
                 ]);
-            })->merge(collect($unhealthyChecks)
+            })->merge(
+                collect($unhealthyChecks)
                 ->map(function (string $checkName) {
                     return new Check([
                         'type' => $checkName,

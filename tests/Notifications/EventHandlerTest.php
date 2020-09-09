@@ -55,12 +55,12 @@ class EventHandlerTest extends TestCase
         event(new $eventClass($this->check, ''));
 
         Notification::assertSentTo(
-                new Notifiable(),
-                $notificationClass,
-                function ($notification) {
+            new Notifiable(),
+            $notificationClass,
+            function ($notification) {
                     return $notification->event->check->id == $this->check->id;
                 }
-            );
+        );
     }
 
     public function eventClassDataProvider(): array
