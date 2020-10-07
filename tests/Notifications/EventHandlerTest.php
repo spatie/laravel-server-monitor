@@ -58,8 +58,8 @@ class EventHandlerTest extends TestCase
             new Notifiable(),
             $notificationClass,
             function ($notification) {
-                    return $notification->event->check->id == $this->check->id;
-                }
+                return $notification->event->check->id == $this->check->id;
+            }
         );
     }
 
