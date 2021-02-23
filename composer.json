@@ -25,8 +25,9 @@
         "symfony/process": "^4.0|^5.0"
     },
     "require-dev": {
+        "mockery/mockery": "^1.4",
         "orchestra/testbench": "^4.0|^5.0|^6.0",
-        "phpunit/phpunit": "^8.0|^9.3"
+        "phpunit/phpunit": "^9.3"
     },
     "autoload": {
         "psr-4": {
