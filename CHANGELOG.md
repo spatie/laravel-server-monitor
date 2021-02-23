@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-server-monitor` will be documented in this file
 
+## 1.9.3 - 2021-02-23
+
+- add support for PHP 8
+
 ## 1.9.2 - 2020-09-09
 
 - add support for Laravel 8
