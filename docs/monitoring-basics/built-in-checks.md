@@ -11,7 +11,7 @@ This check verifies the percentage of diskspace usage on the primary disk.
 
 It executes this command on the server: `df -P .`.
 
-If the reported diskpace is below 80% the check will succeed. If the diskpace usage is 80% or above a warning will be sent. If the reported diskpace is above 90% the check will be marked as failed.
+If the reported diskspace is below 80% the check will succeed. If the diskspace usage is 80% or above a warning will be sent. If the reported diskspace is above 90% the check will be marked as failed.
 
 ### Elasticsearch
 
