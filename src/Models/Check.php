@@ -19,11 +19,11 @@ use Symfony\Component\Process\Process;
 
 class Check extends Model
 {
-    use CheckPresenter,
-        HasCustomProperties,
-        ThrottlesFailingNotifications,
-        HasProcess,
-        HandlesCheckResult;
+    use CheckPresenter;
+    use HasCustomProperties;
+    use ThrottlesFailingNotifications;
+    use HasProcess;
+    use HandlesCheckResult;
 
     public $guarded = [];
 

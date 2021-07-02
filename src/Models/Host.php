@@ -12,7 +12,8 @@ use Spatie\ServerMonitor\Models\Presenters\HostPresenter;
 
 class Host extends Model
 {
-    use HostPresenter, HasCustomProperties;
+    use HostPresenter;
+    use HasCustomProperties;
 
     public $casts = [
         'custom_properties' => 'array',
