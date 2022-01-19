@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-server-monitor` will be documented in this file
 
+## 1.9.4 - 2022-01-19
+
+- support Laravel 9
+
 ## 1.9.3 - 2021-02-23
 
 - add support for PHP 8
@@ -20,7 +24,7 @@ All notable changes to `laravel-server-monitor` will be documented in this file
 
 ## 1.8.1 - 2019-09-20
 
-- `next_run_in_minutes` can be set in config 
+- `next_run_in_minutes` can be set in config
 
 ## 1.8.0 - 2019-09-04
 
