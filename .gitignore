@@ -4,3 +4,6 @@ vendor
 tests/server/node_modules
 tests/server/store.json
 .php_cs.cache
+.idea
+.phpunit.result.cache
+package-lock.json

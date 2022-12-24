@@ -21,7 +21,7 @@ abstract class TestCase extends Orchestra
     /** @var ?string */
     protected $consoleOutputCache;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         Carbon::setTestNow(Carbon::create(2016, 1, 1, 00, 00, 00));
 
