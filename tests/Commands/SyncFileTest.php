@@ -1,73 +1,58 @@
 <?php
 
-namespace Spatie\ServerMonitor\Test\Commands;
-
-use Artisan;
+use Illuminate\Support\Facades\Artisan;
 use Spatie\ServerMonitor\Models\Host;
-use Spatie\ServerMonitor\Test\TestCase;
 
-class SyncFileTest extends TestCase
-{
-    public function setUp(): void
-    {
-        parent::setUp();
+beforeEach(function () {
+    Host::create([
+        'name' => 'original-host',
+        'ssh_user' => 'root',
+        'port' => 22,
+    ])->checks()->create([
+        'type' => 'test-check',
+    ]);
+});
 
-        Host::create([
-            'name' => 'original-host',
-            'ssh_user' => 'root',
-            'port' => 22,
-        ])->checks()->create([
-            'type' => 'test-check',
-        ]);
-    }
+it('can create hosts', function () {
+    Artisan::call('server-monitor:sync-file', ['path' => __DIR__.'/../stubs/file-sync-original.json']);
 
-    /** @test */
-    public function it_can_create_hosts()
-    {
-        Artisan::call('server-monitor:sync-file', ['path' => __DIR__.'/../stubs/file-sync-original.json']);
+    $importHostOne = Host::where('name', 'test-import-one')->first();
+    $importHostTwo = Host::where('name', 'test-import-two')->first();
 
-        $importHostOne = Host::where('name', 'test-import-one')->first();
-        $importHostTwo = Host::where('name', 'test-import-two')->first();
+    $this->seeInConsoleOutput('Synced 2 host(s) to database');
 
-        $this->seeInConsoleOutput('Synced 2 host(s) to database');
+    expect($importHostOne->ssh_user)->toEqual('root');
+    expect($importHostTwo->ssh_user)->toEqual('root');
 
-        $this->assertEquals('root', $importHostOne->ssh_user);
-        $this->assertEquals('root', $importHostTwo->ssh_user);
+    expect($importHostOne->checks->contains('type', 'test-check-one'))->toBeTrue();
+    expect($importHostTwo->checks->contains('type', 'test-check-one'))->toBeTrue();
+    expect($importHostTwo->checks->contains('type', 'test-check-two'))->toBeTrue();
+});
 
-        $this->assertTrue($importHostOne->checks->contains('type', 'test-check-one'));
-        $this->assertTrue($importHostTwo->checks->contains('type', 'test-check-one'));
-        $this->assertTrue($importHostTwo->checks->contains('type', 'test-check-two'));
-    }
+it('can update hosts', function () {
+    Artisan::call('server-monitor:sync-file', ['path' => __DIR__.'/../stubs/file-sync-update.json']);
 
-    /** @test */
-    public function it_can_update_hosts()
-    {
-        Artisan::call('server-monitor:sync-file', ['path' => __DIR__.'/../stubs/file-sync-update.json']);
+    $updatedHost = Host::where('name', 'original-host')->first();
 
-        $updatedHost = Host::where('name', 'original-host')->first();
+    $this->seeInConsoleOutput('Synced 1 host(s) to database');
+    $this->seeInConsoleOutput('Deleted `test-check` from host `original-host`');
 
-        $this->seeInConsoleOutput('Synced 1 host(s) to database');
-        $this->seeInConsoleOutput('Deleted `test-check` from host `original-host`');
+    expect($updatedHost->ssh_user)->toEqual('root-updated');
 
-        $this->assertEquals('root-updated', $updatedHost->ssh_user);
+    expect($updatedHost->checks->contains('type', 'test-check-updated'))->toBeTrue();
 
-        $this->assertTrue($updatedHost->checks->contains('type', 'test-check-updated'));
+    expect($updatedHost->checks->contains('type', 'test-check'))->toBeFalse();
+});
 
-        $this->assertFalse($updatedHost->checks->contains('type', 'test-check'));
-    }
+it('can delete hosts not found in file', function () {
+    Artisan::call('server-monitor:sync-file', [
+        'path' => __DIR__.'/../stubs/file-sync-original.json',
+        '--delete-missing' => true,
+    ]);
 
-    /** @test */
-    public function it_can_delete_hosts_not_found_in_file()
-    {
-        Artisan::call('server-monitor:sync-file', [
-            'path' => __DIR__.'/../stubs/file-sync-original.json',
-            '--delete-missing' => true,
-        ]);
+    $deletedHost = Host::where('name', 'original-host')->first();
 
-        $deletedHost = Host::where('name', 'original-host')->first();
+    $this->seeInConsoleOutput('Deleted host `original-host`');
 
-        $this->seeInConsoleOutput('Deleted host `original-host`');
-
-        $this->assertEmpty($deletedHost);
-    }
-}
+    expect($deletedHost)->toBeEmpty();
+});

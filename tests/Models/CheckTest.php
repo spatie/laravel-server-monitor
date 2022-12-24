@@ -1,77 +1,55 @@
 <?php
 
-namespace Spatie\ServerMonitor\Test\Models;
-
 use Carbon\Carbon;
 use Spatie\ServerMonitor\CheckDefinitions\Diskspace;
 use Spatie\ServerMonitor\Exceptions\InvalidCheckDefinition;
 use Spatie\ServerMonitor\Models\Check;
-use Spatie\ServerMonitor\Test\TestCase;
 
-class CheckTest extends TestCase
-{
-    /** @var \Spatie\ServerMonitor\Models\Check */
-    protected $check;
+beforeEach(function () {
+    $this->createHost('my-host', null, ['diskspace']);
 
-    public function setUp(): void
-    {
-        parent::setUp();
+    $this->check = Check::first();
+});
 
-        $this->createHost('my-host', null, ['diskspace']);
+it('can get its definition', function () {
+    expect($this->check->getDefinition())->toBeInstanceOf(Diskspace::class);
+});
 
-        $this->check = Check::first();
+it('will throw an exception when it has an unknown type', function () {
+    $this->check->type = 'bla bla';
+    $this->check->save();
+
+    $this->expectException(InvalidCheckDefinition::class);
+
+    $this->check->getDefinition();
+});
+
+it('will determine that it should be run', function () {
+    expect($this->check->shouldRun())->toBeTrue();
+});
+
+it('will determine that it should not run when it is disabled', function () {
+    $this->check->enabled = false;
+
+    $this->check->save();
+
+    expect($this->check->shouldRun())->toBeFalse();
+});
+
+it('will determine that it should not be run until after a certain period of time', function () {
+    $nextRunInMinutes = 5;
+
+    $this->check->last_ran_at = Carbon::now();
+
+    $this->check->next_run_in_minutes = $nextRunInMinutes;
+
+    $this->check->save();
+
+    foreach (range(1, $nextRunInMinutes) as $pastMinutes) {
+        expect($this->check->shouldRun())->toBeFalse();
+
+        $this->progressMinutes(1);
     }
 
-    /** @test */
-    public function it_can_get_its_definition()
-    {
-        $this->assertInstanceOf(Diskspace::class, $this->check->getDefinition());
-    }
-
-    /** @test */
-    public function it_will_throw_an_exception_when_it_has_an_unknown_type()
-    {
-        $this->check->type = 'bla bla';
-        $this->check->save();
-
-        $this->expectException(InvalidCheckDefinition::class);
-
-        $this->check->getDefinition();
-    }
-
-    /** @test */
-    public function it_will_determine_that_it_should_be_run()
-    {
-        $this->assertTrue($this->check->shouldRun());
-    }
-
-    /** @test */
-    public function it_will_determine_that_it_should_not_run_when_it_is_disabled()
-    {
-        $this->check->enabled = false;
-
-        $this->check->save();
-
-        $this->assertFalse($this->check->shouldRun());
-    }
-
-    /** @test */
-    public function it_will_determine_that_it_should_not_be_run_until_after_a_certain_period_of_time()
-    {
-        $nextRunInMinutes = 5;
-
-        $this->check->last_ran_at = Carbon::now();
-
-        $this->check->next_run_in_minutes = $nextRunInMinutes;
-
-        $this->check->save();
-
-        foreach (range(1, $nextRunInMinutes) as $pastMinutes) {
-            $this->assertFalse($this->check->shouldRun());
-
-            $this->progressMinutes(1);
-        }
-
-        $this->assertTrue($this->check->shouldRun());
-    }
-}
+    expect($this->check->shouldRun())->toBeTrue();
+});

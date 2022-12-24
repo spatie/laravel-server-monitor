@@ -1,64 +1,43 @@
 <?php
 
-namespace Spatie\ServerMonitor\Test\Models\Concerns;
+beforeEach(function () {
+    $host = $this->createHost('localhost', 65000, ['diskspace']);
 
-use Spatie\ServerMonitor\Test\TestCase;
+    $this->check = $host->checks->first();
+});
 
-class ThrottlesFailingNotificationsTest extends TestCase
-{
-    /** @var \Spatie\ServerMonitor\Models\Check */
-    protected $check;
+it('can determine that it is not throttling', function () {
+    expect($this->check->isThrottlingFailedNotifications())->toBeFalse();
+});
 
-    public function setUp(): void
-    {
-        parent::setUp();
+it('can can start a throttling period', function () {
+    $this->check->startThrottlingFailedNotifications();
 
-        $host = $this->createHost('localhost', 65000, ['diskspace']);
+    expect($this->check->isThrottlingFailedNotifications())->toBeTrue();
+});
 
-        $this->check = $host->checks->first();
-    }
+it('can can end a throttling period', function () {
+    $this->check->startThrottlingFailedNotifications();
 
-    /** @test */
-    public function it_can_determine_that_it_is_not_throttling()
-    {
-        $this->assertFalse($this->check->isThrottlingFailedNotifications());
-    }
+    $this->check->stopThrottlingFailedNotifications();
 
-    /** @test */
-    public function it_can_can_start_a_throttling_period()
-    {
-        $this->check->startThrottlingFailedNotifications();
+    expect($this->check->isThrottlingFailedNotifications())->toBeFalse();
+});
 
-        $this->assertTrue($this->check->isThrottlingFailedNotifications());
-    }
+it('the throttling period will end after an amount of minutes', function () {
+    $this->check->startThrottlingFailedNotifications();
 
-    /** @test */
-    public function it_can_can_end_a_throttling_period()
-    {
-        $this->check->startThrottlingFailedNotifications();
+    $minutes = $this->check->getDefinition()->throttleFailingNotificationsForMinutes();
 
-        $this->check->stopThrottlingFailedNotifications();
+    expect($minutes)->toBeGreaterThan(0);
 
-        $this->assertFalse($this->check->isThrottlingFailedNotifications());
-    }
+    expect($this->check->isThrottlingFailedNotifications())->toBeTrue();
 
-    /** @test */
-    public function the_throttling_period_will_end_after_an_amount_of_minutes()
-    {
-        $this->check->startThrottlingFailedNotifications();
+    $this->progressMinutes($minutes - 1);
 
-        $minutes = $this->check->getDefinition()->throttleFailingNotificationsForMinutes();
+    expect($this->check->isThrottlingFailedNotifications())->toBeTrue();
 
-        $this->assertGreaterThan(0, $minutes);
+    $this->progressMinutes(1);
 
-        $this->assertTrue($this->check->isThrottlingFailedNotifications());
-
-        $this->progressMinutes($minutes - 1);
-
-        $this->assertTrue($this->check->isThrottlingFailedNotifications());
-
-        $this->progressMinutes(1);
-
-        $this->assertFalse($this->check->isThrottlingFailedNotifications());
-    }
-}
+    expect($this->check->isThrottlingFailedNotifications())->toBeFalse();
+});

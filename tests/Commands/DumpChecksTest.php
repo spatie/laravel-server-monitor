@@ -1,45 +1,30 @@
 <?php
 
-namespace Spatie\ServerMonitor\Test\Commands;
+use Illuminate\Support\Facades\Artisan;
 
-use Artisan;
-use Spatie\ServerMonitor\Test\TestCase;
+beforeEach(function () {
+    $this->tempFile = __DIR__.'/temp.json';
+});
 
-class DumpChecksTest extends TestCase
-{
-    private $tempFile = __DIR__.'/temp.json';
-
-    public function setUp(): void
-    {
-        parent::setUp();
+afterEach(function () {
+    if (file_exists($this->tempFile)) {
+        unlink($this->tempFile);
     }
+});
 
-    public function tearDown(): void
-    {
-        parent::tearDown();
-        if (file_exists($this->tempFile)) {
-            unlink($this->tempFile);
-        }
-    }
+it('creates an empty file for an empty database', function () {
+    Artisan::call('server-monitor:dump-checks', ['path' => $this->tempFile]);
 
-    /** @test */
-    public function it_creates_an_empty_file_for_an_empty_database()
-    {
-        Artisan::call('server-monitor:dump-checks', ['path' => $this->tempFile]);
+    expect($this->tempFile)->toBeFile();
+    $contents = file_get_contents($this->tempFile);
+    expect($contents)->toBeJson();
+    $this->assertJsonStringEqualsJsonString($contents, '[]');
+});
 
-        $this->assertFileExists($this->tempFile);
-        $contents = file_get_contents($this->tempFile);
-        $this->assertJson($contents);
-        $this->assertJsonStringEqualsJsonString($contents, '[]');
-    }
+it('creates the same output for synced file', function () {
+    Artisan::call('server-monitor:sync-file', ['path' => __DIR__.'/../stubs/file-sync-original.json']);
+    Artisan::call('server-monitor:dump-checks', ['path' => $this->tempFile]);
 
-    /** @test */
-    public function it_creates_the_same_output_for_synced_file()
-    {
-        Artisan::call('server-monitor:sync-file', ['path' => __DIR__.'/../stubs/file-sync-original.json']);
-        Artisan::call('server-monitor:dump-checks', ['path' => $this->tempFile]);
-
-        $this->assertFileExists($this->tempFile);
-        $this->assertJsonFileEqualsJsonFile(__DIR__.'/../stubs/file-sync-original.json', $this->tempFile);
-    }
-}
+    expect($this->tempFile)->toBeFile();
+    $this->assertJsonFileEqualsJsonFile(__DIR__.'/../stubs/file-sync-original.json', $this->tempFile);
+});

@@ -1,52 +1,37 @@
 <?php
 
-namespace Spatie\ServerMonitor\Test\Integration\Notifications;
-
 use Spatie\ServerMonitor\Events\CheckSucceeded;
 use Spatie\ServerMonitor\Models\Check;
 use Spatie\ServerMonitor\Notifications\Notifiable;
-use Spatie\ServerMonitor\Test\TestCase;
 
-class NotifiableTest extends TestCase
-{
-    /** @var \Spatie\ServerMonitor\Models\Check */
-    protected $check;
+beforeEach(function () {
+    $this->createHost('my-host', null, ['diskspace']);
 
-    public function setUp(): void
-    {
-        parent::setUp();
+    $this->check = Check::first();
+});
 
-        $this->createHost('my-host', null, ['diskspace']);
+it('allows an event to be passed to the notifiable class', function () {
+    $event = \Mockery::mock(CheckSucceeded::class);
 
-        $this->check = Check::first();
-    }
+    /** @var Notifiable $notifiable */
+    $notifiable = app($this->app['config']->get('server-monitor.notifications.notifiable'));
 
-    /** @test */
-    public function it_allows_an_event_to_be_passed_to_the_notifiable_class()
-    {
-        $event = \Mockery::mock(CheckSucceeded::class);
+    $notifiable->setEvent($event);
 
-        /** @var Notifiable $notifiable */
-        $notifiable = app($this->app['config']->get('server-monitor.notifications.notifiable'));
+    expect($event)->toEqual($notifiable->getEvent());
+});
 
-        $notifiable->setEvent($event);
+it('can route notification for mail', function () {
+    $this->app['config']->set('server-monitor.notifications.mail.to', 'test@test.com,other@other.com');
+    $notifiable = new Notifiable();
+    $mails = $notifiable->routeNotificationForMail();
 
-        $this->assertEquals($notifiable->getEvent(), $event);
-    }
+    expect('test@test.com')->toEqual($mails[0]);
+    expect('other@other.com')->toEqual($mails[1]);
 
-    public function testRouteNotificationForMail()
-    {
-        $this->app['config']->set('server-monitor.notifications.mail.to', 'test@test.com,other@other.com');
-        $notifiable = new Notifiable();
-        $mails = $notifiable->routeNotificationForMail();
+    $this->app['config']->set('server-monitor.notifications.mail.to', ['test@test.com', 'other@other.com']);
+    $mails = $notifiable->routeNotificationForMail();
 
-        $this->assertEquals($mails[0], 'test@test.com');
-        $this->assertEquals($mails[1], 'other@other.com');
-
-        $this->app['config']->set('server-monitor.notifications.mail.to', ['test@test.com', 'other@other.com']);
-        $mails = $notifiable->routeNotificationForMail();
-
-        $this->assertEquals($mails[0], 'test@test.com');
-        $this->assertEquals($mails[1], 'other@other.com');
-    }
-}
+    expect('test@test.com')->toEqual($mails[0]);
+    expect('other@other.com')->toEqual($mails[1]);
+});
