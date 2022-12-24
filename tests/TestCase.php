@@ -5,7 +5,6 @@ namespace Spatie\ServerMonitor\Test;
 use Artisan;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Notification;
-use Illuminate\Support\Str;
 use Orchestra\Testbench\TestCase as Orchestra;
 use Spatie\ServerMonitor\Models\Check;
 use Spatie\ServerMonitor\Models\Enums\CheckStatus;

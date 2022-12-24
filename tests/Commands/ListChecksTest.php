@@ -9,8 +9,7 @@ use Spatie\ServerMonitor\Models\Enums\CheckStatus;
 use Spatie\ServerMonitor\Models\Host;
 
 beforeEach(function () {
-    $this->addHosts = function ($hostNames, array $healthyChecks = [], array $unhealthyChecks = []): void
-    {
+    $this->addHosts = function ($hostNames, array $healthyChecks = [], array $unhealthyChecks = []): void {
         if (! is_array($hostNames)) {
             $hostNames = [$hostNames];
         }

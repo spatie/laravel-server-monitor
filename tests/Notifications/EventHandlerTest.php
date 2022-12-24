@@ -29,7 +29,7 @@ it('can send a notifications for certain events', function ($eventClass, $notifi
         new Notifiable(),
         $notificationClass,
         function ($notification) {
-        return $notification->event->check->id == $this->check->id;
+            return $notification->event->check->id == $this->check->id;
         }
     );
 })->with('event_class');
@@ -49,7 +49,7 @@ it('send notifications to the channels configured in the config file', function 
         new Notifiable(),
         CheckSucceededNotification::class,
         function ($notification, $usedChannels) use ($configuredChannels) {
-        return $usedChannels == $configuredChannels;
+            return $usedChannels == $configuredChannels;
         }
     );
 })->with('channel');

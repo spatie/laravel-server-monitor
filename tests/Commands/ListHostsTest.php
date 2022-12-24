@@ -8,8 +8,7 @@ use Spatie\ServerMonitor\Models\Enums\CheckStatus;
 use Spatie\ServerMonitor\Models\Host;
 
 beforeEach(function () {
-    $this->addHosts = function ($names, array $checks = []): void
-    {
+    $this->addHosts = function ($names, array $checks = []): void {
         if (! is_array($names)) {
             $names = [$names];
         }

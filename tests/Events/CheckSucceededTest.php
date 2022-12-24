@@ -23,4 +23,3 @@ it('the succeeded event will be fired when a check succeeds', function () {
         return $event->check->id === $this->check->id;
     });
 });
-

@@ -5,7 +5,6 @@ use Spatie\ServerMonitor\Models\Enums\CheckStatus;
 use Spatie\ServerMonitor\Models\Enums\HostHealth;
 use Spatie\ServerMonitor\Models\Host;
 
-
 function createHostWithCheckStatuses(array $statuses): Host
 {
     $host = Host::create([

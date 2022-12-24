@@ -28,12 +28,12 @@ it('will mark the check as failed when a check definition throws an exception', 
     $checkDefinition = new class extends CheckDefinition {
         public function resolve(Process $process)
         {
-        throw new Exception('my exception message');
+            throw new Exception('my exception message');
         }
 
         public function performNextRunInMinutes(): int
         {
-        return 0;
+            return 0;
         }
     };
 
