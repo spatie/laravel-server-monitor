@@ -9,18 +9,12 @@ jobs:
             fail-fast: false
             matrix:
                 os: [ubuntu-latest, windows-latest]
-                php: [7.4, 8.0]
-                laravel: [9.*, 8.*, 6.*, 7.*]
+                php: [8.0]
+                laravel: [9.*]
                 dependency-version: [prefer-lowest, prefer-stable]
                 include:
                     -   laravel: 9.*
                         testbench: 7.*
-                    -   laravel: 8.*
-                        testbench: 6.*
-                    -   laravel: 7.*
-                        testbench: 5.*
-                    -   laravel: 6.*
-                        testbench: 4.*
                 exclude:
                     -   laravel: 9.*
                         php: 7.4
@@ -50,4 +44,4 @@ jobs:
                     composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction --no-suggest
 
             -   name: Execute tests
-                run: vendor/bin/phpunit
+                run: vendor/bin/pest

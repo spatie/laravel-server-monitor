@@ -5,7 +5,6 @@ namespace Spatie\ServerMonitor\Test;
 use Artisan;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Notification;
-use Illuminate\Support\Str;
 use Orchestra\Testbench\TestCase as Orchestra;
 use Spatie\ServerMonitor\Models\Check;
 use Spatie\ServerMonitor\Models\Enums\CheckStatus;
@@ -21,7 +20,7 @@ abstract class TestCase extends Orchestra
     /** @var ?string */
     protected $consoleOutputCache;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         Carbon::setTestNow(Carbon::create(2016, 1, 1, 00, 00, 00));
 
@@ -126,11 +125,6 @@ abstract class TestCase extends Orchestra
         return $process;
     }
 
-    protected function assertStringContains($needle, $haystack)
-    {
-        $this->assertTrue(Str::contains($haystack, $needle), "String `{$haystack}` did not contain `{$needle}`");
-    }
-
     protected function letSshServerRespondWithDiskspaceUsagePercentage(int $diskspaceUsagePercentage)
     {
         $listenFor = "bash -se <<EOF-LARAVEL-SERVER-MONITOR\nset -e\ndf -P .\nEOF-LARAVEL-SERVER-MONITOR";
@@ -150,7 +144,7 @@ abstract class TestCase extends Orchestra
         }
         $output = $this->getArtisanOutput();
         foreach ($searchStrings as $searchString) {
-            $this->assertStringContainsString((string) $searchString, $output);
+            expect($output)->toContain((string) $searchString);
         }
     }
 
@@ -164,7 +158,7 @@ abstract class TestCase extends Orchestra
         }
         $output = $this->getArtisanOutput();
         foreach ($searchStrings as $searchString) {
-            $this->assertStringNotContainsString((string) $searchString, $output);
+            expect($output)->not->toContain((string) $searchString);
         }
     }
 

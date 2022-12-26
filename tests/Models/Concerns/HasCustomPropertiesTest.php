@@ -1,80 +1,57 @@
 <?php
 
-namespace Spatie\ServerMonitor\Test\Models\Concerns;
+beforeEach(function () {
+    $host = $this->createHost('localhost', 65000, ['diskspace']);
 
-use Spatie\ServerMonitor\Test\TestCase;
+    $this->check = $host->checks->first();
 
-class HasCustomPropertiesTest extends TestCase
-{
-    /** @var \Spatie\ServerMonitor\Models\Check */
-    protected $check;
+    $this->check->custom_properties = [
+        'customName' => 'customValue',
+        'nested' => [
+        'customName' => 'nested customValue',
+        ],
+    ];
 
-    public function setUp(): void
-    {
-        parent::setUp();
+    $this->check->save();
+});
 
-        $host = $this->createHost('localhost', 65000, ['diskspace']);
+it('can determine if a media item has a custom property', function () {
+    expect($this->check->hasCustomProperty('customName'))->toBeTrue();
+    expect($this->check->hasCustomProperty('nested.customName'))->toBeTrue();
 
-        $this->check = $host->checks->first();
+    expect($this->check->hasCustomProperty('nonExisting'))->toBeFalse();
+    expect($this->check->hasCustomProperty('nested.nonExisting'))->toBeFalse();
+});
 
-        $this->check->custom_properties = [
-            'customName' => 'customValue',
-            'nested' => [
-                'customName' => 'nested customValue',
-            ],
-        ];
+it('can get a custom property', function () {
+    expect($this->check->getCustomProperty('customName'))->toEqual('customValue');
+    expect($this->check->getCustomProperty('nested.customName'))->toEqual('nested customValue');
 
-        $this->check->save();
-    }
+    expect($this->check->getCustomProperty('nonExisting'))->toBeNull();
+    expect($this->check->getCustomProperty('nested.nonExisting'))->toBeNull();
+});
 
-    /** @test */
-    public function it_can_determine_if_a_media_item_has_a_custom_property()
-    {
-        $this->assertTrue($this->check->hasCustomProperty('customName'));
-        $this->assertTrue($this->check->hasCustomProperty('nested.customName'));
+it('can set a custom property', function () {
+    $this->check->setCustomProperty('anotherName', 'anotherValue');
 
-        $this->assertFalse($this->check->hasCustomProperty('nonExisting'));
-        $this->assertFalse($this->check->hasCustomProperty('nested.nonExisting'));
-    }
+    expect($this->check->getCustomProperty('anotherName'))->toEqual('anotherValue');
+    expect($this->check->getCustomProperty('customName'))->toEqual('customValue');
 
-    /** @test */
-    public function it_can_get_a_custom_property()
-    {
-        $this->assertEquals('customValue', $this->check->getCustomProperty('customName'));
-        $this->assertEquals('nested customValue', $this->check->getCustomProperty('nested.customName'));
+    $this->check->setCustomProperty('nested.anotherName', 'anotherValue');
+    expect($this->check->getCustomProperty('nested.anotherName'))->toEqual('anotherValue');
+});
 
-        $this->assertNull($this->check->getCustomProperty('nonExisting'));
-        $this->assertNull($this->check->getCustomProperty('nested.nonExisting'));
-    }
+it('can forget a custom property', function () {
+    expect($this->check->hasCustomProperty('customName'))->toBeTrue();
+    expect($this->check->hasCustomProperty('nested.customName'))->toBeTrue();
 
-    /** @test */
-    public function it_can_set_a_custom_property()
-    {
-        $this->check->setCustomProperty('anotherName', 'anotherValue');
+    $this->check->forgetCustomProperty('customName');
+    $this->check->forgetCustomProperty('nested.customName');
 
-        $this->assertEquals('anotherValue', $this->check->getCustomProperty('anotherName'));
-        $this->assertEquals('customValue', $this->check->getCustomProperty('customName'));
+    expect($this->check->hasCustomProperty('customName'))->toBeFalse();
+    expect($this->check->hasCustomProperty('nested.customName'))->toBeFalse();
+});
 
-        $this->check->setCustomProperty('nested.anotherName', 'anotherValue');
-        $this->assertEquals('anotherValue', $this->check->getCustomProperty('nested.anotherName'));
-    }
-
-    /** @test */
-    public function it_can_forget_a_custom_property()
-    {
-        $this->assertTrue($this->check->hasCustomProperty('customName'));
-        $this->assertTrue($this->check->hasCustomProperty('nested.customName'));
-
-        $this->check->forgetCustomProperty('customName');
-        $this->check->forgetCustomProperty('nested.customName');
-
-        $this->assertFalse($this->check->hasCustomProperty('customName'));
-        $this->assertFalse($this->check->hasCustomProperty('nested.customName'));
-    }
-
-    /** @test */
-    public function it_returns_a_fallback_if_a_custom_property_isnt_set()
-    {
-        $this->assertEquals('foo', $this->check->getCustomProperty('imNotHere', 'foo'));
-    }
-}
+it('returns a fallback if a custom property isnt set', function () {
+    expect($this->check->getCustomProperty('imNotHere', 'foo'))->toEqual('foo');
+});

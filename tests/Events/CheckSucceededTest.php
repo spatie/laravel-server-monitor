@@ -1,39 +1,25 @@
 <?php
 
-namespace Spatie\ServerMontior\Test\Events;
-
-use Event;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Event;
 use Spatie\ServerMonitor\Events\CheckSucceeded;
-use Spatie\ServerMonitor\Test\TestCase;
 
-class CheckSucceededTest extends TestCase
-{
-    /** @var \Spatie\ServerMonitor\Models\Check */
-    protected $check;
+beforeEach(function () {
+    $this->skipIfDummySshServerIsNotRunning();
 
-    public function setUp(): void
-    {
-        parent::setUp();
+    Event::fake();
 
-        $this->skipIfDummySshServerIsNotRunning();
+    $this->check = $this->createHost()->checks->first();
+});
 
-        Event::fake();
+it('the succeeded event will be fired when a check succeeds', function () {
+    $this->letSshServerRespondWithDiskspaceUsagePercentage(20);
 
-        $this->check = $this->createHost()->checks->first();
-    }
+    Event::assertNotDispatched(CheckSucceeded::class);
 
-    /** @test */
-    public function the_succeeded_event_will_be_fired_when_a_check_succeeds()
-    {
-        $this->letSshServerRespondWithDiskspaceUsagePercentage(20);
+    Artisan::call('server-monitor:run-checks');
 
-        Event::assertNotDispatched(CheckSucceeded::class);
-
-        Artisan::call('server-monitor:run-checks');
-
-        Event::assertDispatched(CheckSucceeded::class, function (CheckSucceeded $event) {
-            return $event->check->id === $this->check->id;
-        });
-    }
-}
+    Event::assertDispatched(CheckSucceeded::class, function (CheckSucceeded $event) {
+        return $event->check->id === $this->check->id;
+    });
+});

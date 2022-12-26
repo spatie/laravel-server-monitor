@@ -1,58 +1,39 @@
 <?php
 
-namespace Spatie\ServerMonitor\CheckDefinitions\Test;
-
 use Spatie\ServerMonitor\CheckDefinitions\Memcached;
 use Spatie\ServerMonitor\Models\Check;
 use Spatie\ServerMonitor\Models\Enums\CheckStatus;
-use Spatie\ServerMonitor\Test\TestCase;
 
-class MemcachedTest extends TestCase
-{
-    /** @var \Spatie\ServerMonitor\CheckDefinitions\Memcached */
-    protected $memcachedDefinition;
+beforeEach(function () {
+    $this->createHost('localhost', 65000, ['elasticsearch']);
 
-    /** @var \Spatie\ServerMonitor\Models\Check */
-    protected $check;
+    $this->check = Check::first();
 
-    public function setUp(): void
-    {
-        parent::setUp();
+    $this->memcachedDefinition = (new Memcached())->setCheck($this->check);
+});
 
-        $this->createHost('localhost', 65000, ['elasticsearch']);
+it('can determine success', function () {
+    $process = $this->getSuccessfulProcessWithOutput(
+        '* memcached is running'
+    );
 
-        $this->check = Check::first();
+    $this->memcachedDefinition->resolve($process);
 
-        $this->memcachedDefinition = (new Memcached())->setCheck($this->check);
-    }
+    $this->check->fresh();
 
-    /** @test */
-    public function it_can_determine_success()
-    {
-        $process = $this->getSuccessfulProcessWithOutput(
-            '* memcached is running'
-        );
+    expect($this->check->last_run_message)->toContain('is running');
+    expect($this->check->status)->toEqual(CheckStatus::SUCCESS);
+});
 
-        $this->memcachedDefinition->resolve($process);
+it('can determine failure', function () {
+    $process = $this->getSuccessfulProcessWithOutput(
+        ''
+    );
 
-        $this->check->fresh();
+    $this->memcachedDefinition->resolve($process);
 
-        $this->assertStringContains('is running', $this->check->last_run_message);
-        $this->assertEquals(CheckStatus::SUCCESS, $this->check->status);
-    }
+    $this->check->fresh();
 
-    /** @test */
-    public function it_can_determine_failure()
-    {
-        $process = $this->getSuccessfulProcessWithOutput(
-            ''
-        );
-
-        $this->memcachedDefinition->resolve($process);
-
-        $this->check->fresh();
-
-        $this->assertStringContains('is not running', $this->check->last_run_message);
-        $this->assertEquals(CheckStatus::FAILED, $this->check->status);
-    }
-}
+    expect($this->check->last_run_message)->toContain('is not running');
+    expect($this->check->status)->toEqual(CheckStatus::FAILED);
+});

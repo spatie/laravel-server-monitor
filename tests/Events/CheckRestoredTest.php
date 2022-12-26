@@ -1,45 +1,31 @@
 <?php
 
-namespace Spatie\ServerMontior\Test\Events;
-
-use Event;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Event;
 use Spatie\ServerMonitor\Events\CheckRestored;
-use Spatie\ServerMonitor\Test\TestCase;
 
-class CheckRestoredTest extends TestCase
-{
-    /** @var \Spatie\ServerMonitor\Models\Check */
-    protected $check;
+beforeEach(function () {
+    $this->skipIfDummySshServerIsNotRunning();
 
-    public function setUp(): void
-    {
-        parent::setUp();
+    Event::fake();
 
-        $this->skipIfDummySshServerIsNotRunning();
+    $this->check = $this->createHost()->checks->first();
+});
 
-        Event::fake();
+it('the recovered event will be fired when an check succeeds after it has failed', function () {
+    $this->letSshServerRespondWithDiskspaceUsagePercentage(99);
 
-        $this->check = $this->createHost()->checks->first();
-    }
+    Artisan::call('server-monitor:run-checks');
 
-    /** @test */
-    public function the_recovered_event_will_be_fired_when_an_check_succeeds_after_it_has_failed()
-    {
-        $this->letSshServerRespondWithDiskspaceUsagePercentage(99);
+    $this->letSshServerRespondWithDiskspaceUsagePercentage(20);
 
-        Artisan::call('server-monitor:run-checks');
+    $this->progressMinutes(60 * 24);
 
-        $this->letSshServerRespondWithDiskspaceUsagePercentage(20);
+    Event::assertNotDispatched(CheckRestored::class);
 
-        $this->progressMinutes(60 * 24);
+    Artisan::call('server-monitor:run-checks');
 
-        Event::assertNotDispatched(CheckRestored::class);
-
-        Artisan::call('server-monitor:run-checks');
-
-        Event::assertDispatched(CheckRestored::class, function (CheckRestored $event) {
-            return $event->check->id === $this->check->id;
-        });
-    }
-}
+    Event::assertDispatched(CheckRestored::class, function (CheckRestored $event) {
+        return $event->check->id === $this->check->id;
+    });
+});
