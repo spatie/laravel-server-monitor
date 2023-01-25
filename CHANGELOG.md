@@ -2,6 +2,19 @@
 
 All notable changes to `laravel-server-monitor` will be documented in this file
 
+## 1.9.5 - 2023-01-25
+
+### What's Changed
+
+- Refactor tests to pest by @AyoobMH in https://github.com/spatie/laravel-server-monitor/pull/118
+- Laravel 10.x Compatibility by @laravel-shift in https://github.com/spatie/laravel-server-monitor/pull/121
+
+### New Contributors
+
+- @AyoobMH made their first contribution in https://github.com/spatie/laravel-server-monitor/pull/118
+
+**Full Changelog**: https://github.com/spatie/laravel-server-monitor/compare/1.9.4...1.9.5
+
 ## 1.9.4 - 2022-01-19
 
 - support Laravel 9
