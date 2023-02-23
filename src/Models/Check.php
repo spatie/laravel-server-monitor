@@ -30,10 +30,9 @@ class Check extends Model
     public $casts = [
         'custom_properties' => 'array',
         'last_run_output' => 'array',
-    ];
-
-    public $dates = [
-        'last_ran_at', 'next_check_at', 'started_throttling_failing_notifications_at',
+        'last_ran_at' => 'datetime',
+        'next_check_at' => 'datetime',
+        'started_throttling_failing_notifications_at' => 'datetime',
     ];
 
     public function host(): BelongsTo
