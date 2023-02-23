@@ -2,6 +2,18 @@
 
 All notable changes to `laravel-server-monitor` will be documented in this file
 
+## 1.9.6 - 2023-02-23
+
+### What's Changed
+
+- fix for deprecated Model "Dates" Property by @daikazu in https://github.com/spatie/laravel-server-monitor/pull/122
+
+### New Contributors
+
+- @daikazu made their first contribution in https://github.com/spatie/laravel-server-monitor/pull/122
+
+**Full Changelog**: https://github.com/spatie/laravel-server-monitor/compare/1.9.5...1.9.6
+
 ## 1.9.5 - 2023-01-25
 
 ### What's Changed
