@@ -2,6 +2,18 @@
 
 All notable changes to `laravel-server-monitor` will be documented in this file
 
+## 1.9.7 - 2023-07-19
+
+### What's Changed
+
+- Fix typo by @DieterHolvoet in https://github.com/spatie/laravel-server-monitor/pull/123
+
+### New Contributors
+
+- @DieterHolvoet made their first contribution in https://github.com/spatie/laravel-server-monitor/pull/123
+
+**Full Changelog**: https://github.com/spatie/laravel-server-monitor/compare/1.9.6...1.9.7
+
 ## 1.9.6 - 2023-02-23
 
 ### What's Changed
