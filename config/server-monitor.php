@@ -12,6 +12,7 @@ return [
         'elasticsearch' => Spatie\ServerMonitor\CheckDefinitions\Elasticsearch::class,
         'memcached' => Spatie\ServerMonitor\CheckDefinitions\Memcached::class,
         'mysql' => Spatie\ServerMonitor\CheckDefinitions\MySql::class,
+        'mariadb' => Spatie\ServerMonitor\CheckDefinitions\MariaDb::class,
     ],
 
     /*
