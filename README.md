@@ -1,7 +1,7 @@
 # An easy to use powerful server monitor
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/spatie/laravel-server-monitor.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-server-monitor)
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/spatie/laravel-server-monitor/run-tests?label=tests)
+[![run-tests](https://github.com/spatie/laravel-server-monitor/actions/workflows/run-tests.yml/badge.svg)](https://github.com/spatie/laravel-server-monitor/actions/workflows/run-tests.yml)
 [![Total Downloads](https://img.shields.io/packagist/dt/spatie/laravel-server-monitor.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-server-monitor)
 
 We all dream of servers that need no maintenance at all. But unfortunately in reality this is not the case. Disks can get full, processes can crash, the server can run out of memory...
