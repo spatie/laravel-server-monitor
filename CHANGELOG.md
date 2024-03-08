@@ -2,6 +2,14 @@
 
 All notable changes to `laravel-server-monitor` will be documented in this file
 
+## 1.10.0 - 2024-03-08
+
+### What's Changed
+
+* Laravel 11.x Compatibility by @laravel-shift in https://github.com/spatie/laravel-server-monitor/pull/131
+
+**Full Changelog**: https://github.com/spatie/laravel-server-monitor/compare/1.9.7...1.10.0
+
 ## 1.9.7 - 2023-07-19
 
 ### What's Changed
