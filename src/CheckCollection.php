@@ -57,10 +57,7 @@ class CheckCollection implements Countable
         $finishedChecks->each->handleFinishedProcess();
     }
 
-    /**
-     * @return int
-     */
-    public function count()
+    public function count(): int
     {
         return count($this->pendingChecks);
     }
