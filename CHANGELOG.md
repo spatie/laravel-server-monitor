@@ -2,6 +2,19 @@
 
 All notable changes to `laravel-server-monitor` will be documented in this file
 
+## 1.10.1 - 2025-02-21
+
+### What's Changed
+
+* Add type hint to fix deprecation message by @ThobsChoucroute in https://github.com/spatie/laravel-server-monitor/pull/132
+* Laravel 12.x Compatibility by @laravel-shift in https://github.com/spatie/laravel-server-monitor/pull/133
+
+### New Contributors
+
+* @ThobsChoucroute made their first contribution in https://github.com/spatie/laravel-server-monitor/pull/132
+
+**Full Changelog**: https://github.com/spatie/laravel-server-monitor/compare/1.10.0...1.10.1
+
 ## 1.10.0 - 2024-03-08
 
 ### What's Changed
