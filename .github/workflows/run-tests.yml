@@ -12,8 +12,8 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest]
-        php: [8.2]
-        laravel: ['10.*', '11.*']
+        php: [8.4, 8.3, 8.2]
+        laravel: ['10.*', '11.*', '12.*']
         dependency-version: [prefer-lowest, prefer-stable]
 
     name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.dependency-version }} - ${{ matrix.os }}
@@ -21,12 +21,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-
-      - name: Cache dependencies
-        uses: actions/cache@v2
-        with:
-          path: ~/.composer/cache/files
-          key: dependencies-laravel-${{ matrix.laravel }}-php-${{ matrix.php }}-composer-${{ hashFiles('composer.json') }}
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
