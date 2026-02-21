@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-server-monitor` will be documented in this file
 
+## 1.10.2 - 2026-02-21
+
+Add Laravel 13 and PHP 8.5 support
+
 ## 1.10.1 - 2025-02-21
 
 ### What's Changed
