@@ -18,7 +18,6 @@
     "require": {
         "ext-json": "*",
         "php": "^8.2",
-        "guzzlehttp/guzzle": "^7.0",
         "laravel/framework": "^10.0|^11.0|^12.0|^13.0",
         "spatie/laravel-blink": "^1.3",
         "spatie/regex": "^3.1",
