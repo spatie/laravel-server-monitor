@@ -2,6 +2,14 @@
 
 All notable changes to `laravel-server-monitor` will be documented in this file
 
+## 1.10.3 - 2026-07-28
+
+### What's Changed
+
+* Remove Guzzle from direct dependencies by @mbabker in https://github.com/spatie/laravel-server-monitor/pull/141
+
+**Full Changelog**: https://github.com/spatie/laravel-server-monitor/compare/1.10.2...1.10.3
+
 ## 1.10.2 - 2026-02-21
 
 Add Laravel 13 and PHP 8.5 support
