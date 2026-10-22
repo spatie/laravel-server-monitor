@@ -22,7 +22,7 @@ When something goes wrong it can [notify you](https://docs.spatie.be/laravel-ser
 
 ## Support us
 
-[<img src="https://github-ads.s3.eu-central-1.amazonaws.com/laravel-server-monitor.jpg?t=1" width="419px" />](https://spatie.be/github-ad-click/laravel-server-monitor)
+[<img src="https://spatie.be/github-ad-image/laravel-server-monitor.jpg" width="419px" />](https://spatie.be/github-ad-click/laravel-server-monitor)
 
 We invest a lot of resources into creating [best in class open source packages](https://spatie.be/open-source). You can support us by [buying one of our paid products](https://spatie.be/open-source/support-us).
 
